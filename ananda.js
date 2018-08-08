@@ -19,7 +19,7 @@
 const submissionsList = document.querySelector('#submissions-list');
 const facialForm = document.querySelector('#facial-form-eng');
 
-/*function renderSubmissions(doc) {
+{/* function renderSubmissions(doc) {
     let li = document.createElement('li');
     let firstName = document.createElement('span');
     let lastName = document.createElement('span');
@@ -46,7 +46,7 @@ db.collection('Customers').get().then((snapshot) => {
     snapshot.docs.forEach(doc => {
         renderSubmissions(doc);
     })
-});*/
+}); */}
 
 // render submissions in DIVs
 const searchSortBar = document.getElementById("searchSortBar");
