@@ -1,4 +1,3 @@
-<script>
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyDbVv1bVyoARmdFXccAkBM8-eAgG_LuVGU",
@@ -11,9 +10,7 @@
   firebase.initializeApp(config);
   const db = firebase.firestore();
   db.settings({ timestampsInSnapshots: true })
-</script>
 
-<script>
 
 
 const submissionsList = document.querySelector('#submissions-list');
@@ -66,7 +63,7 @@ function renderSubmissionDIVs(doc) {
     HearFromUs = document.createElement("DIV");
     formRow.setAttribute('id', doc.id);
     formRow.setAttribute('class', "submissionrow w-row");
-    firstName.setAttribute('class', "formfield");
+    firstName.setAttribute('class', "forgit mfield");
     lastName.setAttribute('class', "formfield");
     email.setAttribute('class', "formfield");
     HearFromUs.setAttribute('class', "formfield");
@@ -226,9 +223,8 @@ facialForm.addEventListener('submit', (e) => {
         });
     
 });
-</script>
 
-<script>
+
 document.getElementById("Groupon-example").style.display='none';
 
 function condLoad(x) {
@@ -238,5 +234,3 @@ function condLoad(x) {
     document.getElementById("Groupon-example").style.display='none';
     return
 }
-
-</script>
