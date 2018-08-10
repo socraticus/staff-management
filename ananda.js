@@ -51,7 +51,7 @@ function renderSubmissionDIVs(custRef) {
     lastName.textContent = custRef.data().lastName;
     let newISO = new Timestamp(custRef);
     console.log(newISO);
-    let dateISO = custRef.data().createdAt.toDate(); //.toISOString().slice(0, 10);
+    let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
     console.log(dateISO);
     createdAt.textContent = dateISO;
     if(custRef.data().grouponCode != "") {
