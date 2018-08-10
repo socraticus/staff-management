@@ -22,7 +22,7 @@ const formViewer = document.getElementById("FormViewer");
 // Form Input variables
 let firstName
 let lastName
-let date
+let createdAt
 let HearFromUs
 
 
@@ -37,19 +37,19 @@ function renderSubmissionDIVs(custRef) {
 		let formRow = document.createElement("BUTTON");
     firstName = document.createElement("DIV");
     lastName = document.createElement("DIV");
-    date = document.createElement("DIV");
+    createdAt = document.createElement("DIV");
     HearFromUs = document.createElement("DIV");
     formRow.setAttribute('id', custRef.id);
     formRow.setAttribute('class', "submissionrow w-row");
     firstName.setAttribute('class', "formfield");
     lastName.setAttribute('class', "formfield");
-    date.setAttribute('class', "formfield");
+    createdAt.setAttribute('class', "formfield");
     HearFromUs.setAttribute('class', "formfield");
     
         
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
-    date.textContent = custRef.data().date;
+    createdAt.textContent = custRef.data().createdAt;
     if(custRef.data().grouponCode != "") {
     HearFromUs.textContent = 'G-' + custRef.data().grouponCode
     } else  {
@@ -60,7 +60,7 @@ function renderSubmissionDIVs(custRef) {
     
     formRow.appendChild(firstName);
     formRow.appendChild(lastName);
-    formRow.appendChild(date);
+    formRow.appendChild(createdAt);
     formRow.appendChild(HearFromUs);
     
   //  searchSortBar.appendChild(formRow);
@@ -170,7 +170,7 @@ facialForm.addEventListener('submit', (e) => {
     // submit captured data to firestore
      db.collection('facialForms').add({
         // date: new Date().toISOString().slice(0, 10),
-        date: firebase.firestore.FieldValue.serverTimestamp(),
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         hearFromUs: facialForm.HearFromUs.value,
         expChecked: checkedExpCheckbox,
         haveGroupon: checkedGroupon,
@@ -190,6 +190,8 @@ facialForm.addEventListener('submit', (e) => {
         lastName: facialForm.lNameId.value,
         facialFormId: docRef.id,
         hearFromUs: facialForm.HearFromUs.value,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        grouponCode: facialForm.grouponCodeId.value,
         }).then(function(custRef) {
         console.log(custRef.id)
         db.collection('facialForms').doc(docRefVar).update({
