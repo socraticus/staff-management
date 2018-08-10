@@ -77,8 +77,9 @@ function renderSubmissionDIVs(doc) {
         // Populate empty form
         // db.collection('facialForms').doc(formID).get().then((snapshot) => {
         //snapshot.docs.forEach(doc => {
-        db.collection('Customers').doc(customerID).get().then( function(facialRef) {
-	let formID = facialRef.facialFormId;
+        db.collection('Customers').doc(customerID).get().then( function(customerRef) {
+		console.log(customerRef.facialFormId);
+	let formID = customerRef.facialFormId;
 	db.collection('facialForms').doc(formID).get().then(fillForm(doc))
 	});
     
