@@ -70,7 +70,8 @@ function renderSubmissionDIVs(doc) {
   formRow.addEventListener('click', (e) => {
   		if (formViewer.style.display === "none") {
   		  formRow.insertAdjacentElement("afterend", formViewer);
-  		  formViewer.style.display = "block";
+        formViewer.style.display = "block";
+        facialForm.reset();
         let formID = e.target.firstChild.ownerDocument.activeElement.id;
         console.log(formID);
         // Populate empty form
@@ -81,7 +82,6 @@ function renderSubmissionDIVs(doc) {
     
    
     	function fillForm(doc) {
-        facialForm.reset();
         document.getElementById("fNameId").value = doc.data().firstName;
         document.getElementById("lNameId").value = doc.data().lastName;
         document.getElementById("DOBId").value = doc.data().DateOfBirth;
