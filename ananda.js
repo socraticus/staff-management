@@ -132,17 +132,10 @@ function renderSubmissionDIVs(doc) {
       else {
         formViewer.style.display = "none";
         }
-      }
+      });
       
-      
-});
-      
-      
-      
-  });
-  
-  
-}
+  };
+
 
 // get data from firebase
 db.collection('facialForms').get().then((snapshot) => {
