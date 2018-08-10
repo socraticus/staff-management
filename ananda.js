@@ -49,11 +49,11 @@ function renderSubmissionDIVs(custRef) {
         
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
-    let newISO = custRef.Timestamp();
-    console.log(newISO);
-    let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
-    console.log(dateISO);
-    createdAt.textContent = dateISO;
+    // let newISO = custRef.Timestamp();
+    // console.log(newISO);
+    //let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
+    console.log(custRef.data().createdAt);
+    createdAt.textContent = "dateISO";
     if(custRef.data().grouponCode != "") {
     HearFromUs.textContent = 'G-' + custRef.data().grouponCode
     } else  {
