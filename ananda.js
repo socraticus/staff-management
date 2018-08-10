@@ -34,7 +34,7 @@ function renderSubmissionDIVs(doc) {
     HearFromUs = document.createElement("DIV");
     formRow.setAttribute('id', doc.id);
     formRow.setAttribute('class', "submissionrow w-row");
-    firstName.setAttribute('class', "forgit mfield");
+    firstName.setAttribute('class', "formfield");
     lastName.setAttribute('class', "formfield");
     email.setAttribute('class', "formfield");
     HearFromUs.setAttribute('class', "formfield");
@@ -160,6 +160,7 @@ facialForm.addEventListener('submit', (e) => {
     // New Data Structure
     // submit captured data to firestore
      db.collection('facialForms').add({
+        date: db.toDate(),
         hearFromUs: facialForm.HearFromUs.value,
         expChecked: checkedExpCheckbox,
         haveGroupon: checkedGroupon,
