@@ -25,14 +25,20 @@ let lastName
 let date
 let HearFromUs
 
+// get data from firebase
+db.collection('Customers').get().then((snapshot) => {
+    snapshot.docs.forEach(custRef => {
+        renderSubmissionDIVs(custRef);
+    })
+});
 
-function renderSubmissionDIVs(doc) {
+function renderSubmissionDIVs(custRef) {
 		let formRow = document.createElement("BUTTON");
     firstName = document.createElement("DIV");
     lastName = document.createElement("DIV");
     date = document.createElement("DIV");
     HearFromUs = document.createElement("DIV");
-    formRow.setAttribute('id', doc.id);
+    formRow.setAttribute('id', custRef.id);
     formRow.setAttribute('class', "submissionrow w-row");
     firstName.setAttribute('class', "formfield");
     lastName.setAttribute('class', "formfield");
@@ -40,13 +46,13 @@ function renderSubmissionDIVs(doc) {
     HearFromUs.setAttribute('class', "formfield");
     
         
-    firstName.textContent = doc.data().firstName;
-    lastName.textContent = doc.data().lastName;
-    date.textContent = doc.data().date;
-    if(doc.data().grouponCode != "") {
-    HearFromUs.textContent = 'G-' + doc.data().grouponCode
+    firstName.textContent = custRef.data().firstName;
+    lastName.textContent = custRef.data().lastName;
+    date.textContent = custRef.data().date;
+    if(custRef.data().grouponCode != "") {
+    HearFromUs.textContent = 'G-' + custRef.data().grouponCode
     } else  {
-    HearFromUs.textContent = doc.data().hearFromUs;
+    HearFromUs.textContent = custRef.data().hearFromUs;
     };
     
     
@@ -80,18 +86,18 @@ function renderSubmissionDIVs(doc) {
         db.collection('Customers').doc(customerID).get().then( function(customerRef) {
 	let formID = customerRef.data().facialFormId;
 		console.log(formID);
-	db.collection('facialForms').doc(formID).get().then(fillForm(doc))
+	db.collection('facialForms').doc(formID).get().then(fillForm(formRef))
 	});
     
    
-    	function fillForm(doc) {
-        document.getElementById("fNameId").value = doc.data().firstName;
-        document.getElementById("lNameId").value = doc.data().lastName;
-        document.getElementById("DOBId").value = doc.data().DateOfBirth;
-        document.getElementById("AddressId").value = doc.data().Address;
-        document.getElementById("HearFromUs").value = doc.data().hearFromUs;
+    	function fillForm(formRef) {
+        document.getElementById("fNameId").value = formRef.data().firstName;
+        document.getElementById("lNameId").value = formRef.data().lastName;
+        document.getElementById("DOBId").value = formRef.data().DateOfBirth;
+        document.getElementById("AddressId").value = formRef.data().Address;
+        document.getElementById("HearFromUs").value = formRef.data().hearFromUs;
         // Checkboxes
-        let checkedExpCheckbox = doc.data().expChecked;
+        let checkedExpCheckbox = formRef.data().expChecked;
         console.log(checkedExpCheckbox);
         if(checkedExpCheckbox === undefined) {
             return
@@ -101,7 +107,7 @@ function renderSubmissionDIVs(doc) {
           }
         }
         // Radio buttons
-        checkedGroupon = doc.data().haveGroupon;
+        checkedGroupon = formRef.data().haveGroupon;
         document.getElementById(checkedGroupon).checked = true;
     }}
       else {
@@ -111,13 +117,6 @@ function renderSubmissionDIVs(doc) {
       
   };
 
-
-// get data from firebase
-db.collection('Customers').get().then((snapshot) => {
-    snapshot.docs.forEach(doc => {
-        renderSubmissionDIVs(doc);
-    })
-});
 
 // save data to firestore
 facialForm.addEventListener('submit', (e) => {
