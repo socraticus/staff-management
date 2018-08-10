@@ -88,8 +88,9 @@ function renderSubmissionDIVs(custRef) {
 		console.log(formID);
 	db.collection('facialForms').doc(formID).get().then(
     function(snap) {
-    var formRef = snap.data()
-    fillForm(formRef)});
+      var formRef = snap.data()
+      }
+    fillForm(formRef));
     });
   
     
