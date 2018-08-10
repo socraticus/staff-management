@@ -49,7 +49,8 @@ function renderSubmissionDIVs(custRef) {
         
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
-    let dateISO = new Date(custRef.data().createdAt).toISOString().slice(0, 10);
+    let dateISO = new Date(custRef.data().createdAt) //.toISOString().slice(0, 10);
+    console.log(dateISO);
     createdAt.textContent = dateISO;
     if(custRef.data().grouponCode != "") {
     HearFromUs.textContent = 'G-' + custRef.data().grouponCode
