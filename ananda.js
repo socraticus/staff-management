@@ -16,35 +16,6 @@
 const submissionsList = document.querySelector('#submissions-list');
 const facialForm = document.querySelector('#facial-form-eng');
 
-{/* function renderSubmissions(doc) {
-    let li = document.createElement('li');
-    let firstName = document.createElement('span');
-    let lastName = document.createElement('span');
-    let email = document.createElement('span');
-    let phone = document.createElement('span');
-
-    li.setAttribute('data-id', doc.id);
-    firstName.textContent = doc.data().firstName;
-    lastName.textContent = doc.data().lastName;
-    email.textContent = doc.data().email;
-    phone.textContent = doc.data().phone;
-
-    li.appendChild(firstName);
-    li.appendChild(lastName);
-    li.appendChild(email);
-    li.appendChild(phone);
-
-    submissionsList.appendChild(li);
-}
-
-
-// get data from firebase
-db.collection('Customers').get().then((snapshot) => {
-    snapshot.docs.forEach(doc => {
-        renderSubmissions(doc);
-    })
-}); */}
-
 // render submissions in DIVs
 const searchSortBar = document.getElementById("searchSortBar");
 const formViewer = document.getElementById("FormViewer");
@@ -67,7 +38,7 @@ function renderSubmissionDIVs(doc) {
     lastName.setAttribute('class', "formfield");
     email.setAttribute('class', "formfield");
     HearFromUs.setAttribute('class', "formfield");
-    //formRow.setAttribute('onclick', "window.open('http://www.brightcherry.co.uk/');");
+    
         
     firstName.textContent = doc.data().firstName;
     lastName.textContent = doc.data().lastName;
@@ -98,36 +69,37 @@ function renderSubmissionDIVs(doc) {
   // Display submitted empty form
   formRow.addEventListener('click', (e) => {
   		if (formViewer.style.display === "none") {
-  		formRow.insertAdjacentElement("afterend", formViewer);
-  		formViewer.style.display = "block";
-      let formID = e.target.firstChild.ownerDocument.activeElement.id;
-      console.log(formID);
-      // Populate empty form
-      // db.collection('facialForms').doc(formID).get().then((snapshot) => {
-    //snapshot.docs.forEach(doc => {
+  		  formRow.insertAdjacentElement("afterend", formViewer);
+  		  formViewer.style.display = "block";
+        let formID = e.target.firstChild.ownerDocument.activeElement.id;
+        console.log(formID);
+        // Populate empty form
+        // db.collection('facialForms').doc(formID).get().then((snapshot) => {
+        //snapshot.docs.forEach(doc => {
         db.collection('facialForms').doc(formID).get().then(
         fillForm(doc));
     
    
     	function fillForm(doc) {
-      document.getElementById("fNameId").value = doc.data().firstName;
-      document.getElementById("lNameId").value = doc.data().lastName;
-      document.getElementById("DOBId").value = doc.data().DateOfBirth;
-      document.getElementById("AddressId").value = doc.data().Address;
-      document.getElementById("HearFromUs").value = doc.data().hearFromUs;
-      // Checkboxes
-      let checkedExpCheckbox = doc.data().expChecked;
-      console.log(checkedExpCheckbox);
-      if(checkedExpCheckbox === undefined) {
-      		return
-      } else {
-      for(i = 0; i < checkedExpCheckbox.length; i++) {
-      document.getElementById(checkedExpCheckbox[i]).checked = true
-      	}
-      }
-      // Radio buttons
-      checkedGroupon = doc.data().haveGroupon;
-      document.getElementById(checkedGroupon).checked = true;
+        facialForm.reset();
+        document.getElementById("fNameId").value = doc.data().firstName;
+        document.getElementById("lNameId").value = doc.data().lastName;
+        document.getElementById("DOBId").value = doc.data().DateOfBirth;
+        document.getElementById("AddressId").value = doc.data().Address;
+        document.getElementById("HearFromUs").value = doc.data().hearFromUs;
+        // Checkboxes
+        let checkedExpCheckbox = doc.data().expChecked;
+        console.log(checkedExpCheckbox);
+        if(checkedExpCheckbox === undefined) {
+            return
+        } else {
+        for(i = 0; i < checkedExpCheckbox.length; i++) {
+        document.getElementById(checkedExpCheckbox[i]).checked = true
+          }
+        }
+        // Radio buttons
+        checkedGroupon = doc.data().haveGroupon;
+        document.getElementById(checkedGroupon).checked = true;
     }}
       else {
         formViewer.style.display = "none";
