@@ -77,10 +77,10 @@ function renderSubmissionDIVs(doc) {
         // Populate empty form
         // db.collection('facialForms').doc(formID).get().then((snapshot) => {
         //snapshot.docs.forEach(doc => {
-        db.collection('Customers').doc(customerID).get().then(
-	let formID = data.facialFormId).then(
+        db.collection('Customers').doc(customerID).get().then( function(facialRef) {
+	let formID = facialRef.facialFormId;
 	db.collection('facialForms').doc(formID).get().then(fillForm(doc))
-	);
+	});
     
    
     	function fillForm(doc) {
