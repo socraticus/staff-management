@@ -49,7 +49,7 @@ function renderSubmissionDIVs(custRef) {
         
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
-    let newISO = new Timestamp(custRef);
+    let newISO = custRef.Timestamp();
     console.log(newISO);
     let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
     console.log(dateISO);
