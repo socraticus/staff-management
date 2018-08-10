@@ -72,13 +72,15 @@ function renderSubmissionDIVs(doc) {
   		  formRow.insertAdjacentElement("afterend", formViewer);
         formViewer.style.display = "block";
         facialForm.reset();
-        let formID = e.target.firstChild.ownerDocument.activeElement.id;
-        console.log(formID);
+        let customerID = e.target.firstChild.ownerDocument.activeElement.id;
+        console.log(customerID);
         // Populate empty form
         // db.collection('facialForms').doc(formID).get().then((snapshot) => {
         //snapshot.docs.forEach(doc => {
-        db.collection('facialForms').doc(formID).get().then(
-        fillForm(doc));
+        db.collection('Customers').doc(customerID).get().then(
+	let formID = data.facialFormId).then(
+	db.collection('facialForms').doc(formID).get().then(fillForm(doc))
+	);
     
    
     	function fillForm(doc) {
@@ -110,7 +112,7 @@ function renderSubmissionDIVs(doc) {
 
 
 // get data from firebase
-db.collection('facialForms').get().then((snapshot) => {
+db.collection('Customers').get().then((snapshot) => {
     snapshot.docs.forEach(doc => {
         renderSubmissionDIVs(doc);
     })
