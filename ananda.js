@@ -24,7 +24,7 @@ let firstName
 let lastName
 let date
 let HearFromUs
-let formID
+
 
 // get data from firebase
 db.collection('Customers').get().then((snapshot) => {
@@ -85,8 +85,8 @@ function renderSubmissionDIVs(custRef) {
         // db.collection('facialForms').doc(formID).get().then((snapshot) => {
         //snapshot.docs.forEach(doc => {
         db.collection('Customers').doc(customerID).get().then( function(customerRef) {
-	      formID = customerRef.data().facialFormId;
-            console.log(formID)
+          let formID = customerRef.data().facialFormId;
+              console.log(formID)
         });
         db.collection('facialForms').doc(formID).get().then(
           (formRef) => {    
