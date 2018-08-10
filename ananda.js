@@ -93,7 +93,7 @@ function renderSubmissionDIVs(custRef) {
               fillForm(formRef)
           }
         );
-  });
+    
   
     
    
@@ -116,7 +116,9 @@ function renderSubmissionDIVs(custRef) {
         // Radio buttons
         checkedGroupon = formRef.data().haveGroupon;
         document.getElementById(checkedGroupon).checked = true;
-    }}
+    }
+  
+  }
       else {
         formViewer.style.display = "none";
         }
