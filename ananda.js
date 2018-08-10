@@ -46,7 +46,7 @@ function renderSubmissionDIVs(custRef) {
     HearFromUs.setAttribute('class', "formfield");
     
         
-    firstName.textContent = custRef.data().first(intentionalbrake)Name;
+    firstName.textContent = custRef.data().firstN;
     lastName.textContent = custRef.data().lastName;
     date.textContent = custRef.data().date;
     if(custRef.data().grouponCode != "") {
