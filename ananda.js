@@ -22,7 +22,7 @@ const formViewer = document.getElementById("FormViewer");
 // Form Input variables
 let firstName
 let lastName
-let email
+let date
 let HearFromUs
 
 
@@ -30,19 +30,19 @@ function renderSubmissionDIVs(doc) {
 		let formRow = document.createElement("BUTTON");
     firstName = document.createElement("DIV");
     lastName = document.createElement("DIV");
-    email = document.createElement("DIV");
+    date = document.createElement("DIV");
     HearFromUs = document.createElement("DIV");
     formRow.setAttribute('id', doc.id);
     formRow.setAttribute('class', "submissionrow w-row");
     firstName.setAttribute('class', "formfield");
     lastName.setAttribute('class', "formfield");
-    email.setAttribute('class', "formfield");
+    date.setAttribute('class', "formfield");
     HearFromUs.setAttribute('class', "formfield");
     
         
     firstName.textContent = doc.data().firstName;
     lastName.textContent = doc.data().lastName;
-    email.textContent = doc.data().email;
+    date.textContent = doc.data().date;
     if(doc.data().grouponCode != "") {
     HearFromUs.textContent = 'G-' + doc.data().grouponCode
     } else  {
@@ -53,7 +53,7 @@ function renderSubmissionDIVs(doc) {
     
     formRow.appendChild(firstName);
     formRow.appendChild(lastName);
-    formRow.appendChild(email);
+    formRow.appendChild(date);
     formRow.appendChild(HearFromUs);
     
   //  searchSortBar.appendChild(formRow);
@@ -160,7 +160,7 @@ facialForm.addEventListener('submit', (e) => {
     // New Data Structure
     // submit captured data to firestore
      db.collection('facialForms').add({
-        date: new Date().toISOString(),
+        date: new Date().toISOString().slice(0, 10),
         hearFromUs: facialForm.HearFromUs.value,
         expChecked: checkedExpCheckbox,
         haveGroupon: checkedGroupon,
