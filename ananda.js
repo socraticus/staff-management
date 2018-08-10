@@ -169,7 +169,8 @@ facialForm.addEventListener('submit', (e) => {
     // New Data Structure
     // submit captured data to firestore
      db.collection('facialForms').add({
-        date: new Date().toISOString().slice(0, 10),
+        // date: new Date().toISOString().slice(0, 10),
+        date: firebase.firestore.FieldValue.serverTimestamp(),
         hearFromUs: facialForm.HearFromUs.value,
         expChecked: checkedExpCheckbox,
         haveGroupon: checkedGroupon,
