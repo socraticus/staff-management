@@ -47,7 +47,7 @@ function renderSubmissionDIVs(custRef) {
     HearFromUs.setAttribute('class', "formfield");
     
         
-    firstName.textContent = custRef.data().firstN;
+    firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
     date.textContent = custRef.data().date;
     if(custRef.data().grouponCode != "") {
@@ -75,7 +75,9 @@ function renderSubmissionDIVs(custRef) {
   
   // Display submitted empty form
   formRow.addEventListener('click', (e) => {
-  		if (formViewer.style.display === "none") {
+      if (formViewer.style.display === "block") {
+          formViewer.style.display = "none";      
+      } else {
   		  formRow.insertAdjacentElement("afterend", formViewer);
         formViewer.style.display = "block";
         facialForm.reset();
@@ -94,10 +96,7 @@ function renderSubmissionDIVs(custRef) {
               );
         });
        
-    
-  
-    
-   
+       
     	function fillForm(formRef) {
         document.getElementById("fNameId").value = formRef.data().firstName;
         document.getElementById("lNameId").value = formRef.data().lastName;
@@ -119,10 +118,8 @@ function renderSubmissionDIVs(custRef) {
         document.getElementById(checkedGroupon).checked = true;
     }
   
-  }
-      else {
-        formViewer.style.display = "none";
-        }
+  };
+     
       });
       
   };
