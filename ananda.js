@@ -53,6 +53,7 @@ function renderSubmissionDIVs(custRef) {
     // console.log(newISO);
     //let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
     console.log(custRef.get('createdAt'));
+    console.log(firebase.firestore.Timestamp.toDate())
     createdAt.textContent = "dateISO";
     if(custRef.data().grouponCode != "") {
     HearFromUs.textContent = 'G-' + custRef.data().grouponCode
