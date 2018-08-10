@@ -84,14 +84,14 @@ function renderSubmissionDIVs(custRef) {
         // db.collection('facialForms').doc(formID).get().then((snapshot) => {
         //snapshot.docs.forEach(doc => {
         db.collection('Customers').doc(customerID).get().then( function(customerRef) {
-	let formID = customerRef.data().facialFormId;
-		console.log(formID);
-	db.collection('facialForms').doc(formID).get().then(
-    function(snap) {
-      var formRef = snap.data()
-      }
+	var formID = customerRef.data().facialFormId;
+    console.log(formID)
+  }).then(
+  function(formRef) {
+    db.collection('facialForms').doc(formID).get().then(
+    
     fillForm(formRef));
-    });
+  });
   
     
    
