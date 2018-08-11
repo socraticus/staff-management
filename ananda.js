@@ -53,12 +53,12 @@ function renderSubmissionDIVs(custRef) {
   
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
-    let newISO = new firebase.firestore.Timestamp;
+    let newISO = new firebase.firestore.Timestamp();
     console.log(newISO);
-    //let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
-    console.log(typeof(custRef.get('createdAt')));//toDate(function(){ return new Date(this.toMillis()) }));
+    let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
+    console.log(custRef.get('createdAt'));//toDate(function(){ return new Date(this.toMillis()) }));
     
-    console.log(firebase.firestore.Timestamp(custRef.get('createdAt')));
+    console.log(firebase.firestore.Timestamp(dateISO));
     createdAt.textContent = "dateISO";
     if(custRef.data().grouponCode != "") {
     HearFromUs.textContent = 'G-' + custRef.data().grouponCode
