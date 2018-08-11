@@ -33,24 +33,7 @@ db.collection('Customers').get().then((snapshot) => {
     })
 });
 
-//Import Timestamp constructor
-    
-class Timestamp {
-  static now(): Timestamp {
-    return Timestamp.fromMillis(Date.now());
-  }
 
-  static fromDate(date: Date): Timestamp {
-    return Timestamp.fromMillis(date.getTime());
-  }
-
-  static fromMillis(milliseconds: number): Timestamp {
-    const seconds = Math.floor(milliseconds / 1000);
-    const nanos = (milliseconds - seconds * 1000) * 1e6;
-    return new Timestamp(seconds, nanos);
-  }
-
-}
 
 
 function renderSubmissionDIVs(custRef) {
@@ -70,10 +53,11 @@ function renderSubmissionDIVs(custRef) {
   
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
-    // let newISO = custRef.Timestamp();
-    // console.log(newISO);
+    let newISO = new firebase.firestore.Timestamp.now();
+    console.log(newISO);
     //let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
     console.log(typeof(custRef.get('createdAt')));//toDate(function(){ return new Date(this.toMillis()) }));
+    
     console.log(firebase.firestore.Timestamp);
     createdAt.textContent = "dateISO";
     if(custRef.data().grouponCode != "") {
