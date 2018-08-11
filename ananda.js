@@ -33,6 +33,26 @@ db.collection('Customers').get().then((snapshot) => {
     })
 });
 
+//Import Timestamp constructor
+    
+export class Timestamp {
+  static now(): Timestamp {
+    return Timestamp.fromMillis(Date.now());
+  }
+
+  static fromDate(date: Date): Timestamp {
+    return Timestamp.fromMillis(date.getTime());
+  }
+
+  static fromMillis(milliseconds: number): Timestamp {
+    const seconds = Math.floor(milliseconds / 1000);
+    const nanos = (milliseconds - seconds * 1000) * 1e6;
+    return new Timestamp(seconds, nanos);
+  }
+
+}
+
+
 function renderSubmissionDIVs(custRef) {
 		let formRow = document.createElement("BUTTON");
     firstName = document.createElement("DIV");
@@ -46,7 +66,8 @@ function renderSubmissionDIVs(custRef) {
     createdAt.setAttribute('class', "formfield");
     HearFromUs.setAttribute('class', "formfield");
     
-        
+    
+  
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
     // let newISO = custRef.Timestamp();
