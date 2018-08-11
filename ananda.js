@@ -52,8 +52,8 @@ function renderSubmissionDIVs(custRef) {
     // let newISO = custRef.Timestamp();
     // console.log(newISO);
     //let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
-    console.log(custRef.get('createdAt').Timestamp.toDate(function(){ return new Date(this.toMillis()) }));
-    console.log(firebase.firestore.Timestamp)
+    console.log(typeof(custRef.get('createdAt')));//toDate(function(){ return new Date(this.toMillis()) }));
+    console.log(firebase.firestore.Timestamp.toDate(function(){ return new Date(this.toMillis()) }))
     createdAt.textContent = "dateISO";
     if(custRef.data().grouponCode != "") {
     HearFromUs.textContent = 'G-' + custRef.data().grouponCode
