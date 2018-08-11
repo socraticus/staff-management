@@ -53,7 +53,7 @@ function renderSubmissionDIVs(custRef) {
   
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
-    let newISO = new firebase.firestore.Timestamp.now();
+    let newISO = new firebase.firestore.Timestamp.now().toDate();
     console.log(newISO);
     //let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
     console.log(typeof(custRef.get('createdAt')));//toDate(function(){ return new Date(this.toMillis()) }));
