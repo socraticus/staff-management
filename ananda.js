@@ -35,7 +35,7 @@ db.collection('Customers').get().then((snapshot) => {
 
 //Import Timestamp constructor
     
-export class Timestamp {
+class Timestamp {
   static now(): Timestamp {
     return Timestamp.fromMillis(Date.now());
   }
