@@ -53,14 +53,14 @@ function renderSubmissionDIVs(custRef) {
   
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
-    let newISO = new firebase.firestore.Timestamp().fromMillis(10000000);
+    let newISO = new firebase.firestore.Timestamp();
     console.log(newISO);
     //let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
     let dateISO = custRef.get('createdAt');
     console.log(custRef.get('createdAt'));//toDate(function(){ return new Date(this.toMillis()) }));
     
     console.log(firebase.firestore.Timestamp(dateISO));
-    createdAt.textContent = "dateISO";
+    createdAt.textContent = custRef.data().createdAt;
     if(custRef.data().grouponCode != "") {
     HearFromUs.textContent = 'G-' + custRef.data().grouponCode
     } else  {
@@ -181,7 +181,7 @@ facialForm.addEventListener('submit', (e) => {
     // submit captured data to firestore
      db.collection('facialForms').add({
         // date: new Date().toISOString().slice(0, 10),
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        createdAt: Date.now(), //firebase.firestore.FieldValue.serverTimestamp(),
         hearFromUs: facialForm.HearFromUs.value,
         expChecked: checkedExpCheckbox,
         haveGroupon: checkedGroupon,
@@ -201,7 +201,7 @@ facialForm.addEventListener('submit', (e) => {
         lastName: facialForm.lNameId.value,
         facialFormId: docRef.id,
         hearFromUs: facialForm.HearFromUs.value,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        createdAt: Date.now(), //firebase.firestore.FieldValue.serverTimestamp(),
         grouponCode: facialForm.grouponCodeId.value,
         }).then(function(custRef) {
         console.log(custRef.id)
