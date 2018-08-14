@@ -213,11 +213,9 @@ facialForm.addEventListener('submit', (e) => {
         });
 
     // Save Signature Pad Data
-    var storage = firebase.storage();
-    var storageRef = storage.ref();
-    var facialSignatureFolder = storageRef.child('facialFormSignatures');
     var dataURL = signaturePad.toDataURL();
-    facialSignatureFolder.put(dataURL);
+    console.log(dataURL);
+    download(dataURL, "signature.png");
 
 
     

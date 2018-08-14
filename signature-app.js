@@ -48,8 +48,15 @@ function download(dataURL, filename) {
   a.href = url;
   a.download = filename;
 
-  document.body.appendChild(a);
-  a.click();
+  //original method
+  //document.body.appendChild(a);
+  //a.click();
+
+  //Firebase storage
+  var storage = firebase.storage();
+    var storageRef = storage.ref();
+    var facialSignatureFolder = storageRef.child('facialFormSignatures');
+    facialSignatureFolder.put(a);
 
   window.URL.revokeObjectURL(url);
 }
