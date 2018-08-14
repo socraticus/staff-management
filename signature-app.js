@@ -1,3 +1,5 @@
+import { docRefVar } from 'https://socraticus.github.io/staff-management/ananda.js';
+
 var wrapper = document.getElementById("signature-pad");
 var clearButton = wrapper.querySelector("[data-action=clear]");
 var changeColorButton = wrapper.querySelector("[data-action=change-color]");
@@ -54,7 +56,6 @@ function download(dataURL, filename) {
 
   //Firebase storage
   var storage = firebase.storage();
-  import { docRefVar } from 'https://socraticus.github.io/staff-management/ananda.js';
   console.log(docRefVar);
     var storageRef = storage.ref('facialFormSignatures/' + docRefVar);
     //var facialSignatureFolder = storageRef.child('facialFormSignatures');

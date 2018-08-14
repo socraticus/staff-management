@@ -1,3 +1,5 @@
+export { docRefVar };
+  
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyDbVv1bVyoARmdFXccAkBM8-eAgG_LuVGU",
@@ -213,7 +215,6 @@ facialForm.addEventListener('submit', (e) => {
         });
 
     // Save Signature Pad Data
-    export { docRefVar };
     var dataURL = signaturePad.toDataURL();
     console.log(dataURL);
     download(dataURL, "signature.png");
