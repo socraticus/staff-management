@@ -54,7 +54,7 @@ function download(dataURL, filename) {
 
   //Firebase storage
   var storage = firebase.storage();
-    var storageRef = storage.ref('facialFormSignatures/test.png');
+    var storageRef = storage.ref('facialFormSignatures/' + custRef.id);
     //var facialSignatureFolder = storageRef.child('facialFormSignatures');
     storageRef.put(blob);
 
@@ -70,6 +70,7 @@ function dataURLToBlob(dataURL) {
   var raw = window.atob(parts[1]);
   var rawLength = raw.length;
   var uInt8Array = new Uint8Array(rawLength);
+  var blobFilename = "testName"
 
   for (var i = 0; i < rawLength; ++i) {
     uInt8Array[i] = raw.charCodeAt(i);
