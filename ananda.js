@@ -195,8 +195,7 @@ facialForm.addEventListener('submit', (e) => {
         grouponCode: facialForm.grouponCodeId.value,
         customerId: ""
     	}).then(function(docRef) {
-            var docRefVar = docRef.id
-                console.log(docRef.id)
+            var docRefVar = docRef.id;
             db.collection('Customers').add({
             firstName: facialForm.fNameId.value,
             lastName: facialForm.lNameId.value,
@@ -215,7 +214,8 @@ facialForm.addEventListener('submit', (e) => {
     // Save Signature Pad Data
     var dataURL = signaturePad.toDataURL();
     console.log(dataURL);
-    download(dataURL, docRefVar + ".png");
+    console.log(docRef.id)
+    download(dataURL, docRef.id);
 
         
 });
@@ -257,14 +257,14 @@ function resizeCanvas() {
 window.onresize = resizeCanvas;
 resizeCanvas();
 
-function download(dataURL, docRefVar) {
+function download(dataURL) {
     var blob = dataURLToBlob(dataURL);
     var url = window.URL.createObjectURL(blob);
 
     //Send Image to Firebase storage
     var storage = firebase.storage();
     console.log(docRefVar);
-    var storageRef = storage.ref('facialFormSignatures/' + docRefVar);
+    var storageRef = storage.ref('facialFormSignatures/' + docRef.id);
     storageRef.put(blob);
 
     window.URL.revokeObjectURL(url);
