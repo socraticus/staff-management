@@ -195,22 +195,31 @@ facialForm.addEventListener('submit', (e) => {
         grouponCode: facialForm.grouponCodeId.value,
         customerId: ""
     	}).then(function(docRef) {
-      	var docRefVar = docRef.id
-    		console.log(docRef.id)
-        db.collection('Customers').add({
-        firstName: facialForm.fNameId.value,
-        lastName: facialForm.lNameId.value,
-        facialFormId: docRef.id,
-        hearFromUs: facialForm.HearFromUs.value,
-        createdAt: Date.now(), //firebase.firestore.FieldValue.serverTimestamp(),
-        grouponCode: facialForm.grouponCodeId.value,
-        }).then(function(custRef) {
-        console.log(custRef.id)
-        db.collection('facialForms').doc(docRefVar).update({
-        customerId: custRef.id
+            var docRefVar = docRef.id
+                console.log(docRef.id)
+            db.collection('Customers').add({
+            firstName: facialForm.fNameId.value,
+            lastName: facialForm.lNameId.value,
+            facialFormId: docRef.id,
+            hearFromUs: facialForm.HearFromUs.value,
+            createdAt: Date.now(), //firebase.firestore.FieldValue.serverTimestamp(),
+            grouponCode: facialForm.grouponCodeId.value,
+            }).then(function(custRef) {
+            console.log(custRef.id)
+                db.collection('facialForms').doc(docRefVar).update({
+                customerId: custRef.id
+                });
+            });
         });
-        });
-        });
+
+    // Save Signature Pad Data
+    var storage = firebase.storage();
+    var storageRef = storage.ref();
+    var facialSignatureFolder = storageRef.child('facialFormSignatures');
+    var dataURL = signaturePad.toDataURL();
+    facialSignatureFolder.put(dataURL);
+
+
     
 });
 
