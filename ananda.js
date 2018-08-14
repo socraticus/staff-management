@@ -215,7 +215,7 @@ facialForm.addEventListener('submit', (e) => {
     // Save Signature Pad Data
     var dataURL = signaturePad.toDataURL();
     console.log(dataURL);
-    download(dataURL, "signature.png");
+    download(dataURL, docRefVar + ".png");
 
         
 });
