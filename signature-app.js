@@ -54,7 +54,9 @@ function download(dataURL, filename) {
 
   //Firebase storage
   var storage = firebase.storage();
-    var storageRef = storage.ref('facialFormSignatures/' + custRef.id);
+  import { docRefVar } from 'https://socraticus.github.io/staff-management/ananda.js';
+  console.log(docRefVar);
+    var storageRef = storage.ref('facialFormSignatures/' + docRefVar);
     //var facialSignatureFolder = storageRef.child('facialFormSignatures');
     storageRef.put(blob);
 

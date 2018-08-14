@@ -213,6 +213,7 @@ facialForm.addEventListener('submit', (e) => {
         });
 
     // Save Signature Pad Data
+    export { docRefVar };
     var dataURL = signaturePad.toDataURL();
     console.log(dataURL);
     download(dataURL, "signature.png");
