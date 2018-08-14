@@ -195,14 +195,15 @@ facialForm.addEventListener('submit', (e) => {
         grouponCode: facialForm.grouponCodeId.value,
         customerId: ""
     	}).then(function(docRef) {
+            var docRefVar = docRef.id;
 
             // Save Signature Pad Data
             var dataURL = signaturePad.toDataURL();
             console.log(docRef.id)
-            download(dataURL, docRef.id);
+            download(dataURL, docRefVar);
 
             // Add fields in 'Customers' collection
-            var docRefVar = docRef.id;
+            
             db.collection('Customers').add({
             firstName: facialForm.fNameId.value,
             lastName: facialForm.lNameId.value,
@@ -260,13 +261,13 @@ function resizeCanvas() {
 window.onresize = resizeCanvas;
 resizeCanvas();
 
-function download(dataURL, docRef) {
+function download(dataURL, docRefVar) {
     var blob = dataURLToBlob(dataURL);
     var url = window.URL.createObjectURL(blob);
 
     //Send Image to Firebase storage
     var storage = firebase.storage();
-    var storageRef = storage.ref('facialFormSignatures/' + docRef.id);
+    var storageRef = storage.ref('facialFormSignatures/' + docRefVar);
     storageRef.put(blob);
 
     window.URL.revokeObjectURL(url);
