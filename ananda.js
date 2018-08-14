@@ -195,6 +195,14 @@ facialForm.addEventListener('submit', (e) => {
         grouponCode: facialForm.grouponCodeId.value,
         customerId: ""
     	}).then(function(docRef) {
+            
+            // Save Signature Pad Data
+            var dataURL = signaturePad.toDataURL();
+            console.log(dataURL);
+            console.log(docRef.id)
+            download(dataURL, docRef.id);
+
+            // Add fields in 'Customers' collection
             var docRefVar = docRef.id;
             db.collection('Customers').add({
             firstName: facialForm.fNameId.value,
@@ -207,15 +215,11 @@ facialForm.addEventListener('submit', (e) => {
             console.log(custRef.id)
                 db.collection('facialForms').doc(docRefVar).update({
                 customerId: custRef.id
-                });
+                });    
             });
         });
 
-    // Save Signature Pad Data
-    var dataURL = signaturePad.toDataURL();
-    console.log(dataURL);
-    console.log(docRef.id)
-    download(dataURL, docRef.id);
+    
 
         
 });
