@@ -54,9 +54,9 @@ function download(dataURL, filename) {
 
   //Firebase storage
   var storage = firebase.storage();
-    var storageRef = storage.ref();
-    var facialSignatureFolder = storageRef.child('facialFormSignatures');
-    facialSignatureFolder.put(blob);
+    var storageRef = storage.ref('facialFormSignatures/test.png');
+    //var facialSignatureFolder = storageRef.child('facialFormSignatures');
+    storageRef.put(blob);
 
   window.URL.revokeObjectURL(url);
 }
