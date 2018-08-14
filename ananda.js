@@ -195,7 +195,7 @@ facialForm.addEventListener('submit', (e) => {
         grouponCode: facialForm.grouponCodeId.value,
         customerId: ""
     	}).then(function(docRef) {
-            
+
             // Save Signature Pad Data
             var dataURL = signaturePad.toDataURL();
             console.log(dataURL);
@@ -267,7 +267,6 @@ function download(dataURL) {
 
     //Send Image to Firebase storage
     var storage = firebase.storage();
-    console.log(docRefVar);
     var storageRef = storage.ref('facialFormSignatures/' + docRef.id);
     storageRef.put(blob);
 
