@@ -135,6 +135,9 @@ function renderSubmissionDIVs(custRef) {
       
   };
 
+// Initialize Signature Pad
+const canvas = document.querySelector("SignatureCanvas");
+let signaturePad = new SignaturePad(canvas);
 
 // save data to firestore
 facialForm.addEventListener('submit', (e) => {
