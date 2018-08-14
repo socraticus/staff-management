@@ -136,7 +136,7 @@ function renderSubmissionDIVs(custRef) {
   };
 
 // Initialize Signature Pad
-var canvas = document.querySelector("SignatureCanvas");
+var canvas = document.querySelector("canvas");
 var signaturePad = new SignaturePad(canvas);
 
 // save data to firestore
