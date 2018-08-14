@@ -198,7 +198,6 @@ facialForm.addEventListener('submit', (e) => {
 
             // Save Signature Pad Data
             var dataURL = signaturePad.toDataURL();
-            console.log(dataURL);
             console.log(docRef.id)
             download(dataURL, docRef.id);
 
@@ -261,7 +260,7 @@ function resizeCanvas() {
 window.onresize = resizeCanvas;
 resizeCanvas();
 
-function download(dataURL) {
+function download(dataURL, docRef) {
     var blob = dataURLToBlob(dataURL);
     var url = window.URL.createObjectURL(blob);
 
