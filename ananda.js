@@ -12,11 +12,14 @@
   db.settings({ timestampsInSnapshots: true })
 
 
-
+// HTML Elemnt Variables
 const submissionsList = document.querySelector('#submissions-list');
 const facialForm = document.querySelector('#facial-form-eng');
 const wrapper = document.getElementById("signature-pad");
 const canvas = wrapper.querySelector("canvas");
+
+// Firebase variables
+const storage = firebase.storage();
 
 // render submissions in DIVs
 const searchSortBar = document.getElementById("searchSortBar");
@@ -263,7 +266,6 @@ function download(dataURL, docRefVar) {
     var url = window.URL.createObjectURL(blob);
 
     //Send Image to Firebase storage
-    var storage = firebase.storage();
     var storageRef = storage.ref('facialFormSignatures/' + docRefVar);
     storageRef.put(blob);
 
