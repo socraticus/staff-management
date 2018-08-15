@@ -143,7 +143,7 @@ function renderSubmissionDIVs(custRef) {
                 sig.addEventListener('load', loadSignature, false);
             });
 
-            function loadSignature() {
+            function loadSignature(canvas) {
                 canvas.drawImage(sig, 0, 0, canvas.width, canvas.height);
             };
 
