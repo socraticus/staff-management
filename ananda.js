@@ -131,21 +131,19 @@ function renderSubmissionDIVs(custRef) {
 
         // Display saved signature
         // Get Image from Firebase
+        var sig = new Image;
         var gsImageRef = storage.refFromURL('gs://ananda-spa-user-profile.appspot.com/facialFormSignatures/' + formRef.id);
 
-        var sig = new Image;
+        gsImageRef.getDownloadURL().then(function(url) {            
+            sig.src = url;
+            sig.addEventListener('load', loadSignature, false);
+        });
 
         var loadSignature = function() {
             canvas.drawImage(sig, 0, 0, canvas.width, canvas.height);
         }
 
-        gsImageRef.getDownloadURL().then(function(url) {
-            
-            sig.src = url;
-            sig.addEventListener('load', loadSignature, false);
-        });
-
-        
+                
   
   };
      
