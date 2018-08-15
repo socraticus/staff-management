@@ -147,8 +147,7 @@ function renderSubmissionDIVs(custRef) {
                 canvas = document.getElementById("canvas");                
                 var context = canvas.getContext("2d");
                 context.drawImage(sig, 0, 0);
-                signaturePad = null;
-                delete signaturePad;
+                canvas.disabled = true;
             };
 
         };
