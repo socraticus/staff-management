@@ -148,6 +148,7 @@ function renderSubmissionDIVs(custRef) {
                 var context = canvas.getContext("2d");
                 context.drawImage(sig, 0, 0);
                 signaturePad = null;
+                delete signaturePad;
             };
 
         };
