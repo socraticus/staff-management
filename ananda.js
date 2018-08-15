@@ -15,6 +15,8 @@
 
 const submissionsList = document.querySelector('#submissions-list');
 const facialForm = document.querySelector('#facial-form-eng');
+const wrapper = document.getElementById("signature-pad");
+const canvas = wrapper.querySelector("canvas");
 
 // render submissions in DIVs
 const searchSortBar = document.getElementById("searchSortBar");
@@ -109,41 +111,41 @@ function renderSubmissionDIVs(custRef) {
        
        
     	function fillForm(formRef) {
-        document.getElementById("fNameId").value = formRef.data().firstName;
-        document.getElementById("lNameId").value = formRef.data().lastName;
-        document.getElementById("DOBId").value = formRef.data().DateOfBirth;
-        document.getElementById("AddressId").value = formRef.data().Address;
-        document.getElementById("HearFromUs").value = formRef.data().hearFromUs;
-        // Checkboxes
-        let checkedExpCheckbox = formRef.data().expChecked;
-        console.log(checkedExpCheckbox);
-        if(checkedExpCheckbox === undefined) {
-            return
-        } else {
-        for(i = 0; i < checkedExpCheckbox.length; i++) {
-        document.getElementById(checkedExpCheckbox[i]).checked = true
-          }
-        }
-        // Radio buttons
-        checkedGroupon = formRef.data().haveGroupon;
-        document.getElementById(checkedGroupon).checked = true;
-        }
+            document.getElementById("fNameId").value = formRef.data().firstName;
+            document.getElementById("lNameId").value = formRef.data().lastName;
+            document.getElementById("DOBId").value = formRef.data().DateOfBirth;
+            document.getElementById("AddressId").value = formRef.data().Address;
+            document.getElementById("HearFromUs").value = formRef.data().hearFromUs;
+            // Checkboxes
+            let checkedExpCheckbox = formRef.data().expChecked;
+            console.log(checkedExpCheckbox);
+            if(checkedExpCheckbox === undefined) {
+                return
+            } else {
+            for(i = 0; i < checkedExpCheckbox.length; i++) {
+            document.getElementById(checkedExpCheckbox[i]).checked = true
+            }
+            }
+            // Radio buttons
+            checkedGroupon = formRef.data().haveGroupon;
+            document.getElementById(checkedGroupon).checked = true;
 
-        // Display saved signature
-        // Get Image from Firebase
-        var sig = new Image;
-        var gsImageRef = storage.refFromURL('gs://ananda-spa-user-profile.appspot.com/facialFormSignatures/' + formRef.id);
+            // Display saved signature
+            // Get Image from Firebase
+            var sig = new Image;
+            var gsImageRef = storage.refFromURL('gs://ananda-spa-user-profile.appspot.com/facialFormSignatures/' + formRef.id);
 
-        gsImageRef.getDownloadURL().then(function(url) {            
-            sig.src = url;
-            sig.addEventListener('load', loadSignature, false);
-        });
+            gsImageRef.getDownloadURL().then(function(url) {            
+                sig.src = url;
+                sig.addEventListener('load', loadSignature, false);
+            });
 
-        var loadSignature = function() {
-            canvas.drawImage(sig, 0, 0, canvas.width, canvas.height);
-        }
+            var loadSignature = function() {
+                canvas.drawImage(sig, 0, 0, canvas.width, canvas.height);
+            };
 
-                
+        };
+
   
   };
      
@@ -222,9 +224,7 @@ facialForm.addEventListener('submit', (e) => {
 });
 
 // Call Signature Pad App
-var wrapper = document.getElementById("signature-pad");
 var clearButton = wrapper.querySelector("[data-action=clear]");
-var canvas = wrapper.querySelector("canvas");
 var signaturePad = new SignaturePad(canvas, {
     // It's Necessary to use an opaque color when saving image as JPEG;
     // this option can be omitted if only saving as PNG or SVG
