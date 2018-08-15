@@ -135,15 +135,15 @@ function renderSubmissionDIVs(custRef) {
 
         var sig = new Image;
 
-        var loadSignature = function {
-            canvas.drawImage(sig, 0, 0, canvas.height, canvas.width);
+        var loadSignature = function() {
+            canvas.drawImage(sig, 0, 0, canvas.width, canvas.height);
         }
 
         gsImageRef.getDownloadURL().then(function(url) {
             
             sig.src = url;
             sig.addEventListener('load', loadSignature, false);
-        })
+        });
 
         
   
