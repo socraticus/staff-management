@@ -144,7 +144,8 @@ function renderSubmissionDIVs(custRef) {
             });
 
             function loadSignature(canvas) {
-                canvas.drawImage(sig, 0, 0, canvas.width, canvas.height);
+                var context = canvas.getContext("2d");
+                context.drawImage(sig, 0, 0, canvas.width, canvas.height);
             };
 
         };
