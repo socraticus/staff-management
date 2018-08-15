@@ -16,7 +16,7 @@
 const submissionsList = document.querySelector('#submissions-list');
 const facialForm = document.querySelector('#facial-form-eng');
 const wrapper = document.getElementById("signature-pad");
-const canvas = wrapper.querySelector("canvas");
+const canvas = document.getElementById("canvas");
 
 // Firebase variables
 const storage = firebase.storage();
