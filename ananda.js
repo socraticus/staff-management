@@ -89,7 +89,7 @@ function renderSubmissionDIVs(custRef) {
       if (formViewer.style.display === "block") {
           formViewer.style.display = "none";      
       } else {
-  		  formRow.insertAdjacentElement("afterend", formViewer);
+  		formRow.insertAdjacentElement("afterend", formViewer);
         formViewer.style.display = "block";
         facialForm.reset();
         let customerID = e.target.firstChild.ownerDocument.activeElement.id;
@@ -127,7 +127,25 @@ function renderSubmissionDIVs(custRef) {
         // Radio buttons
         checkedGroupon = formRef.data().haveGroupon;
         document.getElementById(checkedGroupon).checked = true;
-    }
+        }
+
+        // Display saved signature
+        // Get Image from Firebase
+        var gsImageRef = storage.refFromURL('gs://ananda-spa-user-profile.appspot.com/facialFormSignatures/' + formRef.id);
+
+        var sig = new Image;
+
+        var loadSignature = function {
+            canvas.drawImage(sig, 0, 0, canvas.height, canvas.width);
+        }
+
+        gsImageRef.getDownloadURL().then(function(url) {
+            
+            sig.src = url;
+            sig.addEventListener('load', loadSignature, false);
+        })
+
+        
   
   };
      
@@ -159,26 +177,7 @@ facialForm.addEventListener('submit', (e) => {
     		} else {}
      });
     
-    /* //Previous data Structure
-    // submit captured data to firestore
-    db.collection('Customers').add({
-        firstName: facialForm.fNameId.value,
-        lastName: facialForm.lNameId.value,
-        email: facialForm.emailId.value,
-        phone: facialForm.phoneId.value
-    }).then(function(docRef) {
-    		console.log(docRef.id)
-        db.collection('Customers').doc(docRef.id).collection('formDetails').add({
-        hearFromUs: facialForm.HearFromUs.value,
-        expChecked: checkedExpCheckbox,
-        haveGroupon: checkedGroupon,
-        Address: facialForm.AddressId.value,
-        DateOfBirth: facialForm.DOBId.value
-    });
-    });
-    */
     
-    // New Data Structure
     // submit captured data to firestore
      db.collection('facialForms').add({
         // date: new Date().toISOString().slice(0, 10),
