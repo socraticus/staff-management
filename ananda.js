@@ -85,7 +85,8 @@ function renderSubmissionDIVs(custRef) {
     afterend - after element */
     
   searchSortBar.insertAdjacentElement("beforeend", formRow);
-  
+
+ 
   
   // Display submitted empty form
   formRow.addEventListener('click', (e) => {
@@ -168,6 +169,12 @@ searchFormButton.addEventListener('click', (e) => {
             function(querySnapshot) {
                 querySnapshot.docs.forEach(
                     custRef => {
+                        // Clean previous displayed rows
+                        let formRowArray = document.getElementsByClassName("submissionrow w-row");
+                        while (formRowArray.length > 0) {
+                            formRowArray[0].remove();
+                        }
+                        // Render search results
                         renderSubmissionDIVs(custRef);
                     } 
                 )
