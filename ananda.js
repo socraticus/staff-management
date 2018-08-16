@@ -158,14 +158,12 @@ function renderSubmissionDIVs(custRef) {
   };
 
 // Search specific Form documents
-searchFormButton.addEventListener('click', lookByNameLastPhone, false)
-
-function lookByNameLastPhone() {
+searchFormButton.addEventListener('click', (e) => {
+    e.preventDefault();
     if(searchForm.value === "") {
         alert("Please enter Name, Last Name or Phone Number")
     } else {        
         let queryVal = searchForm.value;
-        db = firebase.firestore();
         db.collection('Customers').where("firstName", "==", queryVal).then(
             function(querySnapshot) {
                 querySnapshot.docs.forEach(
@@ -176,7 +174,7 @@ function lookByNameLastPhone() {
             }
         )
     }
-}
+});
 
 
 
