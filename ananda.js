@@ -8,7 +8,7 @@
     messagingSenderId: "265611520363"
   };
   firebase.initializeApp(config);
-  db = firebase.firestore();
+  const db = firebase.firestore();
   db.settings({ timestampsInSnapshots: true })
 
 
@@ -163,8 +163,9 @@ searchFormButton.addEventListener('click', lookByNameLastPhone, false)
 function lookByNameLastPhone() {
     if(searchForm.value === "") {
         alert("Please enter Name, Last Name or Phone Number")
-    } else {
-        let queryVal = searchForm.value
+    } else {        
+        let queryVal = searchForm.value;
+        db = firebase.firestore();
         db.collection('Customers').where("firstName", "==", queryVal).then(
             function(querySnapshot) {
                 querySnapshot.docs.forEach(
