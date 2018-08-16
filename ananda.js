@@ -165,10 +165,12 @@ function lookByNameLastPhone() {
         alert("Please enter Name, Last Name or Phone Number")
     } else {
         let queryVal = searchForm.value
-        db.collection('facialForms').where("firstName" == queryVal).then(
+        db.collection('Customers').where("firstName" == queryVal).then(
             function(querySnapshot) {
                 querySnapshot.docs.forEach(
-                    queryRef => 
+                    custRef => {
+                        renderSubmissionDIVs(custRef);
+                    } 
                 )
             }
         )
