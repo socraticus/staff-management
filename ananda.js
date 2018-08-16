@@ -17,6 +17,8 @@ const submissionsList = document.querySelector('#submissions-list');
 const facialForm = document.querySelector('#facial-form-eng');
 const wrapper = document.getElementById("signature-pad");
 const canvas = document.getElementById("canvas");
+const searchForm = document.getElementById("SearchForm");
+const searchFormButton = document.getElementById("searchFormButtonId");
 
 // Firebase variables
 const storage = firebase.storage();
@@ -37,9 +39,6 @@ db.collection('Customers').get().then((snapshot) => {
         renderSubmissionDIVs(custRef);
     })
 });
-
-
-
 
 function renderSubmissionDIVs(custRef) {
 		let formRow = document.createElement("BUTTON");
@@ -79,7 +78,6 @@ function renderSubmissionDIVs(custRef) {
     formRow.appendChild(createdAt);
     formRow.appendChild(HearFromUs);
     
-  //  searchSortBar.appendChild(formRow);
   
   /*beforebegin - before element
     afterbegin - first child
@@ -158,6 +156,25 @@ function renderSubmissionDIVs(custRef) {
       });
       
   };
+
+// Search specific Form documents
+searchFormButton.addEventListener('click', lookByNameLastPhone, false)
+
+function lookByNameLastPhone() {
+    if(searchForm.value === "") {
+        alert("Please enter Name, Last Name or Phone Number")
+    } else {
+        let queryVal = searchForm.value
+        db.collection('facialForms').where("firstName" == queryVal).then(
+            function(querySnapshot) {
+                querySnapshot.docs.forEach(
+                    queryRef => 
+                )
+            }
+        )
+    }
+}
+
 
 
 
