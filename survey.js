@@ -29,11 +29,11 @@ surveyForm.addEventListener('submit', (e) => {
     let firstName = document.getElementById('fNameSurvey').value;
     if (firstName === "") {
         firstName = "Anonymous"
-    } else {return}
+    } else {firstName = firstName};
     let lastName = document.getElementById('lNameSurvey').value;
     if (lastName === "") {
         lastName = "Anonymous"
-    } else {return}
+    } else {lastName = lastName};
     let facialist = document.getElementById('facialistSelect').value;
     
 
@@ -41,7 +41,7 @@ surveyForm.addEventListener('submit', (e) => {
     // submit captured data to firestore
     console.log(firstName);
     console.log(facialist);
-    
+
      db.collection('marketingSurveyEng').add({        
         createdAt: Date.now(), 
         biggestProblem: biggestProblem,
