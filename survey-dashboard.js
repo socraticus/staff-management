@@ -94,9 +94,9 @@ function renderSubmissionDIVs(custRef) {
             document.getElementById("biggestProblem").value = formRef.data().biggestProblem;
             //Display Conditional
             if (formRef.data().prevExplain === "") {
-                surveyForm.previousConditional.style.display = 'none'
+                document.getElementById("previousConditional").style.display = 'none'
             } else {
-                surveyForm.previousConditional.style.display = 'block';
+                document.getElementById("previousConditional").style.display = 'block';
                 document.getElementById("prevExplain").value = formRef.data().prevExplain;
             };
             // Continue rendering form
