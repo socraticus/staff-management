@@ -13,177 +13,28 @@
 
 
 // HTML Elemnt Variables
-const submissionsList = document.querySelector('#submissions-list');
-const facialForm = document.querySelector('#facial-form-eng');
+const surveyForm = document.querySelector('#wf-form-Survey-Form-Eng');
 
-// render submissions in DIVs
-const searchSortBar = document.getElementById("searchSortBar");
-const formViewer = document.getElementById("FormViewer");
 // Form Input variables
 let firstName;
 let lastName;
 let createdAt;
 let facialist;
 
-
-// get data from firebase
-db.collection('surveyCustomers').get().then((snapshot) => {
-    snapshot.docs.forEach(custRef => {
-        renderSubmissionDIVs(custRef);
-    })
-});
-
-function renderSubmissionDIVs(custRef) {
-		let formRow = document.createElement("BUTTON");
-    firstName = document.createElement("DIV");
-    lastName = document.createElement("DIV");
-    createdAt = document.createElement("DIV");
-    facialist = document.createElement("DIV");
-    formRow.setAttribute('id', custRef.id);
-    formRow.setAttribute('class', "submissionrow w-row");
-    firstName.setAttribute('class', "formfield");
-    lastName.setAttribute('class', "formfield");
-    createdAt.setAttribute('class', "formfield");
-    facialist.setAttribute('class', "formfield");
-    
-    
-  
-    firstName.textContent = custRef.data().firstName;
-    lastName.textContent = custRef.data().lastName;
-    let newISO = new firebase.firestore.Timestamp();
-    console.log(newISO);
-    //let dateISO = custRef.data().createdAt; //.toISOString().slice(0, 10);
-    let dateISO = custRef.get('createdAt');
-    console.log(custRef.get('createdAt'));//toDate(function(){ return new Date(this.toMillis()) }));
-    
-    //console.log(firebase.firestore.Timestamp(dateISO));
-    createdAt.textContent = moment(custRef.data().createdAt).format('lll');
-    if(custRef.data().grouponCode != "") {
-    HearFromUs.textContent = 'G-' + custRef.data().grouponCode
-    } else  {
-    HearFromUs.textContent = custRef.data().hearFromUs;
-    };
-    
-    
-    
-    formRow.appendChild(firstName);
-    formRow.appendChild(lastName);
-    formRow.appendChild(createdAt);
-    formRow.appendChild(HearFromUs);
-    
-  
-  /*beforebegin - before element
-    afterbegin - first child
-    beforeend - last child
-    afterend - after element */
-    
-  searchSortBar.insertAdjacentElement("beforeend", formRow);
-
- 
-  
-  // Display submitted empty form
-  formRow.addEventListener('click', (e) => {
-      if (formViewer.style.display === "block") {
-          formViewer.style.display = "none";      
-      } else {
-  		formRow.insertAdjacentElement("afterend", formViewer);
-        formViewer.style.display = "block";
-        facialForm.reset();
-        let customerID = e.target.firstChild.ownerDocument.activeElement.id;
-        console.log(customerID);
-        // Populate empty form
-        // db.collection('facialForms').doc(formID).get().then((snapshot) => {
-        //snapshot.docs.forEach(doc => {
-        db.collection('Customers').doc(customerID).get().then( function(customerRef) {
-          let formID = customerRef.data().facialFormId;
-              console.log(formID);
-              db.collection('facialForms').doc(formID).get().then(
-                (formRef) => {    
-                    fillForm(formRef)
-                }
-              );
-        });
-       
-       
-    	function fillForm(formRef) {
-            document.getElementById("fNameId").value = formRef.data().firstName;
-            document.getElementById("lNameId").value = formRef.data().lastName;
-            document.getElementById("DOBId").value = formRef.data().DateOfBirth;
-            document.getElementById("AddressId").value = formRef.data().Address;
-            document.getElementById("HearFromUs").value = formRef.data().hearFromUs;
-            // Checkboxes
-            let checkedExpCheckbox = formRef.data().expChecked;
-            console.log(checkedExpCheckbox);
-            if(checkedExpCheckbox === undefined) {
-                return
-            } else {
-            for(i = 0; i < checkedExpCheckbox.length; i++) {
-            document.getElementById(checkedExpCheckbox[i]).checked = true
-            }
-            }
-            // Radio buttons
-            checkedGroupon = formRef.data().haveGroupon;
-            document.getElementById(checkedGroupon).checked = true;
-
-            // Display saved signature
-            // Get Image from Firebase
-            var sig = new Image;
-            var gsImageRef = storage.refFromURL('gs://ananda-spa-user-profile.appspot.com/facialFormSignatures/' + formRef.id);
-
-            gsImageRef.getDownloadURL().then(function(url) {            
-                sig.src = url;
-                sig.addEventListener('load', loadSignature, false);
-            });
-
-            function loadSignature(canvas) {
-                canvas = document.getElementById("canvas");                
-                var context = canvas.getContext("2d");
-                context.drawImage(sig, 0, 0);
-                signaturePad.off();
-            };
-
-        };
-
-  
-        };
-     
-      });
-      
-  };
-
-// Search specific Form documents
-searchFormButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    if(searchForm.value === "") {
-        alert("Please enter Name, Last Name or Phone Number")
-    } else {        
-        let queryVal = searchForm.value;
-        db.collection('Customers').where("firstName", "==", queryVal).get().then(
-            function(querySnapshot) {
-                querySnapshot.docs.forEach(
-                    custRef => {
-                        // Clean previously displayed rows
-                        let formRowArray = document.getElementsByClassName("submissionrow w-row");
-                        while (formRowArray.length > 0) {
-                            formRowArray[0].remove();
-                        }
-                        // Render search results
-                        renderSubmissionDIVs(custRef);
-                    } 
-                )
-            }
-        )
-    }
-});
-
-
-
-
 // save data to firestore
-facialForm.addEventListener('submit', (e) => {
+surveyForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
     // Capture filled data
+
+    let biggestProblem = document.getElementById('biggestProblem').value;
+    let prevExplain = document.getElementById('prevExplain').value;
+    let goalTreatment = document.getElementById('goalTreatment').value;
+    let problemGone = document.getElementById('problemGone').value;
+    let triedPast = document.getElementById('triedPast').value;
+    let thisYear = document.getElementById('thisYear').value;
+    firstName = document.getElementById('fNameSurvey').value;
+    lastName = document.getElementById('lNameSurvey').value;
     
     // Radio Sections
     let radioGroupon = document.getElementsByName('haveGroupon')
@@ -247,72 +98,7 @@ facialForm.addEventListener('submit', (e) => {
         
 });
 
-// Call Signature Pad App
-var clearButton = wrapper.querySelector("[data-action=clear]");
-var signaturePad = new SignaturePad(canvas, {
-    // It's Necessary to use an opaque color when saving image as JPEG;
-    // this option can be omitted if only saving as PNG or SVG
-    backgroundColor: 'rgb(255, 255, 255)'
-});
 
-// Adjust canvas coordinate space taking into account pixel ratio,
-// to make it look crisp on mobile devices.
-// This also causes canvas to be cleared.
-function resizeCanvas() {
-    // When zoomed out to less than 100%, for some very strange reason,
-    // some browsers report devicePixelRatio as less than 1
-    // and only part of the canvas is cleared then.
-    var ratio =  Math.max(window.devicePixelRatio || 1, 1);
-
-    // This part causes the canvas to be cleared
-    canvas.width = canvas.offsetWidth * ratio;
-    canvas.height = canvas.offsetHeight * ratio;
-    canvas.getContext("2d").scale(ratio, ratio);
-
-    // This library does not listen for canvas changes, so after the canvas is automatically
-    // cleared by the browser, SignaturePad#isEmpty might still return false, even though the
-    // canvas looks empty, because the internal data of this library wasn't cleared. To make sure
-    // that the state of this library is consistent with visual state of the canvas, you
-    // have to clear it manually.
-    signaturePad.clear();
-}
-
-// On mobile devices it might make more sense to listen to orientation change,
-// rather than window resize events.
-window.onresize = resizeCanvas;
-resizeCanvas();
-
-function download(dataURL, docRefVar) {
-    var blob = dataURLToBlob(dataURL);
-    var url = window.URL.createObjectURL(blob);
-
-    //Send Image to Firebase storage
-    var storageRef = storage.ref('facialFormSignatures/' + docRefVar);
-    storageRef.put(blob);
-
-    window.URL.revokeObjectURL(url);
-}
-
-// One could simply use Canvas#toBlob method instead, but it's just to show
-// that it can be done using result of SignaturePad#toDataURL.
-function dataURLToBlob(dataURL) {
-    // Code taken from https://github.com/ebidel/filer.js
-    var parts = dataURL.split(';base64,');
-    var contentType = parts[0].split(":")[1];
-    var raw = window.atob(parts[1]);
-    var rawLength = raw.length;
-    var uInt8Array = new Uint8Array(rawLength);
-    
-    for (var i = 0; i < rawLength; ++i) {
-        uInt8Array[i] = raw.charCodeAt(i);
-    }
-
-    return new Blob([uInt8Array], { type: contentType });
-}
-
-// clearButton.addEventListener("click", function (event) {
-//   signaturePad.clear();
-// });
 
 
 document.getElementById("Groupon-example").style.display='none';
