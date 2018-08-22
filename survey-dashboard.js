@@ -91,13 +91,15 @@ function renderSubmissionDIVs(custRef) {
     	function fillForm(formRef) {
             document.getElementById("fNameSurvey").value = formRef.data().firstName;
             document.getElementById("lNameSurvey").value = formRef.data().lastName;
-            document.getElementById("biggestProblem").value = formRef.data().biggestProblem;            
+            document.getElementById("biggestProblem").value = formRef.data().biggestProblem;
+            //Display Conditional
             if (formRef.data().prevExplain === "") {
                 surveyForm.previousConditional.style.display = 'none'
             } else {
                 surveyForm.previousConditional.style.display = 'block';
                 document.getElementById("prevExplain").value = formRef.data().prevExplain;
-            }
+            };
+            // Continue rendering form
             document.getElementById("goalTreatment").value = formRef.data().goalTreatment;
             document.getElementById("problemGone").value = formRef.data().problemGone;
             document.getElementById("triedPast").value = formRef.data().triedPast;
