@@ -33,66 +33,27 @@ surveyForm.addEventListener('submit', (e) => {
     let problemGone = document.getElementById('problemGone').value;
     let triedPast = document.getElementById('triedPast').value;
     let thisYear = document.getElementById('thisYear').value;
+    let biggestBenefit = document.getElementById('biggestBenefit').value;
     firstName = document.getElementById('fNameSurvey').value;
     lastName = document.getElementById('lNameSurvey').value;
+    facialist = document.getElementById('facialistSelect').value;
     
-    // Radio Sections
-    let radioGroupon = document.getElementsByName('haveGroupon')
-    let checkedGroupon
-    if(radioGroupon[0].checked === true) {
-    		checkedGroupon = radioGroupon[0].id
-        } else {checkedGroupon = radioGroupon[1].id}
-    
-    
-    let getExpCheckbox = document.getElementsByName('expCheckbox');
-    let checkedExpCheckbox = []
-    getExpCheckbox.forEach((item) => {
-    		if(item.checked === true) {
-    				checkedExpCheckbox.push(item.id)
-    		} else {}
-     });
-    
+
     
     // submit captured data to firestore
-     db.collection('facialForms').add({
-        // date: new Date().toISOString().slice(0, 10),
-        createdAt: Date.now(), //firebase.firestore.FieldValue.serverTimestamp(),
-        hearFromUs: facialForm.HearFromUs.value,
-        expChecked: checkedExpCheckbox,
-        haveGroupon: checkedGroupon,
-        Address: facialForm.AddressId.value,
-        DateOfBirth: facialForm.DOBId.value,
-        firstName: facialForm.fNameId.value,
-        lastName: facialForm.lNameId.value,
-        email: facialForm.emailId.value,
-        phone: facialForm.phoneId.value,
-        grouponCode: facialForm.grouponCodeId.value,
-        customerId: ""
-    	}).then(function(docRef) {
-            var docRefVar = docRef.id;
-
-            // Save Signature Pad Data
-            var dataURL = signaturePad.toDataURL();
-            console.log(docRef.id)
-            download(dataURL, docRefVar);
-
-            // Add fields in 'Customers' collection
-            
-            db.collection('Customers').add({
-            firstName: facialForm.fNameId.value,
-            lastName: facialForm.lNameId.value,
-            facialFormId: docRef.id,
-            hearFromUs: facialForm.HearFromUs.value,
-            createdAt: Date.now(), //firebase.firestore.FieldValue.serverTimestamp(),
-            grouponCode: facialForm.grouponCodeId.value,
-            }).then(function(custRef) {
-            console.log(custRef.id)
-                db.collection('facialForms').doc(docRefVar).update({
-                customerId: custRef.id
-                });    
-            });
-        });
-
+     db.collection('marketingSurvey').add({        
+        createdAt: Date.now(), 
+        biggestProblem: biggestProblem,
+        prevExplain: prevExplain,
+        goalTreatment: goalTreatment,
+        problemGone: problemGone,
+        triedPast: triedPast,
+        firstName: firstName,
+        lastName: lastName,
+        thisYear: thisYear,
+        biggestBenefit: biggestBenefit,
+        facialist: facialist
+    });
     
 
         
