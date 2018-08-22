@@ -101,12 +101,13 @@ surveyForm.addEventListener('submit', (e) => {
 
 
 
-document.getElementById("Groupon-example").style.display='none';
+document.getElementById("previousConditional").style.display='none';
 
 function condLoad(x) {
-		if (x === 0)
-    document.getElementById("Groupon-example").style.display='block';
-    else
-    document.getElementById("Groupon-example").style.display='none';
+	if (x === 0) {
+    document.getElementById("previousConditional").style.display='block';
+    } else {
+    document.getElementById("previousConditional").style.display='none';
     return
+    }
 }
