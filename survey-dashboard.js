@@ -51,7 +51,7 @@ function renderSubmissionDIVs(custRef) {
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
     // Using moment library to render ISO Date
-    createdAt.textContent = moment(custRef.data().createdAt).format('lll');
+    createdAt.textContent = moment(custRef.data().createdAt).format('l');
     facialist.textContent = custRef.data().facialist   ;
     
     formRow.appendChild(firstName);
@@ -96,7 +96,7 @@ function renderSubmissionDIVs(custRef) {
             document.getElementById("triedPast").value = formRef.data().triedPast;
             document.getElementById("thisYear").value = formRef.data().thisYear;
             document.getElementById("biggestBenefit").value = formRef.data().biggestBenefit;
-            document.getElementById("facialistSelect").value = formRef.data().facialistSelect;           
+            document.getElementById("facialistSelect").value = formRef.data().facialist;           
         };
 
         });
