@@ -51,6 +51,8 @@ surveyForm.addEventListener('submit', (e) => {
         thisYear: thisYear,
         biggestBenefit: biggestBenefit,
         facialist: facialist
+    }).then(function() {
+        console.log("Form submitted");
     });
     
 
