@@ -12,10 +12,6 @@
   db.settings({ timestampsInSnapshots: true })
 
 
-// HTML Elemnt Variables
-const surveyForm = document.querySelector('#wf-form-Survey-Form-Eng');
-
-
 // save data to firestore
 surveyForm.addEventListener('submit', (e) => {
     e.preventDefault();
