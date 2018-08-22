@@ -9,7 +9,7 @@
   };
   firebase.initializeApp(config);
   var db = firebase.firestore();
-  db.settings({ timestampsInSnapshots: true })
+  db.settings({ timestampsInSnapshots: true });
 
 
 // save data to firestore
@@ -27,7 +27,13 @@ surveyForm.addEventListener('submit', (e) => {
     let thisYear = document.getElementById('thisYear').value;
     let biggestBenefit = document.getElementById('biggestBenefit').value;
     let firstName = document.getElementById('fNameSurvey').value;
+    if (firstName === "") {
+        firstName = "Anonymous"
+    } else {return}
     let lastName = document.getElementById('lNameSurvey').value;
+    if (lastName === "") {
+        lastName = "Anonymous"
+    } else {return}
     let facialist = document.getElementById('facialistSelect').value;
     
 

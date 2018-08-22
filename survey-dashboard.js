@@ -47,7 +47,9 @@ function renderSubmissionDIVs(custRef) {
     facialist.setAttribute('class', "formfield");
     
     
-  
+    if (custRef.data.firstName === '') {
+
+    }
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
     // Using moment library to render ISO Date
@@ -89,8 +91,13 @@ function renderSubmissionDIVs(custRef) {
     	function fillForm(formRef) {
             document.getElementById("fNameSurvey").value = formRef.data().firstName;
             document.getElementById("lNameSurvey").value = formRef.data().lastName;
-            document.getElementById("biggestProblem").value = formRef.data().biggestProblem;
-            document.getElementById("prevExplain").value = formRef.data().prevExplain;
+            document.getElementById("biggestProblem").value = formRef.data().biggestProblem;            
+            if (formRef.data().prevExplain === "") {
+                surveyForm.previousConditional.style.display = 'none'
+            } else {
+                surveyForm.previousConditional.style.display = 'block';
+                document.getElementById("prevExplain").value = formRef.data().prevExplain;
+            }
             document.getElementById("goalTreatment").value = formRef.data().goalTreatment;
             document.getElementById("problemGone").value = formRef.data().problemGone;
             document.getElementById("triedPast").value = formRef.data().triedPast;
