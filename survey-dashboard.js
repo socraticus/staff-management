@@ -39,28 +39,24 @@ function renderSubmissionDIVs(custRef) {
     firstName = document.createElement("DIV");
     lastName = document.createElement("DIV");
     createdAt = document.createElement("DIV");
-    facialist = document.createElement("DIV");
+    surveyID = document.createElement("DIV");
     formRow.setAttribute('id', custRef.id);
     formRow.setAttribute('class', "submissionrow w-row");
     firstName.setAttribute('class', "formfield");
     lastName.setAttribute('class', "formfield");
     createdAt.setAttribute('class', "formfield");
-    facialist.setAttribute('class', "formfield");
+    surveyID.setAttribute('class', "formfield");
     
-    
-    if (custRef.data.firstName === '') {
-
-    }
     firstName.textContent = custRef.data().firstName;
     lastName.textContent = custRef.data().lastName;
     // Using moment library to render ISO Date
     createdAt.textContent = moment(custRef.data().createdAt).format('l');
-    facialist.textContent = custRef.data().facialist   ;
+    surveyID.textContent = custRef.id.slice(0, 5);
     
     formRow.appendChild(firstName);
     formRow.appendChild(lastName);
     formRow.appendChild(createdAt);
-    formRow.appendChild(facialist);
+    formRow.appendChild(surveyID);
     
   
   /*beforebegin - before element
@@ -80,10 +76,10 @@ function renderSubmissionDIVs(custRef) {
   		formRow.insertAdjacentElement("afterend", formViewer);
         formViewer.style.display = "block";
         surveyForm.reset();
-        let surveyID = e.target.firstChild.ownerDocument.activeElement.id;
-        console.log(surveyID);
+        let refID = e.target.firstChild.ownerDocument.activeElement.id;
+        console.log(refID);
         // Populate empty form
-        db.collection('marketingSurveyEng').doc(surveyID).get().then( (formRef) => {    
+        db.collection('marketingSurveyEng').doc(refID).get().then( (formRef) => {    
             fillForm(formRef)
             });
         };
