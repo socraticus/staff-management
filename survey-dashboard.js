@@ -15,6 +15,7 @@
 // HTML Elemnt Variables
 const submissionsList = document.querySelector('#submissions-list');
 const surveyForm = document.querySelector('#wf-form-Survey-Form-Eng');
+document.getElementById("FormViewer").style.display = "none";
 
 // render submissions in DIVs
 const searchSortBar = document.getElementById("searchSortBar");
@@ -34,7 +35,7 @@ db.collection('marketingSurveyEng').get().then((snapshot) => {
 });
 
 function renderSubmissionDIVs(custRef) {
-		let formRow = document.createElement("BUTTON");
+    	let formRow = document.createElement("BUTTON");
     firstName = document.createElement("DIV");
     lastName = document.createElement("DIV");
     createdAt = document.createElement("DIV");
