@@ -28,20 +28,17 @@ surveyForm.addEventListener('submit', (e) => {
     let biggestBenefit = document.getElementById('biggestBenefit').value;
     let firstName = document.getElementById('fNameSurvey').value;
     if (firstName === "") {
-        firstName = "Anonymous"
+        firstName = "Anon"
     } else {firstName = firstName};
     let lastName = document.getElementById('lNameSurvey').value;
     if (lastName === "") {
-        lastName = "Anonymous"
+        lastName = "Anon"
     } else {lastName = lastName};
     let facialist = document.getElementById('facialistSelect').value;
     
 
     
-    // submit captured data to firestore
-    console.log(firstName);
-    console.log(facialist);
-
+    // submit captured data to firestore    
      db.collection('marketingSurveyEng').add({        
         createdAt: Date.now(), 
         biggestProblem: biggestProblem,
@@ -54,8 +51,6 @@ surveyForm.addEventListener('submit', (e) => {
         thisYear: thisYear,
         biggestBenefit: biggestBenefit,
         facialist: facialist
-    }).then(function() {
-        console.log("Form submitted");
     });
     
 

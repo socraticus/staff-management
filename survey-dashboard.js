@@ -92,7 +92,7 @@ function renderSubmissionDIVs(custRef) {
             surveyForm.reset();
             document.getElementById("fNameSurvey").value = formRef.data().firstName;
             document.getElementById("lNameSurvey").value = formRef.data().lastName;
-            
+
             document.getElementById("biggestProblem").outerHTML = "<div id='biggestProblem' class='select-form-empty'></div>"
             document.getElementById("biggestProblem").innerHTML = formRef.data().biggestProblem;
             //Display Conditional
@@ -119,7 +119,7 @@ function renderSubmissionDIVs(custRef) {
             document.getElementById("thisYear").innerHTML = formRef.data().thisYear;
 
             document.getElementById("biggestBenefit").outerHTML = "<div id='biggestBenefit' class='select-form-empty'></div>";
-            document.getElementById("biggestBenefit").value = formRef.data().biggestBenefit;
+            document.getElementById("biggestBenefit").innerHTML = formRef.data().biggestBenefit;
 
             document.getElementById("facialistSelect").value = formRef.data().facialist;           
         };
