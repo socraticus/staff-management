@@ -33,7 +33,7 @@ surveyForm.addEventListener('submit', (e) => {
 
     
     // submit captured data to firestore
-     db.collection('marketingSurvey').add({        
+     db.collection('marketingSurveyEng').add({        
         createdAt: Date.now(), 
         biggestProblem: biggestProblem,
         prevExplain: prevExplain,
