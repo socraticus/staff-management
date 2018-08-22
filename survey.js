@@ -39,6 +39,9 @@ surveyForm.addEventListener('submit', (e) => {
 
     
     // submit captured data to firestore
+    console.log(firstName);
+    console.log(facialist);
+    
      db.collection('marketingSurveyEng').add({        
         createdAt: Date.now(), 
         biggestProblem: biggestProblem,
