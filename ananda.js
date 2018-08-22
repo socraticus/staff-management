@@ -169,7 +169,7 @@ searchFormButton.addEventListener('click', (e) => {
             function(querySnapshot) {
                 querySnapshot.docs.forEach(
                     custRef => {
-                        // Clean previous displayed rows
+                        // Clean previously displayed rows
                         let formRowArray = document.getElementsByClassName("submissionrow w-row");
                         while (formRowArray.length > 0) {
                             formRowArray[0].remove();
