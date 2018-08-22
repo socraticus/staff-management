@@ -94,9 +94,11 @@ function renderSubmissionDIVs(custRef) {
             document.getElementById("biggestProblem").value = formRef.data().biggestProblem;
             //Display Conditional
             if (formRef.data().prevExplain === "") {
+                document.getElementById("previousNo").setAttribute("checked", "checked")
                 document.getElementById("previousConditional").style.display = 'none'
             } else {
                 document.getElementById("previousConditional").style.display = 'block';
+                document.getElementById("previousYes").setAttribute("checked", "checked")
                 document.getElementById("prevExplain").value = formRef.data().prevExplain;
             };
             // Continue rendering form
