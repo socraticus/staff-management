@@ -15,11 +15,6 @@
 // HTML Elemnt Variables
 const surveyForm = document.querySelector('#wf-form-Survey-Form-Eng');
 
-// Form Input variables
-let firstName;
-let lastName;
-let createdAt;
-let facialist;
 
 // save data to firestore
 surveyForm.addEventListener('submit', (e) => {
@@ -34,9 +29,9 @@ surveyForm.addEventListener('submit', (e) => {
     let triedPast = document.getElementById('triedPast').value;
     let thisYear = document.getElementById('thisYear').value;
     let biggestBenefit = document.getElementById('biggestBenefit').value;
-    firstName = document.getElementById('fNameSurvey').value;
-    lastName = document.getElementById('lNameSurvey').value;
-    facialist = document.getElementById('facialistSelect').value;
+    let firstName = document.getElementById('fNameSurvey').value;
+    let lastName = document.getElementById('lNameSurvey').value;
+    let facialist = document.getElementById('facialistSelect').value;
     
 
     
@@ -58,7 +53,6 @@ surveyForm.addEventListener('submit', (e) => {
 
         
 });
-
 
 
 
