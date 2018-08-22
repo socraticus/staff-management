@@ -89,8 +89,10 @@ function renderSubmissionDIVs(custRef) {
        
        
     	function fillForm(formRef) {
+            surveyForm.reset();
             document.getElementById("fNameSurvey").value = formRef.data().firstName;
             document.getElementById("lNameSurvey").value = formRef.data().lastName;
+            
             document.getElementById("biggestProblem").outerHTML = "<div id='biggestProblem' class='select-form-empty'></div>"
             document.getElementById("biggestProblem").innerHTML = formRef.data().biggestProblem;
             //Display Conditional
@@ -102,12 +104,23 @@ function renderSubmissionDIVs(custRef) {
                 document.getElementById("previousYes").setAttribute("checked", "checked")
                 document.getElementById("prevExplain").value = formRef.data().prevExplain;
             };
+
             // Continue rendering form
+            document.getElementById("goalTreatment").outerHTML = "<div id='goalTreatment' class='select-form-empty'></div>";
             document.getElementById("goalTreatment").innerHTML = formRef.data().goalTreatment;
-            document.getElementById("problemGone").value = formRef.data().problemGone;
-            document.getElementById("triedPast").value = formRef.data().triedPast;
-            document.getElementById("thisYear").value = formRef.data().thisYear;
+
+            document.getElementById("problemGone").outerHTML = "<div id='problemGone' class='select-form-empty'></div>";
+            document.getElementById("problemGone").innerHTML = formRef.data().problemGone;
+
+            document.getElementById("triedPast").outerHTML = "<div id='triedPast' class='select-form-empty'></div>";
+            document.getElementById("triedPast").innerHTML = formRef.data().triedPast;
+
+            document.getElementById("thisYear").outerHTML = "<div id='thisYear' class='select-form-empty'></div>";
+            document.getElementById("thisYear").innerHTML = formRef.data().thisYear;
+
+            document.getElementById("biggestBenefit").outerHTML = "<div id='biggestBenefit' class='select-form-empty'></div>";
             document.getElementById("biggestBenefit").value = formRef.data().biggestBenefit;
+
             document.getElementById("facialistSelect").value = formRef.data().facialist;           
         };
 
