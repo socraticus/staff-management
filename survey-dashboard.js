@@ -77,10 +77,10 @@ function renderSubmissionDIVs(custRef) {
   		formRow.insertAdjacentElement("afterend", formViewer);
         formViewer.style.display = "block";
         surveyForm.reset();
-        let customerID = e.target.firstChild.ownerDocument.activeElement.id;
-        console.log(customerID);
+        let surveyID = e.target.firstChild.ownerDocument.activeElement.id;
+        console.log(surveyID);
         // Populate empty form
-        db.collection('Customers').doc(customerID).get().then( (formRef) => {    
+        db.collection('marketingSurveyEng').doc(surveyID).get().then( (formRef) => {    
             fillForm(formRef)
             });
         };
@@ -113,5 +113,5 @@ function condLoad(x) {
     document.getElementById("previousConditional").style.display='none';
     return
     }
-};
+    };
 };
