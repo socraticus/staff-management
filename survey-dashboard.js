@@ -91,6 +91,7 @@ function renderSubmissionDIVs(custRef) {
     	function fillForm(formRef) {
             document.getElementById("fNameSurvey").value = formRef.data().firstName;
             document.getElementById("lNameSurvey").value = formRef.data().lastName;
+            document.getElementById("biggestProblem").outerHTML = "<div id='biggestProblem' class='select-form-empty'></div>"
             document.getElementById("biggestProblem").innerHTML = formRef.data().biggestProblem;
             //Display Conditional
             if (formRef.data().prevExplain === "") {
