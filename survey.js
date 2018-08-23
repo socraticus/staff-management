@@ -64,8 +64,10 @@ document.getElementById("previousConditional").style.display='none';
 function condLoad(x) {
 	if (x === 0) {
     document.getElementById("previousConditional").style.display='block';
+    document.getElementById("previousNo").checked = false;
     } else {
     document.getElementById("previousConditional").style.display='none';
+    document.getElementById("previousYes").checked = false;
     return
     }
 }

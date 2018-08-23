@@ -165,22 +165,34 @@ searchFormButton.addEventListener('click', (e) => {
         alert("Please enter Name, Last Name or Phone Number")
     } else {        
         let queryVal = searchForm.value;
+        // Clean previously displayed rows
+        let formRowArray = document.getElementsByClassName("submissionrow w-row");
+        while (formRowArray.length > 0) {
+            formRowArray[0].remove();
+        }
+        // Query for First Name
         db.collection('Customers').where("firstName", "==", queryVal).get().then(
             function(querySnapshot) {
                 querySnapshot.docs.forEach(
-                    custRef => {
-                        // Clean previously displayed rows
-                        let formRowArray = document.getElementsByClassName("submissionrow w-row");
-                        while (formRowArray.length > 0) {
-                            formRowArray[0].remove();
-                        }
+                    (custRef) => {                        
                         // Render search results
                         renderSubmissionDIVs(custRef);
-                    } 
-                )
-            }
-        )
-    }
+                    }
+                );
+            };
+        );
+        // Query for Last Name
+        db.collection('Customers').where("firstName", "==", queryVal).get().then(
+            function(querySnapshot) {
+                querySnapshot.docs.forEach(
+                    (custRef) => {
+                        // Render search results                        
+                        renderSubmissionDIVs(custRef);
+                    }; 
+                );
+            };
+        );
+    };
 });
 
 
