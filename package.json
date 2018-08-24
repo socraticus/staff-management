@@ -4,10 +4,10 @@
   "description": "",
   "main": "ananda.js",
   "scripts": {
-    "build": "babel src/survey.js -d build/survey.js"
+    "build": "babel src/survey-dashboard.js -d build"
   },
   "scripts": {
-    "build": "babel --presets env src/survey.js -d build/survey.js"
+    "build": "babel --presets env src/survey-dashboard.js -d build"
   },
   "repository": {
     "type": "git",
