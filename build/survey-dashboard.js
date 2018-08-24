@@ -25,7 +25,7 @@ var formViewer = document.getElementById("FormViewer");
 var firstName = void 0;
 var lastName = void 0;
 var createdAt = void 0;
-var facialist = void 0;
+var surveyID = void 0;
 
 // get data from firebase
 db.collection('marketingSurveyEng').get().then(function (snapshot) {

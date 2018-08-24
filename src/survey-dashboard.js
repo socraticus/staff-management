@@ -24,7 +24,7 @@ const formViewer = document.getElementById("FormViewer");
 let firstName;
 let lastName;
 let createdAt;
-let facialist;
+let surveyID;
 
 
 // get data from firebase
