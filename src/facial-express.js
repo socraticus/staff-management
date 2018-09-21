@@ -1,4 +1,4 @@
-/* https://github.com/peledies/google-places */
+t/* https://github.com/peledies/google-places */
 (function($) {
 
     $.googlePlaces = function(element, options) {
