@@ -1,3 +1,8 @@
+.inactiveLink {
+  pointer-events: none;
+  cursor: default;
+}
+
 #map-plug {display:none;}
 
 
