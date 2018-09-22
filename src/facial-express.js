@@ -6,8 +6,8 @@ $('#express-golden-button').on('click', function (evt) {
   $( '#express-Tab2' ).addClass('w-tab-link');
   $( '#express-Tab1' ).removeClass('w--current');
   $( '#express-Tab2' ).addClass('w--current');
-    //$('#express-Tab2').triggerHandler('click');
-    //evt.preventDefault();
+    $('#express-Tab2').triggerHandler('click');
+    evt.preventDefault();
 });
 
 
