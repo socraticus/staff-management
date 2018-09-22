@@ -1,4 +1,7 @@
 // Link to Tab2 from Button in Tab1
+$( '#express-Tab2' ).click(function( event ) {
+  event.preventDefault();
+}
 
 $('#express-golden-button').on('click', function (evt) {
     $('#express-Tab2').triggerHandler('click');
