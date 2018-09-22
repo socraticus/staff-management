@@ -1,6 +1,6 @@
 // Link to Tab2 from Button in Tab1
-$( '#express-Tab2' ).off('hover');
-$( '#express-Tab2' ).off('click');
+$( '#express-Tab2' ).removeClass('w-tab-link');
+
 
 $('#express-golden-button').on('click', function (evt) {
     $('#express-Tab2').triggerHandler('click');
