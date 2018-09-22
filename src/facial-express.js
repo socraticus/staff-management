@@ -3,8 +3,9 @@ $( '#express-Tab2' ).addClass('inactiveLink');
 
 
 $('#express-golden-button').on('click', function (evt) {
-      $('#express-Tab2').triggerHandler('click');
-    evt.preventDefault();
+  evt.preventDefault();
+  $('#express-Tab2').triggerHandler('click');
+    
 });
 
 
