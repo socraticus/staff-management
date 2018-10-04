@@ -1,3 +1,7 @@
+// Fix problem with G in Google Reviews
+$('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
+
+
 // Link to Tab2 from Button in Tab1
 $( '#express-Tab2' ).addClass('inactiveLink');
 
