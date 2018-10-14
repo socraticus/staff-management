@@ -1,3 +1,22 @@
+//Shopping Cart
+
+//Adjust Total
+addUpgrade = function() {
+  $('#express-row-upgrade').show();
+  $('#express-cart-upgrade').prop('checked', true);
+  $('#express-checkbox-first').prop('checked', true);
+  $('#express-checkbox-second').prop('checked', true)
+};
+
+resetCart = function() {
+  $('#express-row-upgrade').hide();
+  $('#express-cart-upgrade').prop('checked', false);
+  $('#express-checkbox-first').prop('checked', false);
+  $('#express-checkbox-second').prop('checked', false)
+}
+
+$('#express-cart-upgrade, #express-checkbox-first, #express-checkbox-second').on('click', addUpgrade())
+
 // Fix problem with G in Google Reviews
 $('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
 
