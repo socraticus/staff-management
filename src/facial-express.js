@@ -17,7 +17,9 @@ var removeUpgrade = function() {
   $('#express-checkbox-second').prop('checked', false)
 }
 
-$('#express-cart-upgrade, #express-checkbox-first, #express-checkbox-second').on('click', addUpgrade)
+$('#express-cart-upgrade').on('click', addUpgrade)
+
+$('#express-checkbox-first, #express-checkbox-second').toggle(addUpgrade, removeUpgrade)
 
 $('#express-cart-free').on('click', removeUpgrade)
 
