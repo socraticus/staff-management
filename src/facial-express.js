@@ -2,7 +2,7 @@
 
 //Adjust Total
 var addUpgrade = function() {
-  $('#express-row-upgrade').show();
+  $('#express-row-upgrade').css('display', 'flex');
   $('#express-row-total').text('$42.00')
   $('#express-cart-upgrade').prop('checked', true);
   $('#express-checkbox-first').prop('checked', true);
