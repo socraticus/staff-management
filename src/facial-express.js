@@ -27,19 +27,25 @@ $('#express-cart-upgrade').on('click', addUpgrade)
 //   }
 // })
 
-$('#express-checkbox-first, #express-checkbox-second').on('click', function() {
-  if($('#express-checkbox-first, #express-checkbox-second').checked == true) {
-    addUpgrade()
-  } else { return }
+// $('#express-checkbox-first, #express-checkbox-second').on('click', function() {
+//   if($('#express-checkbox-first, #express-checkbox-second').checked == true) {
+//     addUpgrade()
+//   } else { return }
+// })
+
+// $('#express-checkbox-first, #express-checkbox-second').on('click', function() {
+//   if($('#express-checkbox-first, #express-checkbox-second').checked == false) {
+//     removeUpgrade()
+//   } else { return }
+// })
+
+$('#express-checkbox-second').on('click', function() {
+  if($(this).attr('checked') === false) {
+        addUpgrade()
+      } else {
+        removeUpgrade()
+      }
 })
-
-$('#express-checkbox-first, #express-checkbox-second').on('click', function() {
-  if($('#express-checkbox-first, #express-checkbox-second').checked == false) {
-    removeUpgrade()
-  } else { return }
-})
-
-
 
 // $('#express-checkbox-first, #express-checkbox-second').toggle(addUpgrade(), removeUpgrade())
 
