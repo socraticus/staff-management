@@ -19,13 +19,20 @@ var removeUpgrade = function() {
 
 $('#express-cart-upgrade').on('click', addUpgrade)
 
-$('#express-checkbox-first, #express-checkbox-second').on('click', function() {
-  if($(this).attr('checked') === false) {
-    addUpgrade()
-  } else {
-    removeUpgrade()
-  }
-})
+// $('#express-checkbox-first, #express-checkbox-second').on('click', function() {
+//   if($(this).attr('checked') === false) {
+//     addUpgrade()
+//   } else {
+//     removeUpgrade()
+//   }
+// })
+
+if($('#express-checkbox-first, #express-checkbox-second').checked) {
+  addUpgrade()
+} else {
+  removeUpgrade()
+}
+
 // $('#express-checkbox-first, #express-checkbox-second').toggle(addUpgrade(), removeUpgrade())
 
 $('#express-cart-free').on('click', removeUpgrade)
