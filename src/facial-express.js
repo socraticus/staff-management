@@ -8,7 +8,7 @@ addUpgrade = function() {
   $('#express-checkbox-second').prop('checked', true)
 };
 
-resetCart = function() {
+removeUpgrade = function() {
   $('#express-row-upgrade').hide();
   $('#express-cart-upgrade').prop('checked', false);
   $('#express-checkbox-first').prop('checked', false);
@@ -16,6 +16,8 @@ resetCart = function() {
 }
 
 $('#express-cart-upgrade, #express-checkbox-first, #express-checkbox-second').on('click', addUpgrade())
+
+$('#express-cart-free').on('click', removeUpgrade())
 
 // Fix problem with G in Google Reviews
 $('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
