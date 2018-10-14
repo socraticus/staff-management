@@ -19,7 +19,7 @@ var removeUpgrade = function() {
 
 $('#express-cart-upgrade').on('click', addUpgrade)
 
-$('input[name=checkbox]').change(function(){
+$('input[name=checkbox], input[name=checkbox-2]').change(function(){
   if($(this).is(':checked')) {
       addUpgrade()
   } else {
@@ -27,13 +27,13 @@ $('input[name=checkbox]').change(function(){
   }
 });
 
-$('input[name=checkbox-2]').change(function(){
-  if($(this).is(':checked')) {
-      addUpgrade()
-  } else {
-      removeUpgrade()
-  }
-});
+// $('input[name=checkbox-2]').change(function(){
+//   if($(this).is(':checked')) {
+//       addUpgrade()
+//   } else {
+//       removeUpgrade()
+//   }
+// });
 
 $('#express-cart-free').on('click', removeUpgrade)
 
