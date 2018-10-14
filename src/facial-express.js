@@ -3,6 +3,7 @@
 //Adjust Total
 var addUpgrade = function() {
   $('#express-row-upgrade').show();
+  $('#express-row-total').text('$42.00')
   $('#express-cart-upgrade').prop('checked', true);
   $('#express-checkbox-first').prop('checked', true);
   $('#express-checkbox-second').prop('checked', true)
@@ -10,6 +11,7 @@ var addUpgrade = function() {
 
 var removeUpgrade = function() {
   $('#express-row-upgrade').hide();
+  $('#express-row-total').text('$10.00')
   $('#express-cart-upgrade').prop('checked', false);
   $('#express-checkbox-first').prop('checked', false);
   $('#express-checkbox-second').prop('checked', false)
