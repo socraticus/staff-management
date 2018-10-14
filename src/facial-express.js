@@ -29,13 +29,13 @@ $('#express-cart-upgrade').on('click', addUpgrade)
 
 $('#express-checkbox-first, #express-checkbox-second').on('click', function() {
   if($('#express-checkbox-first, #express-checkbox-second').checked == true) {
-    removeUpgrade()
+    addUpgrade()
   } else { return }
 })
 
 $('#express-checkbox-first, #express-checkbox-second').on('click', function() {
   if($('#express-checkbox-first, #express-checkbox-second').checked == false) {
-    addUpgrade()
+    removeUpgrade()
   } else { return }
 })
 
