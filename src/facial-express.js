@@ -19,7 +19,7 @@ var removeUpgrade = function() {
 
 $('#express-cart-upgrade').on('click', addUpgrade)
 
-$('#express-checkbox-first, #express-checkbox-second').change(function() {
+$('#express-checkbox-first, #express-checkbox-second').on('click', function() {
   if($(this).attr('checked') === false) {
     addUpgrade()
   } else {
