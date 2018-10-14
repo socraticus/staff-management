@@ -21,9 +21,9 @@ $('#express-cart-upgrade').on('click', addUpgrade)
 
 $('#express-checkbox-first, #express-checkbox-second').change(function() {
   if($(this).attr('checked') === false) {
-    removeUpgrade()
-  } else {
     addUpgrade()
+  } else {
+    removeUpgrade()
   }
 })
 // $('#express-checkbox-first, #express-checkbox-second').toggle(addUpgrade(), removeUpgrade())
