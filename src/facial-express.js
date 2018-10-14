@@ -12,7 +12,7 @@ var addUpgrade = function() {
 var removeUpgrade = function() {
   $('#express-row-upgrade').hide();
   $('#express-row-total').text('$10.00')
-  $('#express-cart-upgrade').prop('checked', false);
+  $('#express-cart-free').prop('checked', true);
   $('#express-checkbox-first').prop('checked', false);
   $('#express-checkbox-second').prop('checked', false)
 }
