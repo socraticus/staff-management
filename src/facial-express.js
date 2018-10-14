@@ -27,11 +27,15 @@ $('#express-cart-upgrade').on('click', addUpgrade)
 //   }
 // })
 
-if($('#express-checkbox-first, #express-checkbox-second').checked) {
-  addUpgrade()
-} else {
-  removeUpgrade()
-}
+$('#express-checkbox-first, #express-checkbox-second').on('click', function() {
+  if($('#express-checkbox-first, #express-checkbox-second').checked) {
+    addUpgrade()
+  } else {
+    removeUpgrade()
+  }
+})
+
+
 
 // $('#express-checkbox-first, #express-checkbox-second').toggle(addUpgrade(), removeUpgrade())
 
