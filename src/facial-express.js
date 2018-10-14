@@ -17,6 +17,8 @@ var removeUpgrade = function() {
   $('#express-checkbox-second').prop('checked', false)
 }
 
+$('#express-cart-free').on('click', removeUpgrade)
+
 $('#express-cart-upgrade').on('click', addUpgrade)
 
 $('input[name=checkbox], input[name=checkbox-2]').change(function(){
@@ -26,16 +28,6 @@ $('input[name=checkbox], input[name=checkbox-2]').change(function(){
       removeUpgrade()
   }
 });
-
-// $('input[name=checkbox-2]').change(function(){
-//   if($(this).is(':checked')) {
-//       addUpgrade()
-//   } else {
-//       removeUpgrade()
-//   }
-// });
-
-$('#express-cart-free').on('click', removeUpgrade)
 
 // Fix problem with G in Google Reviews
 $('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
