@@ -94,12 +94,6 @@ function stripeTokenHandler(token) {
   form.submit();
 }
 
-// Create an instance of the card Element.
-var card = elements.create('card', {style: style});
-
-// Add an instance of the card Element into the `card-element` <div>.
-card.mount('#card-element');t
-
 
 // Fix problem with G in Google Reviews
 $('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
