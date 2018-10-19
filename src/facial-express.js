@@ -84,7 +84,7 @@ form.addEventListener('submit', function(event) {
     address_line1:document.getElementById('Express-Street-Address-2').value,
     address_city:document.getElementById('express-city').value,
     address_state:document.getElementById('express-state').value,
-    address_zip:document.getElementById('express-zip-code').value,
+    address_zip:document.getElementById('express-Zip-Code').value
   }).then(function(result) {
     if (result.error) {
       // Inform the customer that there was an error.
