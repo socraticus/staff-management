@@ -77,9 +77,14 @@ var form = document.getElementById('wf-form-shopping-cart-tab2');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
 
-  var nameInput = document.getElementById('express-card-name-2').value
+  var nameInput = document.getElementById('express-card-name-2').value;
+  var addressInput = document.getElementById('Express-Street-Address-2').value
   stripe.createToken(card, {
-    name:nameInput 
+    name:document.getElementById('express-card-name-2').value,
+    address_line1:document.getElementById('Express-Street-Address-2').value,
+    address_city:document.getElementById('express-city').value,
+    address_state:document.getElementById('express-state').value,
+    address_zip:document.getElementById('express-zip-code').value,
   }).then(function(result) {
     if (result.error) {
       // Inform the customer that there was an error.
