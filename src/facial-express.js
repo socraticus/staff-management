@@ -77,7 +77,10 @@ var form = document.getElementById('wf-form-shopping-cart-tab2');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
 
-  stripe.createToken(card).then(function(result) {
+  var nameInput = document.getElementById('express-card-name-2').value
+  stripe.createToken(card, {
+    name:nameInput 
+  }).then(function(result) {
     if (result.error) {
       // Inform the customer that there was an error.
       var errorElement = document.getElementById('express-card-errors');
