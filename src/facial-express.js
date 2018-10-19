@@ -73,7 +73,7 @@ card.addEventListener('change', function(event) {
 });
 
 // Create a token or display an error when the form is submitted.
-var form = document.getElementById('express-shopping-cart');
+var form = document.getElementById('express-shopping-cart-tab2');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
 
@@ -92,7 +92,7 @@ form.addEventListener('submit', function(event) {
 // Submit the token and the rest of your form to my server
 function stripeTokenHandler(token) {
   // Insert the token ID into the form so it gets submitted to the server
-  var form = document.getElementById('express-shopping-cart');
+  var form = document.getElementById('express-shopping-cart-tab2');
   var hiddenInput = document.createElement('input');
   hiddenInput.setAttribute('type', 'hidden');
   hiddenInput.setAttribute('name', 'stripeToken');
