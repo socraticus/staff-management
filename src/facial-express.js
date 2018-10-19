@@ -79,7 +79,7 @@ form.addEventListener('submit', function(event) {
 
   var nameInput = document.getElementById('express-card-name-2').value
   stripe.createToken(card, {
-    name:'Hard Coded' 
+    name:nameInput 
   }).then(function(result) {
     if (result.error) {
       // Inform the customer that there was an error.
@@ -101,6 +101,12 @@ function stripeTokenHandler(token) {
   hiddenInput.setAttribute('name', 'stripeToken');
   hiddenInput.setAttribute('value', token.id);
   form.appendChild(hiddenInput);
+  var emailValue = document.getElementById('express-email').value
+  var emailInput = document.createElement('input');
+  emailInput.setAttribute('type', 'hidden');
+  emailInput.setAttribute('name', 'email');
+  emailInput.setAttribute('value', emailValue);
+  form.appendChild(emailInput);
 
   // Submit the form
   form.submit();
