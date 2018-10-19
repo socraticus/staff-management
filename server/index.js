@@ -22,13 +22,13 @@ app.post('/', (req, res) => {
     console.log(amount);
     stripe.customers.create({
         email: req.body.email,
-        address_city: req.body.City,
         source: req.body.stripeToken
     })
     .then(customer => stripe.charges.create({
         amount,
         description,
         currency:'usd',
+        address_city: req.body.City,
         customer:customer.id
     }))
     .then(charge => res.send('SUCCESS'))
