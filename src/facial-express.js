@@ -79,7 +79,7 @@ form.addEventListener('submit', function(event) {
 
   var nameInput = document.getElementById('express-card-name-2').value
   stripe.createToken(card, {
-    name:nameInput 
+    name:'Hard Coded' 
   }).then(function(result) {
     if (result.error) {
       // Inform the customer that there was an error.
