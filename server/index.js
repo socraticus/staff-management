@@ -30,7 +30,7 @@ app.post('/', (req, res) => {
         currency:'usd',
         customer:customer.id
     }))
-    .then(charge => res.response.json('{"status":"SUCCESS"}'))
+    .then(charge => res.json('{"status":"SUCCESS"}'))
 });
 
 

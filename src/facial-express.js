@@ -128,9 +128,12 @@ xhr.open('GET', serverURL, true);
 xhr.responseType = 'text';
 
 xhr.onload = function () {
+  console.log(xhr.status);
   var myResp = JSON.parse(xhr.responseText);
   console.log(myResp); 
-}
+};
+
+xhr.send();
 
 
 // Fix problem with G in Google Reviews
