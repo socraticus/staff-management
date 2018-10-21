@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.post('/', (req, res) => {
     const amount = parseInt(req.body.expressCart, 10);
     var description = "";
-    
+
     if(amount == 1000) {
         description = "Free Facial Express + Gratuity"
     } else {
@@ -30,7 +30,7 @@ app.post('/', (req, res) => {
         currency:'usd',
         customer:customer.id
     }))
-    .then(charge => res.send('SUCCESS'))
+    .then(charge => res.response.json('{"status":"SUCCESS"}'))
 });
 
 
