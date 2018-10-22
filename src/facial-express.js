@@ -115,9 +115,8 @@ function stripeTokenHandler(token) {
 
   // Submit the form
   form.submit();
-}
 
-// AJAX handling of server response of Stripe Charge
+  // AJAX handling of server response of Stripe Charge
 
 var serverURL = document.getElementById('wf-form-shopping-cart-tab2').getAttribute('action');
 console.log(serverURL);
@@ -134,6 +133,7 @@ xhr.onload = function () {
 };
 
 xhr.send();
+}
 
 
 // Fix problem with G in Google Reviews

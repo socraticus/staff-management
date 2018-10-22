@@ -8,6 +8,14 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}))
 
+// CORS Middleware
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+})
+
 // Charge Route
 app.post('/', (req, res) => {
     const amount = parseInt(req.body.expressCart, 10);
@@ -30,7 +38,7 @@ app.post('/', (req, res) => {
         currency:'usd',
         customer:customer.id
     }))
-    .then(charge => res.json('{"status":"SUCCESS"}'))
+    .then(charge => res.json({"status":"SUCCESS"}))
 });
 
 
