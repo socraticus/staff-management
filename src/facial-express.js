@@ -127,6 +127,7 @@ function stripeTokenHandler(token) {
   xhr.onload = function () {
     console.log(xhr.status);
     if(xhr.status == 200) {
+    console.log(xhr.response);
     var myResp = JSON.parse(xhr.response);
     console.log(myResp);
     } 
