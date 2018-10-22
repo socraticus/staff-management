@@ -117,22 +117,20 @@ function stripeTokenHandler(token) {
   form.submit();
 
   // AJAX handling of server response of Stripe Charge
+  var serverURL = document.getElementById('wf-form-shopping-cart-tab2').getAttribute('action');
+  console.log(serverURL);
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', serverURL, true);
+  xhr.responseType = 'text';
+  xhr.send();
 
-var serverURL = document.getElementById('wf-form-shopping-cart-tab2').getAttribute('action');
-console.log(serverURL);
-
-var xhr = new XMLHttpRequest();
-
-xhr.open('GET', serverURL, true);
-xhr.responseType = 'text';
-
-xhr.onload = function () {
-  console.log(xhr.status);
-  var myResp = JSON.parse(xhr.responseText);
-  console.log(myResp); 
-};
-
-xhr.send();
+  xhr.onload = function () {
+    console.log(xhr.status);
+    if(xhr.status == 200) {
+    var myResp = JSON.parse(xhr.responseText);
+    console.log(myResp);
+    } 
+  };
 }
 
 
