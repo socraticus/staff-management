@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is the Index</h1>
+<form id="test-form" method="POST" onsubmit="return false" action="https://afc9dd5e.ngrok.io/submit">
+        <input type="text" name="field">
+        <input type="submit" value="Submit">
+        <input type="button" value=""> 
+        <button id="SubmitBtn" type="button">Submit Btn</button>
+    </form>
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    <script>
+        var btn = document.getElementById('SubmitBtn');
+        var form = document.forms[0]
+        // onsubmit="yourJsFunction();return false"
+        function yourJsFunction() {
+            console.log("form sent");
+            return false
+        }
+        // form.addEventListener('submit', function(event) {
+        //      event.preventDefault()
+        //     console.log('form submitted');
+        //     form.submit();
+        //     form.preventDefault
+        //     return false
+        //  })
+
+         $( "#test-form" ).submit(function( event ) {
+            // event.preventDefault();
+            // return false;
+            console.log('JQuery form');
+            
+        });
+    </script>
+</body>
+</html>

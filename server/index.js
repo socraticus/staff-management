@@ -38,9 +38,18 @@ app.post('/', (req, res) => {
         currency:'usd',
         customer:customer.id
     }))
-    .then(charge => res.status(200))
+    .then(charge => res.json({"status":"SUCCESS"}))
 });
 
+//Troubleshooting AJAX
+app.get('/', (req, res) => {
+    res.json({"message":"Hello World"});
+})
+
+app.post('/submit', (req, res) => {
+    console.log(req.body);
+    res.json({"message":"SUCCESS"})
+})
 
 
 const port = 5000
