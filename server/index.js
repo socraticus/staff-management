@@ -18,33 +18,29 @@ app.use(function(req, res, next) {
 
 // Charge Route
 app.post('/', (req, res) => {
-    const amount = parseInt(req.body.expressCart, 10);
-    var description = "";
+    //const amount = parseInt(req.body.expressCart, 10);
+    //var description = "";
 
-    if(amount == 1000) {
-        description = "Free Facial Express + Gratuity"
-    } else {
-        description = "Deep Pore Cleansing Upgrade + Gratuity"
-    }
-    console.log(req.body);
-    console.log(amount);
+    // if(amount == 1000) {
+    //     description = "Free Facial Express + Gratuity"
+    // } else {
+    //     description = "Deep Pore Cleansing Upgrade + Gratuity"
+    // }
+    // console.log(req.body);
+    // console.log(amount);
     stripe.customers.create({
-        email: req.body.email,
+        // email: req.body.email,
         source: req.body.stripeToken
     })
     .then(customer => stripe.charges.create({
-        amount,
-        description,
+        amount: 1000,
+        description: 'whatever',
         currency:'usd',
         customer:customer.id
     }))
-    .then(charge => res.json({"status":"SUCCESS"}))
+    .then(charge => res.json({"message":"SUCCESS"}))
 });
 
-//Troubleshooting AJAX
-app.get('/', (req, res) => {
-    res.json({"message":"Hello World"});
-})
 
 app.post('/submit', (req, res) => {
     console.log(req.body);

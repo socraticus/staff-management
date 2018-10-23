@@ -36,10 +36,6 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            var formData = new FormData();
-            formData.append("field", "Groucho");
-            console.log(formData);
-
             var field = form.field.value
             var field2 = form.field2.value
             var postString = "name="+field+"&"+"last name="+field2;

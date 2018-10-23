@@ -114,24 +114,30 @@ function stripeTokenHandler(token) {
   form.appendChild(emailInput);
 
   // Submit the form
-  form.submit();
+  // form.submit();
 
-  // AJAX handling of server response of Stripe Charge
-  var serverURL = document.getElementById('wf-form-shopping-cart-tab2').getAttribute('action');
-  console.log(serverURL);
+  var postURL = form.getAttribute('action')
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', serverURL, true);
-  xhr.responseType = 'text';
-  xhr.send();
+    xhr.open('POST', postURL, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+      var reply = JSON.parse(this.response)
+      console.log(reply.message)
+      var message = document.getElementById('express-card-errors');
+      message.innerHTML = reply.message
+    };
 
-  xhr.onload = function () {
-    console.log(xhr.status);
-    if(xhr.status == 200) {
-    console.log(xhr.response);
-    //var myResp = JSON.parse(xhr.response);
-    //console.log(myResp);
-    } 
-  };
+//     xhr.onload = function() {
+//     if (xhr.status === 200) {
+//       var resp = JSON.parse(xhr.responseText);
+//       console.log(resp);
+//       alert(resp.form.token);
+//     }
+//     else if (xhr.status !== 200) {
+//       alert('Request failed.  Returned status of ' + xhr.status);
+//     }
+// };
+    xhr.send(encodeURI('token=' + token.id));
 }
 
 
