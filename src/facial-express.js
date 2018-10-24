@@ -4,7 +4,7 @@
 var addUpgrade = function() {
   $('#express-row-upgrade').css('display', 'flex');
   $('#express-row-total').text('$42.00')
-  $('#express-cart-upgrade').prop('checked', true);
+  $('input[name=expressCart][value="4200"]').prop('checked', true);
   $('#express-checkbox-first').prop('checked', true);
   $('#express-checkbox-second').prop('checked', true)
 };
@@ -12,14 +12,14 @@ var addUpgrade = function() {
 var removeUpgrade = function() {
   $('#express-row-upgrade').hide();
   $('#express-row-total').text('$10.00')
-  $('#express-cart-free').prop('checked', true);
+  $('input[name=expressCart][value="1000"]').prop('checked', true);
   $('#express-checkbox-first').prop('checked', false);
   $('#express-checkbox-second').prop('checked', false)
 }
 
-$('#express-cart-free').on('click', removeUpgrade)
+$('input[name=expressCart][value="1000"]').on('click', removeUpgrade)
 
-$('#express-cart-upgrade').on('click', addUpgrade)
+$('input[name=expressCart][value="4200"]').on('click', addUpgrade)
 
 $('input[name=checkbox], input[name=checkbox-2]').change(function(){
   if($(this).is(':checked')) {
@@ -99,23 +99,6 @@ form.addEventListener('submit', function(event) {
 
 // Submit the token and the rest of your form to my server
 function stripeTokenHandler(token) {
-  // Insert the token ID into the form so it gets submitted to the server
-  var form = document.getElementById('wf-form-shopping-cart-tab2');
-  var hiddenInput = document.createElement('input');
-  hiddenInput.setAttribute('type', 'hidden');
-  hiddenInput.setAttribute('name', 'stripeToken');
-  hiddenInput.setAttribute('value', token.id);
-  form.appendChild(hiddenInput);
-  var emailValue = document.getElementById('express-email').value
-  var emailInput = document.createElement('input'); 
-  emailInput.setAttribute('type', 'hidden');
-  emailInput.setAttribute('name', 'email');
-  emailInput.setAttribute('value', emailValue);
-  form.appendChild(emailInput);
-
-  // Submit the form
-  // form.submit();
-
   var postURL = form.getAttribute('action')
   var xhr = new XMLHttpRequest();
     xhr.open('POST', postURL, true);
@@ -137,7 +120,13 @@ function stripeTokenHandler(token) {
 //       alert('Request failed.  Returned status of ' + xhr.status);
 //     }
 // };
-    xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue));
+
+  //Gather Form Data
+  var emailValue = document.getElementById('express-email').value;
+  var amount = form.expressCart.value;
+
+  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue + "&" + "amount=" + amount));
+  message.innerHTML = "PROCESSING... Please do not reload"
 }
 
 
@@ -146,12 +135,13 @@ $('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
 
 
 // Link to Tab2 from Button in Tab1
-$( '#express-Tab2' ).addClass('inactiveLink');
+// $( '#express-Tab2' ).addClass('inactiveLink');
 
 
 $('#express-golden-button1').on('click', function (evt) {
-  $('#express-Tab2').triggerHandler('click');
-  evt.preventDefault();
+   $('#express-Tab2').triggerHandler('click');
+  
+//   //evt.preventDefault();
     
 });
 

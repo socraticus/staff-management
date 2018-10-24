@@ -18,16 +18,16 @@ app.use(function(req, res, next) {
 
 // Charge Route
 app.post('/', (req, res) => {
-    //const amount = parseInt(req.body.expressCart, 10);
-    //var description = "";
+    const amount = parseInt(req.body.amount, 10);
+    var description = "";
 
-    // if(amount == 1000) {
-    //     description = "Free Facial Express + Gratuity"
-    // } else {
-    //     description = "Deep Pore Cleansing Upgrade + Gratuity"
-    // }
+    if(amount == 1000) {
+        description = "Free Facial Express + Gratuity"
+    } else {
+        description = "Deep Pore Cleansing Upgrade + Gratuity"
+    }
     console.log(req.body);
-    // console.log(amount);
+    console.log(amount);
     stripe.customers.create({
         email: req.body.email,
         source: req.body.stripeToken
