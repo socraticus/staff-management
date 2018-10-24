@@ -26,10 +26,10 @@ app.post('/', (req, res) => {
     // } else {
     //     description = "Deep Pore Cleansing Upgrade + Gratuity"
     // }
-    // console.log(req.body);
+    console.log(req.body);
     // console.log(amount);
     stripe.customers.create({
-        // email: req.body.email,
+        email: req.body.email,
         source: req.body.stripeToken
     })
     .then(customer => stripe.charges.create({

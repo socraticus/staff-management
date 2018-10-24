@@ -107,7 +107,7 @@ function stripeTokenHandler(token) {
   hiddenInput.setAttribute('value', token.id);
   form.appendChild(hiddenInput);
   var emailValue = document.getElementById('express-email').value
-  var emailInput = document.createElement('input');
+  var emailInput = document.createElement('input'); 
   emailInput.setAttribute('type', 'hidden');
   emailInput.setAttribute('name', 'email');
   emailInput.setAttribute('value', emailValue);
@@ -137,7 +137,7 @@ function stripeTokenHandler(token) {
 //       alert('Request failed.  Returned status of ' + xhr.status);
 //     }
 // };
-    xhr.send(encodeURI('token=' + token.id));
+    xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue));
 }
 
 
