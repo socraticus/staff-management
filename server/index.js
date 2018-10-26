@@ -2,9 +2,11 @@ const express = require('express');
 const stripe = require("stripe")("sk_test_Z7gcXsGlhzayOk8rUyG8I0em");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const ExpressCustomer = require('./models/expresscustomer.js');
 mongoose.Promise = global.Promise;
 
 const app = express();
+
 
 // Body Parser Middleware
 app.use(bodyParser.json());
@@ -35,12 +37,41 @@ app.post('/', (req, res) => {
         source: req.body.stripeToken
     })
     .then(customer => stripe.charges.create({
-        amount: 1000,
-        description: 'whatever',
+        amount,
+        description,
         currency:'usd',
         customer:customer.id
     }))
-    .then(charge => res.json({"message":"SUCCESS"}))
+    .then(charge => {
+        var cust = new ExpressCustomer({
+            //name: 'Tatiana',
+            email: req.body.email,
+            amount,
+            // address: {
+            //     street: '16120 SW 98th Ct',
+            //     city: 'Miami',
+            //     state: 'FL',
+            //     zip_code: '33157'
+            // },
+            // createdAt: 12300000000
+        });
+        cust.save(function(err) {
+            if(err) return handleError(err);
+            console.log('Record saved: ', cust);
+            ExpressCustomer.estimatedDocumentCount({}, function(err, count) {
+                var resultObj = JSON.stringify({
+                    message: 'SUCCESS',
+                    customerCount: count
+                });
+                console.log('There are ', count + ' customers')
+                res.json(resultObj);
+            });
+            
+            
+        });
+
+        
+    })
 });
 
 // Connect to MongoDB Atlas

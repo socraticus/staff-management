@@ -19,8 +19,12 @@ describe('Saving records', function() {
                 
         expresscust.save(function (err) {
             if (err) return handleError(err);
-            console.log('Record saved: ', expresscust)
+            console.log('Record saved: ', expresscust);
+            ExpressCustomer.estimatedDocumentCount({}, function(err, count) {
+                console.log('There are ', count + ' customers')
+            });
         })
+
         //.then(function() {
             //assert(expresscust.isNew === false);
             assert(2+2===4);

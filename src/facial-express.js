@@ -105,9 +105,9 @@ function stripeTokenHandler(token) {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
       var reply = JSON.parse(this.response)
-      console.log(reply.message)
-      var message = document.getElementById('express-card-errors');
-      message.innerHTML = reply.message
+      console.log(reply.message, reply.customerCount)
+      var cardErrors = document.getElementById('express-card-errors');
+      cardErrors.innerHTML = reply.message
     };
 
 //     xhr.onload = function() {
