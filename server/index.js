@@ -1,6 +1,7 @@
 const express = require('express');
 const stripe = require("stripe")("sk_test_Z7gcXsGlhzayOk8rUyG8I0em");
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -41,6 +42,14 @@ app.post('/', (req, res) => {
     .then(charge => res.json({"message":"SUCCESS"}))
 });
 
+// Connect to MongoDB Atlas
+
+mongoose.connect('mongodb+srv://socraticus:Tra21ai*@anandaspa-cluster0-iap7t.gcp.mongodb.net/AnandaSpaDB')
+mongoose.connection.once('open', function() {
+    console.log('Connected to MongoDB');
+}).on('error', function(error) {
+    console.log('Connection error: ', error);
+})
 
 app.post('/submit', (req, res) => {
     console.log(req.body);
