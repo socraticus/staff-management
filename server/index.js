@@ -2,6 +2,7 @@ const express = require('express');
 const stripe = require("stripe")("sk_test_Z7gcXsGlhzayOk8rUyG8I0em");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 const app = express();
 
@@ -50,6 +51,25 @@ mongoose.connection.once('open', function() {
 }).on('error', function(error) {
     console.log('Connection error: ', error);
 })
+
+// const ExpressCustomer = require('./models/expresscustomer.js');
+// var cust = new ExpressCustomer({
+//             name: 'Tatiana',
+//             email: 'tatiana@gmail.com',
+//             amount: 4200,
+//             address: {
+//                 street: '16120 SW 98th Ct',
+//                 city: 'Miami',
+//                 state: 'FL',
+//                 zip_code: '33157'
+//             },
+//             createdAt: 12300000000
+// });
+// cust.save(function(err) {
+//     if(err) return handleError(err);
+//     console.log('Record saved: ', cust)
+// });
+
 
 app.post('/submit', (req, res) => {
     console.log(req.body);

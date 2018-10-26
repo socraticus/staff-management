@@ -12,5 +12,10 @@ const ExpressCustomerSchema = new Schema({
         city: String,
         state: String,
         zip_code: String
-    }
+    },
+    createdAt: Number
 });
+
+const ExpressCustomer = mongoose.model('expresscustomers', ExpressCustomerSchema)
+
+module.exports = ExpressCustomer;
