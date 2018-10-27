@@ -3,6 +3,7 @@ const stripe = require("stripe")("sk_test_Z7gcXsGlhzayOk8rUyG8I0em");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const ExpressCustomer = require('./models/expresscustomer.js');
+const Counter = require('./models/counter.js');
 mongoose.Promise = global.Promise;
 
 const app = express();
@@ -20,8 +21,22 @@ app.use(function(req, res, next) {
     next();
 })
 
+// Vouchers Left Route
+app.get('/vouchers', (req, res) => {
+    Counter.findOne({counterName:'Express Facial Customers'})
+    .then(function(result) {
+        var respObj = {
+            message: 'Voucher Total Retrieved',
+            customerCount: result.total
+        };
+        console.log("total found")
+        res.json(respObj);
+    })
+})
+
 // Charge Route
 app.post('/', (req, res) => {
+    const name = req.body.name;
     const amount = parseInt(req.body.amount, 10);
     var description = "";
 
@@ -44,26 +59,32 @@ app.post('/', (req, res) => {
     }))
     .then(charge => {
         var cust = new ExpressCustomer({
-            //name: 'Tatiana',
+            name,
             email: req.body.email,
             amount,
-            // address: {
-            //     street: '16120 SW 98th Ct',
-            //     city: 'Miami',
-            //     state: 'FL',
-            //     zip_code: '33157'
-            // },
-            // createdAt: 12300000000
+            address: {
+                street: req.body.street,
+                city: req.body.city,
+                state: req.body.state,
+                zip_code: req.body.zip_code
+            },
+            createdAt: req.body.createdAt
         });
         cust.save(function(err) {
             if(err) return handleError(err);
             console.log('Record saved: ', cust);
             ExpressCustomer.estimatedDocumentCount({}, function(err, count) {
-                var resultObj = JSON.stringify({
+                var resultObj = {
                     message: 'SUCCESS',
                     customerCount: count
-                });
+                };
+                
                 console.log('There are ', count + ' customers')
+
+                // Update counter in DB
+                Counter.findOneAndUpdate({counterName:'Express Facial Customers'}, {total:count}).then(function() {
+                    console.log("counter Updated");
+                });
                 res.json(resultObj);
             });
             

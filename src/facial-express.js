@@ -1,3 +1,5 @@
+var form = document.getElementById('wf-form-shopping-cart-tab2');
+
 //Shopping Cart
 
 //Adjust Total
@@ -28,6 +30,43 @@ $('input[name=checkbox], input[name=checkbox-2]').change(function(){
       removeUpgrade()
   }
 });
+
+// AJAX request to Get Vouchers Left
+var getURL = form.getAttribute('action') + "/vouchers"
+  var voucherxhr = new XMLHttpRequest();
+    voucherxhr.open('GET', getURL, true);
+    //voucherxhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    voucherxhr.onload = function(event) {
+      console.log(event.currentTarget.response);
+      updateVoucherCount(event);
+    }
+    voucherxhr.send();
+
+// Process Response from AJAX
+
+var updateVoucherCount = function(event) {
+  console.log(event);
+  var reply = JSON.parse(event.currentTarget.response)
+  console.log(reply.message, reply.customerCount)
+  cardErrors.innerHTML = reply.message;
+
+  // Update Voucher counter in DOM
+  var firstDigit = document.getElementById('express-digit1');
+  var secondDigit = document.getElementById('express-digit2');
+
+  // Calculate remainder on base 50
+  var finalCount = 50 - reply.customerCount % 50;
+
+  if(finalCount < 10) {
+    firstDigit.innerText = 0;
+    secondDigit.innerText = finalCount;
+  } else {
+    firstDigit.innerText = JSON.stringify(finalCount).slice(0,1);
+    secondDigit.innerHTML = JSON.stringify(finalCount).slice(1);
+  }
+   
+
+};
 
 //************//
 //Stripe Implementation
@@ -73,12 +112,11 @@ card.addEventListener('change', function(event) {
 });
 
 // Create a token or display an error when the form is submitted.
-var form = document.getElementById('wf-form-shopping-cart-tab2');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
 
-  var nameInput = document.getElementById('express-card-name-2').value;
-  var addressInput = document.getElementById('Express-Street-Address-2').value
+  
+
   stripe.createToken(card, {
     name:document.getElementById('express-card-name-2').value,
     address_line1:document.getElementById('Express-Street-Address-2').value,
@@ -99,16 +137,14 @@ form.addEventListener('submit', function(event) {
 
 // Submit the token and the rest of your form to my server
 function stripeTokenHandler(token) {
+  var cardErrors = document.getElementById('express-card-errors');
+  cardErrors.innerHTML = "PROCESSING... Please do not reload"
   var postURL = form.getAttribute('action')
   var xhr = new XMLHttpRequest();
     xhr.open('POST', postURL, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-      var reply = JSON.parse(this.response)
-      console.log(reply.message, reply.customerCount)
-      var cardErrors = document.getElementById('express-card-errors');
-      cardErrors.innerHTML = reply.message
-    };
+    xhr.onload = updateVoucherCount()
+
 
 //     xhr.onload = function() {
 //     if (xhr.status === 200) {
@@ -124,9 +160,19 @@ function stripeTokenHandler(token) {
   //Gather Form Data
   var emailValue = document.getElementById('express-email').value;
   var amount = form.expressCart.value;
+  var nameInput = document.getElementById('express-card-name-2').value;
+  var addressInput = document.getElementById('Express-Street-Address-2').value;
+  var cityInput = document.getElementById('express-city').value;
+  var stateInput = document.getElementById('express-state').value;
+  var zipInput = document.getElementById('express-Zip-Code').value
+  var createdAt = Date.now();
 
-  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue + "&" + "amount=" + amount));
-  message.innerHTML = "PROCESSING... Please do not reload"
+  console.log(createdAt)
+
+  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue + "&" + "amount=" + amount
+  + "&" + "name=" + nameInput + "&street=" + addressInput + "&city=" + cityInput + "&state=" + stateInput
+  + "&zip_code=" + zipInput + "&createdAt=" + createdAt));
+  
 }
 
 
@@ -144,150 +190,3 @@ $('#express-golden-button1').on('click', function (evt) {
 //   //evt.preventDefault();
     
 });
-
-
-// Get Google Reviews
-/* https://github.com/peledies/google-places */
-(function($) {
-
-    $.googlePlaces = function(element, options) {
-
-        var defaults = {
-              placeId: 'ChIJN1t_tDeuEmsRUsoyG83frY4' // placeId provided by google api documentation
-            , render: ['reviews']
-            , min_rating: 0
-            , max_rows: 0
-            , rotateTime: false
-        };
-
-        var plugin = this;
-
-        plugin.settings = {}
-
-        var $element = $(element),
-             element = element;
-
-        plugin.init = function() {
-          plugin.settings = $.extend({}, defaults, options);
-          $element.html("<div id='map-plug'></div>"); // create a plug for google to load data into
-          initialize_place(function(place){
-            plugin.place_data = place;
-            // render specified sections
-            if(plugin.settings.render.indexOf('reviews') > -1){
-              renderReviews(plugin.place_data.reviews);
-              if(!!plugin.settings.rotateTime) {
-                  initRotation();
-              }
-            }
-          });
-        }
-
-        var initialize_place = function(c){
-          var map = new google.maps.Map(document.getElementById('map-plug'));
-
-          var request = {
-            placeId: plugin.settings.placeId
-          };
-
-          var service = new google.maps.places.PlacesService(map);
-
-          service.getDetails(request, function(place, status) {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-              c(place);
-            }
-          });
-        }
-
-        var sort_by_date = function(ray) {
-          ray.sort(function(a, b){
-            var keyA = new Date(a.time),
-            keyB = new Date(b.time);
-            // Compare the 2 dates
-            if(keyA < keyB) return -1;
-            if(keyA > keyB) return 1;
-            return 0;
-          });
-          return ray;
-        }
-
-        var filter_minimum_rating = function(reviews){
-          for (var i = reviews.length -1; i >= 0; i--) {
-            if(reviews[i].rating < plugin.settings.min_rating){
-              reviews.splice(i,1);
-            }
-          }
-          return reviews;
-        }
-
-        var renderReviews = function(reviews){
-          reviews = sort_by_date(reviews);
-          reviews = filter_minimum_rating(reviews);
-          var html = "";
-          var row_count = (plugin.settings.max_rows > 0)? plugin.settings.max_rows - 1 : reviews.length - 1;
-          // make sure the row_count is not greater than available records
-          row_count = (row_count > reviews.length-1)? reviews.length -1 : row_count;
-          for (var i = row_count; i >= 0; i--) {
-            var stars = renderStars(reviews[i].rating);
-            var date = convertTime(reviews[i].time);
-            html = html+"<div class='review-item'><div class='review-meta'><span class='review-author'>"+reviews[i].author_name+"</span><span class='review-sep'>, </span><span class='review-date'>"+date+"</span></div>"+stars+"<p class='review-text'>"+reviews[i].text+"</p></div>"
-          };
-          $element.append(html);
-        }
-        
-        var initRotation = function() {
-            var $reviewEls = $element.children('.review-item');
-            var currentIdx = $reviewEls.length > 0 ? 0 : false;
-            $reviewEls.hide();
-            if(currentIdx !== false) {
-                $($reviewEls[currentIdx]).show();
-                setInterval(function(){ 
-                    if(++currentIdx >= $reviewEls.length) {
-                        currentIdx = 0;
-                    }
-                    $reviewEls.hide();
-                    $($reviewEls[currentIdx]).fadeIn('slow');
-                }, plugin.settings.rotateTime);
-            }
-        }
-
-        var renderStars = function(rating){
-          var stars = "<div class='review-stars'><ul>";
-                            
-          // fill in gold stars
-          for (var i = 0; i < rating; i++) {
-            stars = stars+"<li><i class='star'></i></li>";
-          };
-
-          // fill in empty stars
-          if(rating < 5){
-            for (var i = 0; i < (5 - rating); i++) {
-              stars = stars+"<li><i class='star inactive'></i></li>";
-            };
-          }
-          stars = stars+"</ul></div>";
-          return stars;
-        }
-
-        var convertTime = function(UNIX_timestamp){
-          var a = new Date(UNIX_timestamp * 1000);
-          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-          var time = months[a.getMonth()] + ' ' + a.getDate() + ', ' + a.getFullYear();
-          return time;
-        }
-
-        plugin.init();
-
-    }
-
-    $.fn.googlePlaces = function(options) {
-
-        return this.each(function() {
-            if (undefined == $(this).data('googlePlaces')) {
-                var plugin = new $.googlePlaces(this, options);
-                $(this).data('googlePlaces', plugin);
-            }
-        });
-
-    }
-
-})(jQuery);
