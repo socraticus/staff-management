@@ -1,4 +1,5 @@
 var form = document.getElementById('wf-form-shopping-cart-tab2');
+var cardErrors = document.getElementById('express-card-errors');
 
 //Shopping Cart
 
@@ -37,7 +38,6 @@ var getURL = form.getAttribute('action') + "/vouchers"
     voucherxhr.open('GET', getURL, true);
     //voucherxhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     voucherxhr.onload = function(event) {
-      console.log(event.currentTarget.response);
       updateVoucherCount(event);
     }
     voucherxhr.send();
@@ -137,13 +137,15 @@ form.addEventListener('submit', function(event) {
 
 // Submit the token and the rest of your form to my server
 function stripeTokenHandler(token) {
-  var cardErrors = document.getElementById('express-card-errors');
+  
   cardErrors.innerHTML = "PROCESSING... Please do not reload"
   var postURL = form.getAttribute('action')
   var xhr = new XMLHttpRequest();
     xhr.open('POST', postURL, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = updateVoucherCount()
+    xhr.onload = function(event) {
+      updateVoucherCount(event);
+    };
 
 
 //     xhr.onload = function() {
