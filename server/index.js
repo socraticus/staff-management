@@ -19,6 +19,11 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
+});
+
+app.get('/', (req, res) => {
+    console.log("Connection established");
+    res.status(200).send("Express Server Working")
 })
 
 // Vouchers Left Route
@@ -123,17 +128,14 @@ mongoose.connection.once('open', function() {
 // });
 
 
-app.post('/submit', (req, res) => {
-    console.log(req.body);
-    res.json({"message":"SUCCESS"})
+
+
+
+var server = app.listen(process.env.PORT || '8080',  function() {
+    console.log('Server started on port %s', server.address().port)
 })
 
 
-const port = 5000
-
-app.listen(port, () => {
-    console.log(`Server started on port ${port}`)
-})
 
 
 
