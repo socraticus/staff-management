@@ -109,6 +109,7 @@ $bubble1.on("click", function() {
   if($bubble1.attr('clicked') == false) {
     $bubble1.attr('clicked', true);
     quizClickCount += 1
+    console.log(quizClickCount);
     if(quizClickCount == 4) {
       ix.run(trigger, $target);
     }
@@ -121,6 +122,7 @@ $bubble2.on("click", function() {
   if($bubble2.attr('clicked') == false) {
     $bubble2.attr('clicked', true);
     quizClickCount += 1
+    console.log(quizClickCount);
     if(quizClickCount == 4) {
       ix.run(trigger, $target);
     }
@@ -133,6 +135,7 @@ $bubble3.on("click", function() {
   if($bubble3.attr('clicked') == false) {
     $bubble3.attr('clicked', true);
     quizClickCount += 1
+    console.log(quizClickCount);
     if(quizClickCount == 4) {
       ix.run(trigger, $target);
     }
