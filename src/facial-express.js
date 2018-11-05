@@ -68,6 +68,92 @@ var updateVoucherCount = function(event) {
 
 };
 
+// *******
+// Webflow Animation of finish Quiz
+// *******
+
+var ix = Webflow.require('ix');
+
+var $bubble1 = $('#express-bubble1');
+$bubble1.attr('clicked', false);
+
+var $bubble2 = $('#express-bubble2');
+$bubble2.attr('clicked', false);
+
+var $bubble3 = $('#express-bubble3');
+$bubble3.attr('clicked', false);
+
+var $bubble4 = $('#express-bubble4');
+$bubble1.attr('clicked', false);
+
+var quizClickCount = 0
+
+// Define Animation
+
+var $target = $('#express-finish-quiz');
+
+var trigger = {
+            "type": "click",
+            "stepsA": [{
+                "transition": "transform 500ms ease-in-out 0",
+                "x": "0px",
+                "y": "0px",
+                "z": "0px"
+            }],
+            "stepsB": []
+        };
+
+// Add Listenners and trigger animation
+
+$bubble1.on("click", function() {
+  if($bubble1.attr('clicked') == false) {
+    $bubble1.attr('clicked', true);
+    quizClickCount += 1
+    if(quizClickCount == 4) {
+      ix.run(trigger, $target);
+    }
+  } else {
+    return
+  }
+});
+
+$bubble2.on("click", function() {
+  if($bubble2.attr('clicked') == false) {
+    $bubble2.attr('clicked', true);
+    quizClickCount += 1
+    if(quizClickCount == 4) {
+      ix.run(trigger, $target);
+    }
+  } else {
+    return
+  }
+});
+
+$bubble3.on("click", function() {
+  if($bubble3.attr('clicked') == false) {
+    $bubble3.attr('clicked', true);
+    quizClickCount += 1
+    if(quizClickCount == 4) {
+      ix.run(trigger, $target);
+    }
+  } else {
+    return
+  }
+});
+
+$bubble4.on("click", function() {
+  if($bubble4.attr('clicked') == false) {
+    $bubble4.attr('clicked', true);
+    quizClickCount += 1
+    if(quizClickCount == 4) {
+      ix.run(trigger, $target);
+    }
+  } else {
+    return
+  }
+});
+
+
 //************//
 //Stripe Implementation
 //************//
