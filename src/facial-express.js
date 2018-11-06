@@ -84,13 +84,16 @@ var $bubble3 = $('#express-bubble3');
 $bubble3.attr('clicked', false);
 
 var $bubble4 = $('#express-bubble4');
-$bubble1.attr('clicked', false);
+$bubble4.attr('clicked', false);
 
 var quizClickCount = 0
 
 // Define Animation
 
 var $target = $('#express-finish-quiz');
+$target.on('click', function(){
+  window.location.href='#express-form-label';
+})
 
 var trigger = {
             "type": "click",
@@ -106,12 +109,12 @@ var trigger = {
 // Add Listenners and trigger animation
 
 $bubble1.on("click", function() {
-  if($bubble1.attr('clicked') == false) {
+  if($bubble1.attr('clicked') == 'false') {
     $bubble1.attr('clicked', true);
     quizClickCount += 1
     console.log(quizClickCount);
     if(quizClickCount == 4) {
-      ix.run(trigger, $target);
+      triggerAnimation()
     }
   } else {
     return
@@ -119,12 +122,12 @@ $bubble1.on("click", function() {
 });
 
 $bubble2.on("click", function() {
-  if($bubble2.attr('clicked') == false) {
+  if($bubble2.attr('clicked') == 'false') {
     $bubble2.attr('clicked', true);
     quizClickCount += 1
     console.log(quizClickCount);
     if(quizClickCount == 4) {
-      ix.run(trigger, $target);
+      triggerAnimation();
     }
   } else {
     return
@@ -132,12 +135,12 @@ $bubble2.on("click", function() {
 });
 
 $bubble3.on("click", function() {
-  if($bubble3.attr('clicked') == false) {
+  if($bubble3.attr('clicked') == 'false') {
     $bubble3.attr('clicked', true);
     quizClickCount += 1
     console.log(quizClickCount);
     if(quizClickCount == 4) {
-      ix.run(trigger, $target);
+      triggerAnimation();
     }
   } else {
     return
@@ -145,16 +148,23 @@ $bubble3.on("click", function() {
 });
 
 $bubble4.on("click", function() {
-  if($bubble4.attr('clicked') == false) {
+  if($bubble4.attr('clicked') == 'false') {
     $bubble4.attr('clicked', true);
-    quizClickCount += 1
+    quizClickCount += 1;
+    console.log(quizClickCount);
     if(quizClickCount == 4) {
-      ix.run(trigger, $target);
+      triggerAnimation();
     }
   } else {
     return
   }
 });
+
+function triggerAnimation() {
+  setTimeout(function() {
+    ix.run(trigger, $target);
+  }, 3000)
+}
 
 
 //************//
