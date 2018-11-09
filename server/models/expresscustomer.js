@@ -13,6 +13,7 @@ const ExpressCustomerSchema = new Schema({
         state: String,
         zip_code: String
     },
+    voucher: Number,
     createdAt: Number
 });
 

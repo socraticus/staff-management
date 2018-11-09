@@ -11,10 +11,12 @@ const app = express();
 
 // Body Parser Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
 
 // CORS Middleware
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -28,24 +30,31 @@ app.get('/', (req, res) => {
 
 // Vouchers Left Route
 app.get('/vouchers', (req, res) => {
-    Counter.findOne({counterName:'Express Facial Customers'})
-    .then(function(result) {
-        var respObj = {
-            message: 'Voucher Total Retrieved',
-            customerCount: result.total
-        };
-        console.log("total found")
-        res.json(respObj);
-    })
+    Counter.findOne({
+            counterName: 'Express Facial Customers'
+        })
+        .then(function (result) {
+            var respObj = {
+                message: 'Voucher Total Retrieved',
+                customerCount: result.total
+            };
+            console.log("total found")
+            res.json(respObj);
+        })
 })
+
+
+
 
 // Charge Route
 app.post('/', (req, res) => {
+    
+    // Parse POST form
     const name = req.body.name;
     const amount = parseInt(req.body.amount, 10);
     var description = "";
 
-    if(amount == 1000) {
+    if (amount == 1000) {
         description = "Free Facial Express + Gratuity"
     } else {
         description = "Deep Pore Cleansing Upgrade + Gratuity"
@@ -53,59 +62,64 @@ app.post('/', (req, res) => {
     console.log(req.body);
     console.log(amount);
     stripe.customers.create({
-        email: req.body.email,
-        source: req.body.stripeToken
-    })
-    .then(customer => stripe.charges.create({
-        amount,
-        description,
-        currency:'usd',
-        customer:customer.id
-    }))
-    .then(charge => {
-        var cust = new ExpressCustomer({
-            name,
             email: req.body.email,
+            source: req.body.stripeToken
+        })
+        .then(customer => stripe.charges.create({
             amount,
-            address: {
-                street: req.body.street,
-                city: req.body.city,
-                state: req.body.state,
-                zip_code: req.body.zip_code
-            },
-            createdAt: req.body.createdAt
-        });
-        cust.save(function(err) {
-            if(err) return handleError(err);
-            console.log('Record saved: ', cust);
-            ExpressCustomer.estimatedDocumentCount({}, function(err, count) {
-                var resultObj = {
-                    message: 'SUCCESS',
-                    customerCount: count
-                };
-                
-                console.log('There are ', count + ' customers')
-
-                // Update counter in DB
-                Counter.findOneAndUpdate({counterName:'Express Facial Customers'}, {total:count}).then(function() {
-                    console.log("counter Updated");
-                });
-                res.json(resultObj);
+            description,
+            currency: 'usd',
+            customer: customer.id
+        }))
+        .then(charge => {
+            var cust = new ExpressCustomer({
+                name,
+                email: req.body.email,
+                amount,
+                address: {
+                    street: req.body.street,
+                    city: req.body.city,
+                    state: req.body.state,
+                    zip_code: req.body.zip_code
+                },
+                voucher: req.body.voucher,
+                createdAt: req.body.createdAt
             });
-            
-            
-        });
+            cust.save(function (err) {
+                if (err) return handleError(err);
+                console.log('Record saved: ', cust);
+                ExpressCustomer.estimatedDocumentCount({}, function (err, count) {
+                    var resultObj = {
+                        message: 'SUCCESS',
+                        customerCount: count
+                    };
 
-        
-    })
+                    console.log('There are ', count + ' customers')
+
+                    // Update counter in DB
+                    Counter.findOneAndUpdate({
+                        counterName: 'Express Facial Customers'
+                    }, {
+                        total: count
+                    }).then(function () {
+                        console.log("counter Updated");
+                    });
+                    res.json(resultObj);
+                });
+
+
+            });
+
+
+        })
 });
 
 // Connect to MongoDB Atlas
 
 mongoose.connect('mongodb+srv://socraticus:Tra21ai*@anandaspa-cluster0-iap7t.gcp.mongodb.net/AnandaSpaDB')
-mongoose.connection.once('open', function() {
+mongoose.connection.once('open', function () {
     console.log('Connected to MongoDB');
-}).on('error', function(error) {
+}).on('error', function (error) {
     console.log('Connection error: ', error);
 })
 
@@ -131,7 +145,7 @@ mongoose.connection.once('open', function() {
 
 
 
-var server = app.listen(process.env.PORT || '8080',  function() {
+var server = app.listen(process.env.PORT || '8080', function () {
     console.log('Server started on port %s', server.address().port)
 })
 

@@ -4,7 +4,7 @@ var cardErrors = document.getElementById('express-card-errors');
 //Shopping Cart
 
 //Adjust Total
-var addUpgrade = function() {
+var addUpgrade = function () {
   $('#express-row-upgrade').css('display', 'flex');
   $('#express-row-total').text('$42.00')
   $('input[name=expressCart][value="4200"]').prop('checked', true);
@@ -12,7 +12,7 @@ var addUpgrade = function() {
   $('#express-checkbox-second').prop('checked', true)
 };
 
-var removeUpgrade = function() {
+var removeUpgrade = function () {
   $('#express-row-upgrade').hide();
   $('#express-row-total').text('$10.00')
   $('input[name=expressCart][value="1000"]').prop('checked', true);
@@ -24,27 +24,27 @@ $('input[name=expressCart][value="1000"]').on('click', removeUpgrade)
 
 $('input[name=expressCart][value="4200"]').on('click', addUpgrade)
 
-$('input[name=checkbox], input[name=checkbox-2]').change(function(){
-  if($(this).is(':checked')) {
-      addUpgrade()
+$('input[name=checkbox], input[name=checkbox-2]').change(function () {
+  if ($(this).is(':checked')) {
+    addUpgrade()
   } else {
-      removeUpgrade()
+    removeUpgrade()
   }
 });
 
 // AJAX request to Get Vouchers Left
 var getURL = form.getAttribute('action') + "/vouchers"
-  var voucherxhr = new XMLHttpRequest();
-    voucherxhr.open('GET', getURL, true);
-    //voucherxhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    voucherxhr.onload = function(event) {
-      updateVoucherCount(event);
-    }
-    voucherxhr.send();
+var voucherxhr = new XMLHttpRequest();
+voucherxhr.open('GET', getURL, true);
+//voucherxhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+voucherxhr.onload = function (event) {
+  updateVoucherCount(event);
+}
+voucherxhr.send();
 
 // Process Response from AJAX
 
-var updateVoucherCount = function(event) {
+var updateVoucherCount = function (event) {
   console.log(event);
   var reply = JSON.parse(event.currentTarget.response)
   console.log(reply.message, reply.customerCount)
@@ -57,14 +57,14 @@ var updateVoucherCount = function(event) {
   // Calculate remainder on base 50
   var finalCount = 50 - reply.customerCount % 50;
 
-  if(finalCount < 10) {
+  if (finalCount < 10) {
     firstDigit.innerText = 0;
     secondDigit.innerText = finalCount;
   } else {
-    firstDigit.innerText = JSON.stringify(finalCount).slice(0,1);
+    firstDigit.innerText = JSON.stringify(finalCount).slice(0, 1);
     secondDigit.innerHTML = JSON.stringify(finalCount).slice(1);
   }
-   
+
 
 };
 
@@ -91,29 +91,29 @@ var quizClickCount = 0
 // Define Animation
 
 var $target = $('#express-finish-quiz');
-$target.on('click', function(){
-  window.location.href='#express-form-label';
+$target.on('click', function () {
+  window.location.href = '#express-form-label';
 })
 
 var trigger = {
-            "type": "click",
-            "stepsA": [{
-                "transition": "transform 500ms ease-in-out 0",
-                "x": "0px",
-                "y": "0px",
-                "z": "0px"
-            }],
-            "stepsB": []
-        };
+  "type": "click",
+  "stepsA": [{
+    "transition": "transform 500ms ease-in-out 0",
+    "x": "0px",
+    "y": "0px",
+    "z": "0px"
+  }],
+  "stepsB": []
+};
 
 // Add Listenners and trigger animation
 
-$bubble1.on("click", function() {
-  if($bubble1.attr('clicked') == 'false') {
+$bubble1.on("click", function () {
+  if ($bubble1.attr('clicked') == 'false') {
     $bubble1.attr('clicked', true);
     quizClickCount += 1
     console.log(quizClickCount);
-    if(quizClickCount == 4) {
+    if (quizClickCount == 4) {
       triggerAnimation()
     }
   } else {
@@ -121,12 +121,12 @@ $bubble1.on("click", function() {
   }
 });
 
-$bubble2.on("click", function() {
-  if($bubble2.attr('clicked') == 'false') {
+$bubble2.on("click", function () {
+  if ($bubble2.attr('clicked') == 'false') {
     $bubble2.attr('clicked', true);
     quizClickCount += 1
     console.log(quizClickCount);
-    if(quizClickCount == 4) {
+    if (quizClickCount == 4) {
       triggerAnimation();
     }
   } else {
@@ -134,12 +134,12 @@ $bubble2.on("click", function() {
   }
 });
 
-$bubble3.on("click", function() {
-  if($bubble3.attr('clicked') == 'false') {
+$bubble3.on("click", function () {
+  if ($bubble3.attr('clicked') == 'false') {
     $bubble3.attr('clicked', true);
     quizClickCount += 1
     console.log(quizClickCount);
-    if(quizClickCount == 4) {
+    if (quizClickCount == 4) {
       triggerAnimation();
     }
   } else {
@@ -147,12 +147,12 @@ $bubble3.on("click", function() {
   }
 });
 
-$bubble4.on("click", function() {
-  if($bubble4.attr('clicked') == 'false') {
+$bubble4.on("click", function () {
+  if ($bubble4.attr('clicked') == 'false') {
     $bubble4.attr('clicked', true);
     quizClickCount += 1;
     console.log(quizClickCount);
-    if(quizClickCount == 4) {
+    if (quizClickCount == 4) {
       triggerAnimation();
     }
   } else {
@@ -161,7 +161,7 @@ $bubble4.on("click", function() {
 });
 
 function triggerAnimation() {
-  setTimeout(function() {
+  setTimeout(function () {
     ix.run(trigger, $target);
   }, 3000)
 }
@@ -194,14 +194,16 @@ var style = {
 };
 
 // Create an instance of the card Element.
-var card = elements.create('card', {style: style});
+var card = elements.create('card', {
+  style: style
+});
 
 // Add an instance of the card Element into the `card-element` <div>.
 card.mount('#card-element');
 
 /*Elements validates user input as it is typed. To help your customers catch mistakes, 
 you should listen to change events on the card Element and display any errors*/
-card.addEventListener('change', function(event) {
+card.addEventListener('change', function (event) {
   var displayError = document.getElementById('express-card-errors');
   if (event.error) {
     displayError.textContent = event.error.message;
@@ -211,18 +213,18 @@ card.addEventListener('change', function(event) {
 });
 
 // Create a token or display an error when the form is submitted.
-form.addEventListener('submit', function(event) {
+form.addEventListener('submit', function (event) {
   event.preventDefault();
 
-  
+
 
   stripe.createToken(card, {
-    name:document.getElementById('express-card-name-2').value,
-    address_line1:document.getElementById('Express-Street-Address-2').value,
-    address_city:document.getElementById('express-city').value,
-    address_state:document.getElementById('express-state').value,
-    address_zip:document.getElementById('express-Zip-Code').value
-  }).then(function(result) {
+    name: document.getElementById('express-card-name-2').value,
+    address_line1: document.getElementById('Express-Street-Address-2').value,
+    address_city: document.getElementById('express-city').value,
+    address_state: document.getElementById('express-state').value,
+    address_zip: document.getElementById('express-Zip-Code').value
+  }).then(function (result) {
     if (result.error) {
       // Inform the customer that there was an error.
       var errorElement = document.getElementById('express-card-errors');
@@ -236,27 +238,16 @@ form.addEventListener('submit', function(event) {
 
 // Submit the token and the rest of your form to my server
 function stripeTokenHandler(token) {
-  
+
   cardErrors.innerHTML = "PROCESSING... Please do not reload"
   var postURL = form.getAttribute('action')
   var xhr = new XMLHttpRequest();
-    xhr.open('POST', postURL, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function(event) {
-      updateVoucherCount(event);
-    };
+  xhr.open('POST', postURL, true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onload = function (event) {
+    updateVoucherCount(event);
+  };
 
-
-//     xhr.onload = function() {
-//     if (xhr.status === 200) {
-//       var resp = JSON.parse(xhr.responseText);
-//       console.log(resp);
-//       alert(resp.form.token);
-//     }
-//     else if (xhr.status !== 200) {
-//       alert('Request failed.  Returned status of ' + xhr.status);
-//     }
-// };
 
   //Gather Form Data
   var emailValue = document.getElementById('express-email').value;
@@ -267,13 +258,18 @@ function stripeTokenHandler(token) {
   var stateInput = document.getElementById('express-state').value;
   var zipInput = document.getElementById('express-Zip-Code').value
   var createdAt = Date.now();
+  // Generate random Voucher Code
+  function getRandomVoucher(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min
+  };
+  var voucher = getRandomVoucher(100000, 999999);
 
   console.log(createdAt)
 
-  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue + "&" + "amount=" + amount
-  + "&" + "name=" + nameInput + "&street=" + addressInput + "&city=" + cityInput + "&state=" + stateInput
-  + "&zip_code=" + zipInput + "&createdAt=" + createdAt));
-  
+  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue + "&" + "amount=" + amount +
+    "&" + "name=" + nameInput + "&street=" + addressInput + "&city=" + cityInput + "&state=" + stateInput +
+    "&zip_code=" + zipInput + "&createdAt=" + createdAt + "&voucher=" + voucher));
+
 }
 
 
@@ -286,8 +282,8 @@ $('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
 
 
 $('#express-golden-button1').on('click', function (evt) {
-   $('#express-Tab2').triggerHandler('click');
-  
-//   //evt.preventDefault();
-    
+  $('#express-Tab2').triggerHandler('click');
+
+  //   //evt.preventDefault();
+
 });
