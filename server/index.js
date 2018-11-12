@@ -47,6 +47,9 @@ app.get('/vouchers', (req, res) => {
 
 // Mailchimp First Tab Route
 app.post('/mailchimp', (req, res) => {
+    
+    console.log('mailchimp route hit');
+    console.log(req.body);
 
     // Check if subscriber already exists
     var options = {
@@ -60,12 +63,12 @@ app.post('/mailchimp', (req, res) => {
             authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
             'content-type': 'application/json'
         },
-        body:
-        {
-            email_address: 'urist.mcvankab@freddiesjokes.com',
-            status: 'subscribed',
-            merge_fields: { FNAME: 'Urist', LNAME: 'McVankab' }
-        },
+        // body:
+        // {
+        //     email_address: 'urist.mcvankab@freddiesjokes.com',
+        //     status: 'subscribed',
+        //     merge_fields: { FNAME: 'Urist', LNAME: 'McVankab' }
+        // },
         json: true
     };
 
@@ -74,6 +77,8 @@ app.post('/mailchimp', (req, res) => {
 
         console.log(body);
     });
+
+    console.log('Query sent');
 
 });
 

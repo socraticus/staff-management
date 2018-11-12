@@ -4,7 +4,7 @@ var form = document.getElementById('wf-form-shopping-cart-tab2');
 var cardErrors = document.getElementById('express-card-errors');
 var postURL = form.getAttribute('action');
 var fname = document.getElementById('express-first-name');
-var fname = document.getElementById('express-first-name');
+var lname = document.getElementById('express-last-name');
 var emailValue = document.getElementById('express-email');
 
 //Shopping Cart
@@ -293,14 +293,14 @@ $('#express-golden-button1').on('click', function (evt) {
 
   // Send Form Tab 1 to Server
   
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', postURL + '/mailchimp', true);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.onload = function (event) {
+  var xhr1 = new XMLHttpRequest();
+  xhr1.open('POST', postURL + '/mailchimp', true);
+  xhr1.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr1.onload = function (event) {
     console.log('First Tab Form sent to Server');
   };
 
-  xhr.send(encodeURI('fname=' + fname.value + '&lname=' + lname.value + "&email=" + emailValue.value));
+  xhr1.send(encodeURI('fname=' + fname.value + '&lname=' + lname.value + "&email=" + emailValue.value));
 
 
   
