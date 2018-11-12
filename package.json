@@ -4,9 +4,6 @@
   "description": "",
   "main": "ananda.js",
   "scripts": {
-    "build": "babel src/survey-dashboard.js -d build"
-  },
-  "scripts": {
     "build": "babel --presets env src/survey-dashboard.js -d build"
   },
   "repository": {
@@ -22,5 +19,12 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.11",
+    "request": "^2.88.0",
+    "stripe": "^6.15.0"
   }
 }
