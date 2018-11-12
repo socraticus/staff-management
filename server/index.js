@@ -6,6 +6,9 @@ const ExpressCustomer = require('./models/expresscustomer.js');
 const Counter = require('./models/counter.js');
 const http = require("https");
 const request = require("request");
+const morgan = require("morgan");
+const fs = require("fs");
+const path = require("path");
 mongoose.Promise = global.Promise;
 
 const app = express();
@@ -24,6 +27,12 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
+
+// Enable Logging
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
+    { flags: 'a' }
+);
+app.use(morgan('combined', { stream: accessLogStream }));
 
 app.get('/', (req, res) => {
     console.log("Connection established");
