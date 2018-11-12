@@ -86,9 +86,11 @@ app.post('/mailchimp', (req, res) => {
 
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
+        fs.writeFile('mailchimp.log', response);
+        fs.writeFile('mailchimp_body.log', body);
 
         // console.log(body);
-        console.log(response);
+        console.log('Files Written');
     });
 
     console.log('Query sent');
