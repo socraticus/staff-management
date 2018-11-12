@@ -130,7 +130,7 @@ $bubble2.on("click", function () {
       triggerAnimation();
     }
   } else {
-    return
+    return;
   }
 });
 
@@ -143,7 +143,7 @@ $bubble3.on("click", function () {
       triggerAnimation();
     }
   } else {
-    return
+    return;
   }
 });
 
@@ -156,14 +156,14 @@ $bubble4.on("click", function () {
       triggerAnimation();
     }
   } else {
-    return
+    return;
   }
 });
 
 function triggerAnimation() {
   setTimeout(function () {
     ix.run(trigger, $target);
-  }, 3000)
+  }, 3000);
 }
 
 
@@ -239,8 +239,8 @@ form.addEventListener('submit', function (event) {
 // Submit the token and the rest of your form to my server
 function stripeTokenHandler(token) {
 
-  cardErrors.innerHTML = "PROCESSING... Please do not reload"
-  var postURL = form.getAttribute('action')
+  cardErrors.innerHTML = "PROCESSING... Please do not reload";
+  var postURL = form.getAttribute('action');
   var xhr = new XMLHttpRequest();
   xhr.open('POST', postURL, true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -253,22 +253,24 @@ function stripeTokenHandler(token) {
   var emailValue = document.getElementById('express-email').value;
   var amount = form.expressCart.value;
   var nameInput = document.getElementById('express-card-name-2').value;
+  var fname = document.getElementById('express-first-name').value;
+  var lname = document.getElementById('express-last-name').value;
   var addressInput = document.getElementById('Express-Street-Address-2').value;
   var cityInput = document.getElementById('express-city').value;
   var stateInput = document.getElementById('express-state').value;
-  var zipInput = document.getElementById('express-Zip-Code').value
+  var zipInput = document.getElementById('express-Zip-Code').value;
   var createdAt = Date.now();
   // Generate random Voucher Code
   function getRandomVoucher(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min
-  };
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
   var voucher = getRandomVoucher(100000, 999999);
 
-  console.log(createdAt)
+  console.log(voucher);
 
   xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue + "&" + "amount=" + amount +
-    "&" + "name=" + nameInput + "&street=" + addressInput + "&city=" + cityInput + "&state=" + stateInput +
-    "&zip_code=" + zipInput + "&createdAt=" + createdAt + "&voucher=" + voucher));
+    "&" + "name=" + nameInput + "&fname=" + fname + "&lname=" + lname + "&street=" + addressInput + "&city=" + cityInput + 
+    "&state=" + stateInput + "&zip_code=" + zipInput + "&createdAt=" + createdAt + "&voucher=" + voucher));
 
 }
 

@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 // Create Schema and Model
 
 const ExpressCustomerSchema = new Schema({
-    name: String,
+    fname: String,
+    lname: String,
     email: String,
     amount: Number,
     address: {

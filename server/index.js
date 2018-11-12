@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const ExpressCustomer = require('./models/expresscustomer.js');
 const Counter = require('./models/counter.js');
+const http = require("https");
+const request = require("request");
 mongoose.Promise = global.Promise;
 
 const app = express();
@@ -26,13 +28,13 @@ app.use(function (req, res, next) {
 app.get('/', (req, res) => {
     console.log("Connection established");
     res.status(200).send("Express Server Working")
-})
+});
 
 // Vouchers Left Route
 app.get('/vouchers', (req, res) => {
     Counter.findOne({
-            counterName: 'Express Facial Customers'
-        })
+        counterName: 'Express Facial Customers'
+    })
         .then(function (result) {
             var respObj = {
                 message: 'Voucher Total Retrieved',
@@ -48,9 +50,9 @@ app.get('/vouchers', (req, res) => {
 
 // Charge Route
 app.post('/', (req, res) => {
-    
+
     // Parse POST form
-    const name = req.body.name;
+    //const name = req.body.name;
     const amount = parseInt(req.body.amount, 10);
     var description = "";
 
@@ -62,9 +64,9 @@ app.post('/', (req, res) => {
     console.log(req.body);
     console.log(amount);
     stripe.customers.create({
-            email: req.body.email,
-            source: req.body.stripeToken
-        })
+        email: req.body.email,
+        source: req.body.stripeToken
+    })
         .then(customer => stripe.charges.create({
             amount,
             description,
@@ -73,7 +75,8 @@ app.post('/', (req, res) => {
         }))
         .then(charge => {
             var cust = new ExpressCustomer({
-                name,
+                fname: req.body.fname,
+                lname: req.body.lname,
                 email: req.body.email,
                 amount,
                 address: {
@@ -88,27 +91,63 @@ app.post('/', (req, res) => {
             cust.save(function (err) {
                 if (err) return handleError(err);
                 console.log('Record saved: ', cust);
-                ExpressCustomer.estimatedDocumentCount({}, function (err, count) {
-                    var resultObj = {
-                        message: 'SUCCESS',
-                        customerCount: count
-                    };
+            });
 
-                    console.log('There are ', count + ' customers')
+            // Get customer count
+            ExpressCustomer.estimatedDocumentCount({}, function (err, count) {
+                var resultObj = {
+                    message: 'SUCCESS',
+                    customerCount: count
+                };
 
-                    // Update counter in DB
-                    Counter.findOneAndUpdate({
-                        counterName: 'Express Facial Customers'
-                    }, {
+                console.log('There are ', count + ' customers')
+
+                // Update counter in DB
+                Counter.findOneAndUpdate({
+                    counterName: 'Express Facial Customers'
+                }, {
                         total: count
                     }).then(function () {
                         console.log("counter Updated");
                     });
-                    res.json(resultObj);
+
+                // Add Subscriber to MailChimp
+                var options = {
+                    method: 'POST',
+                    url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/',
+                    headers:
+                    {
+                        'postman-token': '86c3a131-629d-6d10-a929-68c21985b858',
+                        'cache-control': 'no-cache',
+                        authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
+                        'content-type': 'application/json'
+                    },
+                    body:
+                    {
+                        email_address: cust.email,
+                        status: 'subscribed',
+                        merge_fields: { FNAME: cust.fname, 
+                            LNAME: cust.lname, 
+                            VOUCHER: cust.voucher, 
+                            ADDRESS: cust.street + ", " + cust.city + ", " + cust.state + ", " + cust.zip_code
+                        }
+                    },
+                    json: true
+                };
+
+                request(options, function (error, response, body) {
+                    if (error) throw new Error(error);
+
+                    console.log(body);
                 });
 
 
+                // Send Final response to Client Browser
+                res.json(resultObj);
             });
+
+
+
 
 
         })

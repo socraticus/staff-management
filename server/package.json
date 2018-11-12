@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "start": "node index.js",
-    "deploy": "gcloud app deploy"
+    "deploy": "gcloud beta app deploy"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "express": "^4.16.4",
     "mocha": "^5.2.0",
     "mongoose": "^5.3.6",
+    "request": "^2.88.0",
     "stripe": "^6.12.1"
   }
 }
