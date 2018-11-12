@@ -36,7 +36,7 @@ app.use(morgan('combined', { stream: accessLogStream }));
 
 app.get('/', (req, res) => {
     console.log("Connection established");
-    res.status(200).send("Express Server Working")
+    res.status(200).send("Express Server Working");
 });
 
 // Vouchers Left Route
@@ -58,13 +58,16 @@ app.get('/vouchers', (req, res) => {
 app.post('/mailchimp', (req, res) => {
     
     console.log('mailchimp route hit');
-    console.log(req.body);
-
+    
     // Check if subscriber already exists
+    let email = encodeURI(req.body.email);
+    console.log(email);
+
+
     var options = {
         method: 'GET',
         url: 'https://us15.api.mailchimp.com/3.0/search-members',
-        qs: { query: req.body.email, list_id: '879953e1ab' },
+        qs: { query: email, list_id: '879953e1ab' },
         headers:
         {
             'postman-token': '2ac842c3-ae9d-c1be-943a-eeae0a871220',
