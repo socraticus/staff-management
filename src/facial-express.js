@@ -1,5 +1,11 @@
+
+// DOM Variable Declarations
 var form = document.getElementById('wf-form-shopping-cart-tab2');
 var cardErrors = document.getElementById('express-card-errors');
+var postURL = form.getAttribute('action');
+var fname = document.getElementById('express-first-name');
+var fname = document.getElementById('express-first-name');
+var emailValue = document.getElementById('express-email');
 
 //Shopping Cart
 
@@ -240,9 +246,8 @@ form.addEventListener('submit', function (event) {
 function stripeTokenHandler(token) {
 
   cardErrors.innerHTML = "PROCESSING... Please do not reload";
-  var postURL = form.getAttribute('action');
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', postURL, true);
+  xhr.open('POST', postURL + '/charge', true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function (event) {
     updateVoucherCount(event);
@@ -250,11 +255,11 @@ function stripeTokenHandler(token) {
 
 
   //Gather Form Data
-  var emailValue = document.getElementById('express-email').value;
+  // var emailValue = document.getElementById('express-email').value;
   var amount = form.expressCart.value;
   var nameInput = document.getElementById('express-card-name-2').value;
-  var fname = document.getElementById('express-first-name').value;
-  var lname = document.getElementById('express-last-name').value;
+  // var fname = document.getElementById('express-first-name').value;
+  // var lname = document.getElementById('express-last-name').value;
   var addressInput = document.getElementById('Express-Street-Address-2').value;
   var cityInput = document.getElementById('express-city').value;
   var stateInput = document.getElementById('express-state').value;
@@ -284,8 +289,23 @@ $('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
 
 
 $('#express-golden-button1').on('click', function (evt) {
+  evt.preventDefault();
+
+  // Send Form Tab 1 to Server
+  
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', postURL + '/mailchimp', true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onload = function (event) {
+    console.log('First Tab Form sent to Server');
+  };
+
+  xhr.send(encodeURI('fname=' + fname.value + '&lname=' + lname.value + "&email=" + emailValue.value));
+
+
+  
   $('#express-Tab2').triggerHandler('click');
 
-  //   //evt.preventDefault();
+  
 
 });

@@ -45,11 +45,35 @@ app.get('/vouchers', (req, res) => {
         })
 })
 
+// Mailchimp First Tab Route
+app.post('/mailchimp', (req, res) => {
 
+// Check if subscriber already exists
+var options = { method: 'GET',
+  url: 'https://us15.api.mailchimp.com/3.0/search-members',
+  qs: { query: req.body.email, list_id: '879953e1ab' },
+  headers: 
+   { 'postman-token': '2ac842c3-ae9d-c1be-943a-eeae0a871220',
+     'cache-control': 'no-cache',
+     authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
+     'content-type': 'application/json' },
+  body: 
+   { email_address: 'urist.mcvankab@freddiesjokes.com',
+     status: 'subscribed',
+     merge_fields: { FNAME: 'Urist', LNAME: 'McVankab' } },
+  json: true };
+
+request(options, function (error, response, body) {
+  if (error) throw new Error(error);
+
+  console.log(body);
+});
+
+}
 
 
 // Charge Route
-app.post('/', (req, res) => {
+app.post('/charge', (req, res) => {
 
     // Parse POST form
     //const name = req.body.name;
