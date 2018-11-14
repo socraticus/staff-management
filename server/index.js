@@ -119,14 +119,14 @@ app.post('/mailchimp', (req, res) => {
                     merge_fields: {
                         FNAME: subscriber.fname,
                         LNAME: subscriber.lname,
-                        VOUCHER: subscriber.voucher,
+                        VOUCHER: ''
 
                     }
                 },
                 interests: {
                     "89e3ef05ba": false,
-                    "0751ff5d8f": false,
-                    "d5d2641f68": true
+                    "0751ff5d8f": true,
+                    "d5d2641f68": false
                 },
                 json: true
             };
