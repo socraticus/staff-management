@@ -99,7 +99,7 @@ app.post('/mailchimp', (req, res) => {
             // Populate Subscriber Global Object
             subscriber.fname = req.body.fname;
             subscriber.lname = req.body.lname;
-            
+
             // Send POST request to Mailchimp
             var options = {
                 method: 'POST',
@@ -123,9 +123,7 @@ app.post('/mailchimp', (req, res) => {
                     }
                 },
                 interests: {
-                    '89e3ef05ba': false,
-                    '0751ff5d8f': true,
-                    'd5d2641f68': false
+                    '0751ff5d8f': true
                 },
                 json: true
             };
@@ -140,7 +138,7 @@ app.post('/mailchimp', (req, res) => {
         }
         //const emailID = response.body.exact_matches.members[0].id;
         //console.log(emailID);
-        
+
 
     });
 
@@ -233,6 +231,11 @@ app.post('/charge', (req, res) => {
                             VOUCHER: cust.voucher,
                             ADDRESS: cust.street + ", " + cust.city + ", " + cust.state + ", " + cust.zip_code
                         }
+                    },
+                    interests: {
+                        '89e3ef05ba': true,
+                        '0751ff5d8f': false,
+                        'd5d2641f68': false
                     },
                     json: true
                 };
