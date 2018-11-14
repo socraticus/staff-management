@@ -232,11 +232,11 @@ app.post('/charge', (req, res) => {
                             ADDRESS: cust.street + ", " + cust.city + ", " + cust.state + ", " + cust.zip_code
                         }
                     },
-                    interests: {
-                        '89e3ef05ba': true,
-                        '0751ff5d8f': false,
-                        'd5d2641f68': false
-                    },
+                    // interests: {
+                    //     '89e3ef05ba': true,
+                    //     '0751ff5d8f': false,
+                    //     'd5d2641f68': false
+                    // },
                     json: true
                 };
 
