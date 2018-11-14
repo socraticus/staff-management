@@ -93,14 +93,13 @@ app.post('/mailchimp', (req, res) => {
 
     request(options, function (error, response, body) {
         if (response.body.exact_matches.members[0]) {
-            res.json({ 'message': 'This email has already been used. If you aregetting this propmotion for somebody else please use their email' });
+            res.json({ 'message': 'This email has already been used. If you are getting this promotion for somebody else please use their email' });
         } else {
 
             // Populate Subscriber Global Object
             subscriber.fname = req.body.fname;
             subscriber.lname = req.body.lname;
-            subscriber.voucher = req.body.voucher;
-
+            
             // Send POST request to Mailchimp
             var options = {
                 method: 'POST',
@@ -124,9 +123,9 @@ app.post('/mailchimp', (req, res) => {
                     }
                 },
                 interests: {
-                    "89e3ef05ba": false,
-                    "0751ff5d8f": true,
-                    "d5d2641f68": false
+                    '89e3ef05ba': false,
+                    '0751ff5d8f': true,
+                    'd5d2641f68': false
                 },
                 json: true
             };

@@ -275,7 +275,7 @@ function stripeTokenHandler(token) {
   console.log(voucher);
 
   xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue + "&" + "amount=" + amount +
-    "&" + "name=" + nameInput + "&fname=" + fname + "&lname=" + lname + "&street=" + addressInput + "&city=" + cityInput + 
+    "&" + "name=" + nameInput + "&fname=" + fname + "&lname=" + lname + "&street=" + addressInput + "&city=" + cityInput +
     "&state=" + stateInput + "&zip_code=" + zipInput + "&createdAt=" + createdAt + "&voucher=" + voucher));
 
 }
@@ -293,22 +293,28 @@ $('#express-golden-button1').on('click', function (evt) {
   evt.preventDefault();
 
   // Send Form Tab 1 to Server
-  
+
   var xhr1 = new XMLHttpRequest();
   xhr1.open('POST', postURL + '/mailchimp', true);
   xhr1.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr1.onload = function (event) {
     var mailchimpQueryresponse = JSON.parse(event.currentTarget.response);
-    cardErrors1rstTab.innerHTML = mailchimpQueryresponse.message;
+    if (mailchimpQueryresponse.message === 'First Step Completed') {
+      cardErrors1rstTab.innerHTML = mailchimpQueryresponse.message;
+      $('#express-Tab2').triggerHandler('click');
+    } else {
+      cardErrors1rstTab.innerHTML = mailchimpQueryresponse.message;
+    }
+
     console.log(mailchimpQueryresponse);
   };
 
   xhr1.send(encodeURI('fname=' + fname.value + '&lname=' + lname.value + "&email=" + emailValue.value));
 
 
-  
-  $('#express-Tab2').triggerHandler('click');
 
-  
+
+
+
 
 });
