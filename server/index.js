@@ -101,29 +101,56 @@ app.post('/mailchimp', (req, res) => {
             subscriber.lname = req.body.lname;
 
             // Send POST request to Mailchimp
+            // var options = {
+            //     method: 'POST',
+            //     url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/',
+            //     headers:
+            //     {
+            //         'postman-token': '86c3a131-629d-6d10-a929-68c21985b858',
+            //         'cache-control': 'no-cache',
+            //         authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
+            //         'content-type': 'application/json'
+            //     },
+            //     body:
+            //     {
+            //         email_address: subscriber.email,
+            //         status: 'subscribed',
+            //         merge_fields: {
+            //             FNAME: subscriber.fname,
+            //             LNAME: subscriber.lname,
+            //             VOUCHER: ''
+
+            //         }
+            //     },
+            //     interests: {
+            //         '0751ff5d8f': true
+            //     },
+            //     json: true
+            // };
+
+            // request(options, function (error, response, body) {
+            //     if (error) throw new Error(error);
+
+            //     console.log(body);
+            // });
+
+            // tEST hARD cODED sUBSCRIBER
             var options = {
                 method: 'POST',
                 url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/',
                 headers:
                 {
-                    'postman-token': '86c3a131-629d-6d10-a929-68c21985b858',
+                    'postman-token': 'aca9edc5-169e-afac-5e2b-aa4d1c4ae07a',
                     'cache-control': 'no-cache',
                     authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
                     'content-type': 'application/json'
                 },
                 body:
                 {
-                    email_address: subscriber.email,
+                    email_address: 'urist.mcvankab@freddiesjokes.com',
                     status: 'subscribed',
-                    merge_fields: {
-                        FNAME: subscriber.fname,
-                        LNAME: subscriber.lname,
-                        VOUCHER: ''
-
-                    }
-                },
-                interests: {
-                    '0751ff5d8f': true
+                    merge_fields: { FNAME: 'Urist', LNAME: 'McVankab' },
+                    interests: { '89e3ef05ba': false, '0751ff5d8f': true, d5d2641f68: false }
                 },
                 json: true
             };
