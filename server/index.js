@@ -137,7 +137,7 @@ app.post('/mailchimp', (req, res) => {
                 console.log(body);
             });
 
-            res.json({ 'message': 'Subscriber Added as abandoned cart' });
+            res.json({ 'message': 'First Step Completed' });
         }
         //const emailID = response.body.exact_matches.members[0].id;
         //console.log(emailID);
