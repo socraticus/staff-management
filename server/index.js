@@ -54,23 +54,33 @@ app.get('/vouchers', (req, res) => {
             };
             console.log("total found")
             res.json(respObj);
-        })
-})
+        });
+});
+
+// Subscriber Global Object
+
+var subscriber = {
+    fname: "",
+    lname: "",
+    email: "",
+    voucher: "",
+    address: "",
+}
 
 // Mailchimp First Tab Route
 app.post('/mailchimp', (req, res) => {
-    
+
     console.log('mailchimp route hit');
-    
+
     // Check if subscriber already exists
-    let email = encodeURI(req.body.email);
-    console.log(email);
+    subscriber.email = encodeURI(req.body.email);
+    console.log(subscriber.email);
 
 
     var options = {
         method: 'GET',
         url: 'https://us15.api.mailchimp.com/3.0/search-members',
-        qs: { query: email, list_id: '879953e1ab' },
+        qs: { query: subscriber.email, list_id: '879953e1ab' },
         headers:
         {
             'postman-token': '2ac842c3-ae9d-c1be-943a-eeae0a871220',
@@ -78,25 +88,64 @@ app.post('/mailchimp', (req, res) => {
             authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
             'content-type': 'application/json'
         },
-        // body:
-        // {
-        //     email_address: 'urist.mcvankab@freddiesjokes.com',
-        //     status: 'subscribed',
-        //     merge_fields: { FNAME: 'Urist', LNAME: 'McVankab' }
-        // },
         json: true
     };
 
     request(options, function (error, response, body) {
-        if (error) throw new Error(error);
-        fs.writeFile('mailchimp.log', response);
-        fs.writeFile('mailchimp_body.log', body);
+        if (response.body.exact_matches.members[0]) {
+            res.json({ 'message': 'This email has already been used. If you aregetting this propmotion for somebody else please use their email' });
+        } else {
 
-        // console.log(body);
-        console.log('Files Written');
+            // Populate Subscriber Global Object
+            subscriber.fname = req.body.fname;
+            subscriber.lname = req.body.lname;
+            subscriber.voucher = req.body.voucher;
+
+            // Send POST request to Mailchimp
+            var options = {
+                method: 'POST',
+                url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/',
+                headers:
+                {
+                    'postman-token': '86c3a131-629d-6d10-a929-68c21985b858',
+                    'cache-control': 'no-cache',
+                    authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
+                    'content-type': 'application/json'
+                },
+                body:
+                {
+                    email_address: subscriber.email,
+                    status: 'subscribed',
+                    merge_fields: {
+                        FNAME: subscriber.fname,
+                        LNAME: subscriber.lname,
+                        VOUCHER: subscriber.voucher,
+
+                    }
+                },
+                interests: {
+                    "89e3ef05ba": false,
+                    "0751ff5d8f": false,
+                    "d5d2641f68": true
+                },
+                json: true
+            };
+
+            request(options, function (error, response, body) {
+                if (error) throw new Error(error);
+
+                console.log(body);
+            });
+
+            res.json({ 'message': 'Subscriber Added as abandoned cart' });
+        }
+        //const emailID = response.body.exact_matches.members[0].id;
+        //console.log(emailID);
+        
+
     });
 
-    console.log('Query sent');
+
 
 });
 
@@ -238,8 +287,8 @@ mongoose.connection.once('open', function () {
 
 
 
-var server = app.listen(process.env.PORT || '8080', function () {
-    console.log('Server started on port %s', server.address().port)
+var server = app.listen(process.env.PORT || '5000', function () {
+    console.log('Server started on port %s', server.address().port);
 })
 
 

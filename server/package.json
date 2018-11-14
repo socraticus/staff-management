@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "start": "node index.js",
-    "deploy": "gcloud beta app deploy"
+    "deploy": "gcloud beta app deploy",
+    "start:dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
