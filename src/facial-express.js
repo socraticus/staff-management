@@ -2,6 +2,7 @@
 // DOM Variable Declarations
 var form = document.getElementById('wf-form-shopping-cart-tab2');
 var cardErrors = document.getElementById('express-card-errors');
+var cardErrors1rstTab = document.getElementById('express-card-errors-1stTab');
 var postURL = form.getAttribute('action');
 var fname = document.getElementById('express-first-name');
 var lname = document.getElementById('express-last-name');
@@ -52,8 +53,8 @@ voucherxhr.send();
 
 var updateVoucherCount = function (event) {
   console.log(event);
-  var reply = JSON.parse(event.currentTarget.response)
-  console.log(reply.message, reply.customerCount)
+  var reply = JSON.parse(event.currentTarget.response);
+  console.log(reply.message, reply.customerCount);
   cardErrors.innerHTML = reply.message;
 
   // Update Voucher counter in DOM
@@ -297,7 +298,9 @@ $('#express-golden-button1').on('click', function (evt) {
   xhr1.open('POST', postURL + '/mailchimp', true);
   xhr1.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr1.onload = function (event) {
-    console.log('First Tab Form sent to Server');
+    var mailchimpQueryresponse = JSON.parse(event.currentTarget.response);
+    cardErrors1rstTab.innerHTML = mailchimpQueryresponse.message;
+    console.log(mailchimpQueryresponse);
   };
 
   xhr1.send(encodeURI('fname=' + fname.value + '&lname=' + lname.value + "&email=" + emailValue.value));
