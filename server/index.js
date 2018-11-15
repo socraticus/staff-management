@@ -96,12 +96,17 @@ app.post('/mailchimp', (req, res) => {
 
     request(options, function (error, response, body) {
         // Validate whether subscriber belongs to FreeVoucher or Upgraded
-        if (response.body.exact_matches.members[0].interests['89e3ef05ba'] === true ||
-            response.body.exact_matches.members[0].interests['0751ff5d8f'] === true) {
-            res.json({ 'message': 'This email has already been used. If you are getting this promotion for somebody else please use their email' });
+        if (
+            !response.body.exact_matches.members[0]) {
+            postMailchimp();
+        } else if (response.body.exact_matches.members[0].interests[d5d2641f68] === true) {
+            postMailchimp();
         } else {
+            res.json({ 'message': 'This email has already been used. If you are getting this promotion for somebody else please use their email' });
+        }
 
 
+        function postMailchimp() {
             // Populate Subscriber Global Object
             subscriber.fname = req.body.fname;
             subscriber.lname = req.body.lname;
@@ -154,6 +159,7 @@ app.post('/mailchimp', (req, res) => {
                 res.json({ 'message': 'First Step Completed' });
             }
         }
+
         //const emailID = response.body.exact_matches.members[0].id;
         //console.log(emailID);
 
@@ -257,9 +263,9 @@ app.post('/charge', (req, res) => {
                                 zip: cust.address.zip_code,
                                 country: 'USA'
                             }
-                        },                    
-                    interests: { '89e3ef05ba': subscriber.freevoucher, '0751ff5d8f': subscriber.upgraded, d5d2641f68: false }
-                },
+                        },
+                        interests: { '89e3ef05ba': subscriber.freevoucher, '0751ff5d8f': subscriber.upgraded, d5d2641f68: false }
+                    },
                     json: true
                 };
                 console.log("charge route hit");
