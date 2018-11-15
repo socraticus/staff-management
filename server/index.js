@@ -95,7 +95,8 @@ app.post('/mailchimp', (req, res) => {
     };
 
     request(options, function (error, response, body) {
-        if (response.body.exact_matches.members[0]) {
+        if (response.body.exact_matches.members[0].interests['89e3ef05ba'] === true || 
+        response.body.exact_matches.members[0].interests['0751ff5d8f'] === true ) {
             res.json({ 'message': 'This email has already been used. If you are getting this promotion for somebody else please use their email' });
         } else {
 
