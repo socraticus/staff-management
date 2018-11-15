@@ -96,10 +96,11 @@ app.post('/mailchimp', (req, res) => {
 
     request(options, function (error, response, body) {
         // Validate whether subscriber belongs to FreeVoucher or Upgraded
-        if (response.body.exact_matches.members[0].interests['89e3ef05ba'] === true || 
-        response.body.exact_matches.members[0].interests['0751ff5d8f'] === true ) {
+        if (response.body.exact_matches.members[0].interests['89e3ef05ba'] === true ||
+            response.body.exact_matches.members[0].interests['0751ff5d8f'] === true) {
             res.json({ 'message': 'This email has already been used. If you are getting this promotion for somebody else please use their email' });
         } else {
+
 
             // Populate Subscriber Global Object
             subscriber.fname = req.body.fname;
@@ -115,36 +116,42 @@ app.post('/mailchimp', (req, res) => {
             // 
             //*****
 
-            // Send POST request to Mailchimp
-            var options = {
-                method: 'POST',
-                url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/',
-                headers:
-                {
-                    'postman-token': 'aca9edc5-169e-afac-5e2b-aa4d1c4ae07a',
-                    'cache-control': 'no-cache',
-                    authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
-                    'content-type': 'application/json'
-                },
-                body:
-                {
-                    email_address: subscriber.email,
-                    status: 'subscribed',
-                    merge_fields: { FNAME: subscriber.fname, LNAME: subscriber.lname },
-                    interests: { '89e3ef05ba': false, '0751ff5d8f': false, d5d2641f68: true }
-                },
-                json: true
-            };
+            if (response.body.exact_matches.members[0]) {
+                subscriber.id = response.body.exact_matches.members[0].id;
+                res.json({ 'message': 'First Step Completed' });
+            } else {
 
-            request(options, function (error, response, body) {
-                if (error) throw new Error(error);
+                // Send POST request to Mailchimp
+                var options = {
+                    method: 'POST',
+                    url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/',
+                    headers:
+                    {
+                        'postman-token': 'aca9edc5-169e-afac-5e2b-aa4d1c4ae07a',
+                        'cache-control': 'no-cache',
+                        authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
+                        'content-type': 'application/json'
+                    },
+                    body:
+                    {
+                        email_address: subscriber.email,
+                        status: 'subscribed',
+                        merge_fields: { FNAME: subscriber.fname, LNAME: subscriber.lname },
+                        interests: { '89e3ef05ba': false, '0751ff5d8f': false, d5d2641f68: true }
+                    },
+                    json: true
+                };
 
-                // Update subscriber object with ID
-                subscriber.id = response.id;
-                console.log(body);
-            });
+                request(options, function (error, response, body) {
+                    if (error) throw new Error(error);
 
-            res.json({ 'message': 'First Step Completed' });
+                    // Update subscriber object with ID
+                    subscriber.id = response.id;
+                    console.log(body);
+                });
+
+                res.json({ 'message': 'First Step Completed' });
+            }
         }
         //const emailID = response.body.exact_matches.members[0].id;
         //console.log(emailID);
@@ -173,8 +180,8 @@ app.post('/charge', (req, res) => {
         subscriber.upgraded = true;
     }
 
-    
-    
+
+
     console.log(req.body);
     console.log(amount);
     stripe.customers.create({
@@ -254,16 +261,16 @@ app.post('/charge', (req, res) => {
                 });
 
                 // Reset subscriber object
-                
-                    // subscriber.fname = "";
-                    // subscriber.lname= "";
-                    // subscriber.email= "";
-                    // subscriber.id= "";
-                    // subscriber.voucher= "";
-                    // subscriber.address= "";
-                    // subscriber.freevoucher= false;
-                    // subscriber.upgraded= false; 
-                
+
+                // subscriber.fname = "";
+                // subscriber.lname= "";
+                // subscriber.email= "";
+                // subscriber.id= "";
+                // subscriber.voucher= "";
+                // subscriber.address= "";
+                // subscriber.freevoucher= false;
+                // subscriber.upgraded= false; 
+
 
 
                 // Send Final response to Client Browser
