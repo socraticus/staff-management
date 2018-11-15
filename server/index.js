@@ -235,7 +235,7 @@ app.post('/charge', (req, res) => {
 
                 // Add Subscriber to MailChimp
                 var options = {
-                    
+
                     method: 'PUT',
                     url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/' + subscriber.id,
                     headers:
@@ -249,10 +249,17 @@ app.post('/charge', (req, res) => {
                     {
                         merge_fields: {
                             VOUCHER: cust.voucher,
-                            ADDRESS: '16120 SW 98th Ct'
+                            ADDRESS: {
+                                addr1: cust.address.street,
+                                addr2: '',
+                                city: cust.address.city,
+                                state: cust.address.state,
+                                zip: cust.address.zip_code,
+                                country: 'USA'
+                            }
                         }
                     },
-                    interests: { '89e3ef05ba': false, '0751ff5d8f': true, 'd5d2641f68': false },
+                    interests: { '89e3ef05ba': false, '0751ff5d8f': true, d5d2641f68: false },
                     json: true
                 };
                 console.log("charge route hit");
