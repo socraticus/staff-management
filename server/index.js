@@ -153,6 +153,8 @@ app.post('/mailchimp', (req, res) => {
 
                     // Update subscriber object with ID
                     subscriber.id = response.id;
+                    console.log(response);
+                    console.log(response.id);
                     console.log(subscriber.id);
                 });
 
