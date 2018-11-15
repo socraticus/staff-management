@@ -253,14 +253,14 @@ app.post('/charge', (req, res) => {
 
                 // Reset subscriber object
                 
-                    subscriber.fname = "",
-                    subscriber.lname= "",
-                    subscriber.email= "",
-                    subscriber.id= "",
-                    subscriber.voucher= "",
-                    subscriber.address= "",
-                    subscriber.freevoucher= false,
-                    subscriber.upgraded= false; 
+                    // subscriber.fname = "";
+                    // subscriber.lname= "";
+                    // subscriber.email= "";
+                    // subscriber.id= "";
+                    // subscriber.voucher= "";
+                    // subscriber.address= "";
+                    // subscriber.freevoucher= false;
+                    // subscriber.upgraded= false; 
                 
 
 
