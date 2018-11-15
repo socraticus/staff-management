@@ -68,7 +68,7 @@ var subscriber = {
     address: "",
     freevoucher: false,
     upgraded: false
-}
+};
 
 // Mailchimp First Tab Route
 app.post('/mailchimp', (req, res) => {
@@ -250,6 +250,18 @@ app.post('/charge', (req, res) => {
 
                     console.log(body);
                 });
+
+                // Reset subscriber object
+                
+                    subscriber.fname = "",
+                    subscriber.lname= "",
+                    subscriber.email= "",
+                    subscriber.id= "",
+                    subscriber.voucher= "",
+                    subscriber.address= "",
+                    subscriber.freevoucher= false,
+                    subscriber.upgraded= false; 
+                
 
 
                 // Send Final response to Client Browser
