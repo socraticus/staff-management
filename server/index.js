@@ -119,6 +119,7 @@ app.post('/mailchimp', (req, res) => {
             if (response.body.exact_matches.members[0]) {
                 subscriber.id = response.body.exact_matches.members[0].id;
                 res.json({ 'message': 'First Step Completed' });
+                console.log(subscriber.id);
             } else {
 
                 // Send POST request to Mailchimp
@@ -147,7 +148,7 @@ app.post('/mailchimp', (req, res) => {
 
                     // Update subscriber object with ID
                     subscriber.id = response.id;
-                    console.log(body);
+                    console.log(subscriber.id);
                 });
 
                 res.json({ 'message': 'First Step Completed' });
@@ -247,12 +248,13 @@ app.post('/charge', (req, res) => {
                     {
                         merge_fields: {
                             VOUCHER: cust.voucher,
-                            ADDRESS: cust.street + ", " + cust.city + ", " + cust.state + ", " + cust.zip_code
+                            ADDRESS: cust.address.street + ", " + cust.address.city + ", " + cust.address.state + ", " + cust.address.zip_code
                         }
                     },
                     interests: { '89e3ef05ba': subscriber.freevoucher, '0751ff5d8f': subscriber.upgraded, d5d2641f68: false },
                     json: true
                 };
+                console.log(subscriber.freevoucher, subscriber.upgraded);
 
                 request(options, function (error, response, body) {
                     if (error) throw new Error(error);
