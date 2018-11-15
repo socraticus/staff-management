@@ -100,41 +100,14 @@ app.post('/mailchimp', (req, res) => {
             subscriber.fname = req.body.fname;
             subscriber.lname = req.body.lname;
 
+            //***** 
+            // Interests IDs
+            //
+            // '89e3ef05ba'
+            // '0751ff5d8f': UpgradedDeepCleansing
+            // d5d2641f68: 
+
             // Send POST request to Mailchimp
-            // var options = {
-            //     method: 'POST',
-            //     url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/',
-            //     headers:
-            //     {
-            //         'postman-token': '86c3a131-629d-6d10-a929-68c21985b858',
-            //         'cache-control': 'no-cache',
-            //         authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
-            //         'content-type': 'application/json'
-            //     },
-            //     body:
-            //     {
-            //         email_address: subscriber.email,
-            //         status: 'subscribed',
-            //         merge_fields: {
-            //             FNAME: subscriber.fname,
-            //             LNAME: subscriber.lname,
-            //             VOUCHER: ''
-
-            //         }
-            //     },
-            //     interests: {
-            //         '0751ff5d8f': true
-            //     },
-            //     json: true
-            // };
-
-            // request(options, function (error, response, body) {
-            //     if (error) throw new Error(error);
-
-            //     console.log(body);
-            // });
-
-            // tEST hARD cODED sUBSCRIBER
             var options = {
                 method: 'POST',
                 url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/',
@@ -150,7 +123,7 @@ app.post('/mailchimp', (req, res) => {
                     email_address: subscriber.email,
                     status: 'subscribed',
                     merge_fields: { FNAME: subscriber.fname, LNAME: subscriber.lname },
-                    interests: { '89e3ef05ba': false, '0751ff5d8f': true, d5d2641f68: false }
+                    interests: { '89e3ef05ba': true, '0751ff5d8f': false, d5d2641f68: false }
                 },
                 json: true
             };
