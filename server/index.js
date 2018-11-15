@@ -235,6 +235,7 @@ app.post('/charge', (req, res) => {
 
                 // Add Subscriber to MailChimp
                 var options = {
+                    
                     method: 'PUT',
                     url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/' + subscriber.id,
                     headers:
@@ -254,6 +255,7 @@ app.post('/charge', (req, res) => {
                     interests: { '89e3ef05ba': false, '0751ff5d8f': true, 'd5d2641f68': false },
                     json: true
                 };
+                console.log("charge route hit");
                 console.log(subscriber.freevoucher, subscriber.upgraded);
 
                 request(options, function (error, response, body) {
