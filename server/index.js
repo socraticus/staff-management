@@ -103,9 +103,11 @@ app.post('/mailchimp', (req, res) => {
             //***** 
             // Interests IDs
             //
-            // '89e3ef05ba'
+            // '89e3ef05ba': FreeVoucher
             // '0751ff5d8f': UpgradedDeepCleansing
             // d5d2641f68: 
+            // 
+            //*****
 
             // Send POST request to Mailchimp
             var options = {
@@ -123,7 +125,7 @@ app.post('/mailchimp', (req, res) => {
                     email_address: subscriber.email,
                     status: 'subscribed',
                     merge_fields: { FNAME: subscriber.fname, LNAME: subscriber.lname },
-                    interests: { '89e3ef05ba': true, '0751ff5d8f': false, d5d2641f68: false }
+                    interests: { '89e3ef05ba': false, '0751ff5d8f': false, d5d2641f68: true }
                 },
                 json: true
             };
