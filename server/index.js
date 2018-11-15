@@ -248,10 +248,11 @@ app.post('/charge', (req, res) => {
                     {
                         merge_fields: {
                             VOUCHER: cust.voucher,
-                            ADDRESS: cust.address.street + ", " + cust.address.city + ", " + cust.address.state + ", " + cust.address.zip_code
+                            ADDRESS: req.body.street
+                            // cust.address.street + ", " + cust.address.city + ", " + cust.address.state + ", " + cust.address.zip_code
                         }
                     },
-                    interests: { '89e3ef05ba': subscriber.freevoucher, '0751ff5d8f': subscriber.upgraded, d5d2641f68: false },
+                    interests: { '89e3ef05ba': false, '0751ff5d8f': true, d5d2641f68: false },
                     json: true
                 };
                 console.log(subscriber.freevoucher, subscriber.upgraded);
