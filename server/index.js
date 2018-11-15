@@ -63,8 +63,11 @@ var subscriber = {
     fname: "",
     lname: "",
     email: "",
+    id: "",
     voucher: "",
     address: "",
+    freevoucher: false,
+    upgraded: false
 }
 
 // Mailchimp First Tab Route
@@ -100,12 +103,13 @@ app.post('/mailchimp', (req, res) => {
             subscriber.fname = req.body.fname;
             subscriber.lname = req.body.lname;
 
+
             //***** 
-            // Interests IDs
+            // Interests IDs (Mailchimp Groups)
             //
             // '89e3ef05ba': FreeVoucher
             // '0751ff5d8f': UpgradedDeepCleansing
-            // d5d2641f68: 
+            // d5d2641f68: AbandonCart
             // 
             //*****
 
@@ -133,6 +137,8 @@ app.post('/mailchimp', (req, res) => {
             request(options, function (error, response, body) {
                 if (error) throw new Error(error);
 
+                // Update subscriber object with ID
+                subscriber.id = response.id;
                 console.log(body);
             });
 
@@ -158,10 +164,15 @@ app.post('/charge', (req, res) => {
     var description = "";
 
     if (amount == 1000) {
-        description = "Free Facial Express + Gratuity"
+        description = "Free Facial Express + Gratuity";
+        subscriber.freevoucher = true;
     } else {
-        description = "Deep Pore Cleansing Upgrade + Gratuity"
+        description = "Deep Pore Cleansing Upgrade + Gratuity";
+        subscriber.upgraded = true;
     }
+
+    
+    
     console.log(req.body);
     console.log(amount);
     stripe.customers.create({
@@ -214,8 +225,8 @@ app.post('/charge', (req, res) => {
 
                 // Add Subscriber to MailChimp
                 var options = {
-                    method: 'POST',
-                    url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/',
+                    method: 'PATCH',
+                    url: 'https://us15.api.mailchimp.com/3.0/lists/879953e1ab/members/' + subscriber.id,
                     headers:
                     {
                         'postman-token': '86c3a131-629d-6d10-a929-68c21985b858',
@@ -225,20 +236,12 @@ app.post('/charge', (req, res) => {
                     },
                     body:
                     {
-                        email_address: cust.email,
-                        status: 'subscribed',
                         merge_fields: {
-                            FNAME: cust.fname,
-                            LNAME: cust.lname,
                             VOUCHER: cust.voucher,
                             ADDRESS: cust.street + ", " + cust.city + ", " + cust.state + ", " + cust.zip_code
                         }
                     },
-                    // interests: {
-                    //     '89e3ef05ba': true,
-                    //     '0751ff5d8f': false,
-                    //     'd5d2641f68': false
-                    // },
+                    interests: { '89e3ef05ba': subscriber.freevoucher, '0751ff5d8f': subscriber.upgraded, d5d2641f68: false },
                     json: true
                 };
 
