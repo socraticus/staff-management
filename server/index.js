@@ -147,9 +147,9 @@ app.post('/mailchimp', (req, res) => {
                 },
                 body:
                 {
-                    email_address: 'urist.mcvankab@freddiesjokes.com',
+                    email_address: subscriber.email,
                     status: 'subscribed',
-                    merge_fields: { FNAME: 'Urist', LNAME: 'McVankab' },
+                    merge_fields: { FNAME: subscriber.fname, LNAME: subscriber.lname },
                     interests: { '89e3ef05ba': false, '0751ff5d8f': true, d5d2641f68: false }
                 },
                 json: true
