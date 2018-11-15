@@ -257,9 +257,9 @@ app.post('/charge', (req, res) => {
                                 zip: cust.address.zip_code,
                                 country: 'USA'
                             }
-                        }
-                    },
-                    interests: { '89e3ef05ba': false, '0751ff5d8f': true, d5d2641f68: false },
+                        },                    
+                    interests: { '89e3ef05ba': subscriber.freevoucher, '0751ff5d8f': subscriber.upgraded, d5d2641f68: false }
+                },
                     json: true
                 };
                 console.log("charge route hit");
