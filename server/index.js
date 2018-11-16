@@ -49,7 +49,7 @@ app.get('/vouchers', (req, res) => {
     })
         .then(function (result) {
             var respObj = {
-                message: 'Voucher Total Retrieved',
+                message: '',
                 customerCount: result.total
             };
             console.log("total found")
@@ -88,7 +88,7 @@ app.post('/mailchimp', (req, res) => {
         {
             'postman-token': '2ac842c3-ae9d-c1be-943a-eeae0a871220',
             'cache-control': 'no-cache',
-            authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
+            authorization: process.env.POSTMAN-AUTH,
             'content-type': 'application/json'
         },
         json: true
@@ -135,7 +135,7 @@ app.post('/mailchimp', (req, res) => {
                     {
                         'postman-token': 'aca9edc5-169e-afac-5e2b-aa4d1c4ae07a',
                         'cache-control': 'no-cache',
-                        authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
+                        authorization: process.env.POSTMAN-AUTH,
                         'content-type': 'application/json'
                     },
                     body:
@@ -226,7 +226,7 @@ app.post('/charge', (req, res) => {
             // Get customer count
             ExpressCustomer.estimatedDocumentCount({}, function (err, count) {
                 var resultObj = {
-                    message: 'SUCCESS',
+                    message: 'Payment has been successful. You will receive an email with your voucher and/or upgrade shortly',
                     customerCount: count
                 };
 
@@ -250,7 +250,7 @@ app.post('/charge', (req, res) => {
                     {
                         'postman-token': '86c3a131-629d-6d10-a929-68c21985b858',
                         'cache-control': 'no-cache',
-                        authorization: 'Basic YW55c3RyaW5nOjJlOWNkZDg3OGNkY2ZjNWI1ZmFhOGFmMDAzNjJmNTJhLXVzMTU=',
+                        authorization: process.env.POSTMAN-AUTH,
                         'content-type': 'application/json'
                     },
                     body:
@@ -279,16 +279,16 @@ app.post('/charge', (req, res) => {
                     console.log(body);
                 });
 
-                // Reset subscriber object
+                //Reset subscriber object
 
-                // subscriber.fname = "";
-                // subscriber.lname= "";
-                // subscriber.email= "";
-                // subscriber.id= "";
-                // subscriber.voucher= "";
-                // subscriber.address= "";
-                // subscriber.freevoucher= false;
-                // subscriber.upgraded= false; 
+                subscriber.fname = "";
+                subscriber.lname= "";
+                subscriber.email= "";
+                subscriber.id= "";
+                subscriber.voucher= "";
+                subscriber.address= "";
+                subscriber.freevoucher= false;
+                subscriber.upgraded= false; 
 
 
 
@@ -305,7 +305,7 @@ app.post('/charge', (req, res) => {
 
 // Connect to MongoDB Atlas
 
-mongoose.connect('mongodb+srv://socraticus:Tra21ai*@anandaspa-cluster0-iap7t.gcp.mongodb.net/AnandaSpaDB')
+mongoose.connect(process.env.MONGODB-CONECT)
 mongoose.connection.once('open', function () {
     console.log('Connected to MongoDB');
 }).on('error', function (error) {

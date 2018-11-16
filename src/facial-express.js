@@ -40,7 +40,7 @@ $('input[name=checkbox], input[name=checkbox-2]').change(function () {
 });
 
 // AJAX request to Get Vouchers Left
-var getURL = form.getAttribute('action') + "/vouchers"
+var getURL = form.getAttribute('action') + "/vouchers";
 var voucherxhr = new XMLHttpRequest();
 voucherxhr.open('GET', getURL, true);
 //voucherxhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
