@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const ExpressCustomer = require('./models/expresscustomer.js');
 const Counter = require('./models/counter.js');
-const http = require("http");
+const https = require("https");
 const request = require("request");
 const morgan = require("morgan");
 const fs = require("fs");
@@ -15,7 +15,7 @@ const app = express();
 
 // Keep Alive app in Heroku
 setInterval(function() {
-    http.get("https://ananda-spa-backend.herokuapp.com");
+    https.get("https://ananda-spa-backend.herokuapp.com");
 }, 300000); // every 5 minutes (300000)
 
 
