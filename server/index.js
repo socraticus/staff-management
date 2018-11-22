@@ -93,7 +93,7 @@ app.post('/mailchimp', (req, res) => {
         {
             'postman-token': '2ac842c3-ae9d-c1be-943a-eeae0a871220',
             'cache-control': 'no-cache',
-            authorization: process.env.POSTMAN-AUTH,
+            authorization: process.env.POSTMAN_AUTH,
             'content-type': 'application/json'
         },
         json: true
@@ -140,7 +140,7 @@ app.post('/mailchimp', (req, res) => {
                     {
                         'postman-token': 'aca9edc5-169e-afac-5e2b-aa4d1c4ae07a',
                         'cache-control': 'no-cache',
-                        authorization: process.env.POSTMAN-AUTH,
+                        authorization: process.env.POSTMAN_AUTH,
                         'content-type': 'application/json'
                     },
                     body:
@@ -255,7 +255,7 @@ app.post('/charge', (req, res) => {
                     {
                         'postman-token': '86c3a131-629d-6d10-a929-68c21985b858',
                         'cache-control': 'no-cache',
-                        authorization: process.env.POSTMAN-AUTH,
+                        authorization: process.env.POSTMAN_AUTH,
                         'content-type': 'application/json'
                     },
                     body:
