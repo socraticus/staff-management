@@ -309,8 +309,8 @@ app.post('/charge', (req, res) => {
 });
 
 // Connect to MongoDB Atlas
-
-mongoose.connect(process.env.MONGODB-CONECT)
+const mongoURI = process.env.MONGODB_CONECT;
+mongoose.connect(mongoURI);
 mongoose.connection.once('open', function () {
     console.log('Connected to MongoDB');
 }).on('error', function (error) {
