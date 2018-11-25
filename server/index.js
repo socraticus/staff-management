@@ -206,7 +206,7 @@ app.post('/charge', (req, res) => {
             amount,
             description,
             currency: 'usd',
-            customer: email
+            customer: customer.id
         }))
         .then(charge => {
             var cust = new ExpressCustomer({
