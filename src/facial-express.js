@@ -33,9 +33,9 @@ $('input[name=expressCart][value="4200"]').on('click', addUpgrade)
 
 $('input[name=checkbox], input[name=checkbox-2]').change(function () {
   if ($(this).is(':checked')) {
-    addUpgrade()
+    addUpgrade();
   } else {
-    removeUpgrade()
+    removeUpgrade();
   }
 });
 
@@ -124,14 +124,14 @@ $bubble1.on("click", function () {
       triggerAnimation()
     }
   } else {
-    return
+    return;
   }
 });
 
 $bubble2.on("click", function () {
   if ($bubble2.attr('clicked') == 'false') {
     $bubble2.attr('clicked', true);
-    quizClickCount += 1
+    quizClickCount += 1;
     console.log(quizClickCount);
     if (quizClickCount == 4) {
       triggerAnimation();
@@ -144,7 +144,7 @@ $bubble2.on("click", function () {
 $bubble3.on("click", function () {
   if ($bubble3.attr('clicked') == 'false') {
     $bubble3.attr('clicked', true);
-    quizClickCount += 1
+    quizClickCount += 1;
     console.log(quizClickCount);
     if (quizClickCount == 4) {
       triggerAnimation();
@@ -179,7 +179,7 @@ function triggerAnimation() {
 //************//
 
 //Initialize Stripe
-var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
+var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
 var elements = stripe.elements();
 
 // Custom styling can be passed to options when creating an Element.
