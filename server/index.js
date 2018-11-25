@@ -199,14 +199,14 @@ app.post('/charge', (req, res) => {
     console.log(req.body);
     console.log(amount);
     stripe.customers.create({
-        email: req.body.email,
+        email: 'arielvv85@gmail.com',
         source: req.body.stripeToken
     })
         .then(customer => stripe.charges.create({
             amount,
             description,
             currency: 'usd',
-            customer: customer.id
+            customer: email
         }))
         .then(charge => {
             var cust = new ExpressCustomer({
