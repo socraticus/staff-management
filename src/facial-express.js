@@ -295,7 +295,7 @@ $('#express-golden-button1').on('click', function (evt) {
   // Validade form fields
 
   if (fname.value === '' || lname.value === '' || emailValue.value === '') {
-    cardErrors1rstTab.innerHTML = "Please fill in all required fields";
+    cardErrors1rstTab.innerHTML = "* Please fill in all required fields";
   } else {
 
     // Send Form Tab 1 to Server
