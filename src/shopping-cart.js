@@ -1,7 +1,7 @@
 // Initialize Vue instance
 
 new Vue({
-    el: '#vue-app',
+    el: '#app',
     data: {
         title: 'This is a Demo'
     }
