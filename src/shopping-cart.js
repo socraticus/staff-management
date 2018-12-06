@@ -26,7 +26,7 @@ window.onload = function () {
             ]
         },
         methods: {
-            addProductsToCart: function(product) {
+            addProductsToCart: function (product) {
                 this.cart.items.push({
                     product: product,
                     quantity: 1
@@ -34,10 +34,10 @@ window.onload = function () {
             }
         },
         computed: {
-            cartTotal: function() {
+            cartTotal: function () {
                 var total = 0;
-                
-                this.cart.items.forEach(function(item) {
+
+                this.cart.items.forEach(function (item) {
                     total += item.quantity * item.product.price;
                 });
 
@@ -45,13 +45,15 @@ window.onload = function () {
             }
         }
     });
+
+    // DOM Interactions with Vue Instance
+    cartIconTotal.innerHTML = mainVue.cartTotal;
+
+    addCartDeepCleansing.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        mainVue.addProductsToCart(mainVue.products[0]);
+    });
+
 };
 
-// DOM Interactions with Vue Instance
-cartIconTotal.innerHTML = mainVue.cartTotal;
-
-addCartDeepCleansing.addEventListener('click', function(event) {
-    event.preventDefault();
-
-    mainVue.addProductsToCart(mainVue.products[0]);
-});
