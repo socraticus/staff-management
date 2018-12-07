@@ -1,10 +1,14 @@
-// DOM Variable Declarations
-var cartIconTotal = document.getElementById('shopping-cart-total-items');
-var addCartDeepCleansing = document.getElementById('add-cart-deep-cleansing');
+
 
 // Initialize Vue instance
 
 window.onload = function () {
+
+    // DOM Variable Declarations
+    var cartIconTotal = document.getElementById('shopping-cart-total-items');
+    var addCartDeepCleansing = document.getElementById('add-cart-deep-cleansing');
+    var addCartDermapen = document.getElementById('add-cart-dermapen');
+
     var mainVue = new Vue({
         el: '#vue-app',
         data: {
@@ -27,10 +31,37 @@ window.onload = function () {
         },
         methods: {
             addProductsToCart: function (product) {
-                this.cart.items.push({
-                    product: product,
-                    quantity: 1
-                });
+                var cartItem = this.getCartItem(product);
+
+                if (cartItem != null) {
+                    cartItem.quantity++;
+                } else {
+                    this.cart.items.push({
+                        product: product,
+                        quantity: 1
+                    });
+                }
+
+                cartIconTotal.innerHTML = this.cart.items.length;
+            },
+            getCartItem: function () {
+                for (var i = 0; i < this.cart.items.length; i++) {
+                    if (this.cart.items[i].product.id === product.id) {
+                        return this.cart.items[i];
+                    }
+                }
+
+                return null;
+            },
+            increaseQTY: function(cartItem) {
+
+            },
+            removeItemFromCart: function(cartItem) {
+                var index = this.cart.items.indexOf(cartItem);
+
+                if (index !== -1) {
+                    this.cart.items.splice(index, 1);
+                }
             }
         },
         computed: {
@@ -47,13 +78,22 @@ window.onload = function () {
     });
 
     // DOM Interactions with Vue Instance
-    cartIconTotal.innerHTML = mainVue.cartTotal;
+
+    cartIconTotal.innerHTML = mainVue.cart.items.length;
+
 
     addCartDeepCleansing.addEventListener('click', function (event) {
         event.preventDefault();
 
         mainVue.addProductsToCart(mainVue.products[0]);
     });
+
+    addCartDermapen.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        mainVue.addProductsToCart(mainVue.products[1]);
+    });
+
 
 };
 
