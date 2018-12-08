@@ -44,7 +44,7 @@ window.onload = function () {
 
                 cartIconTotal.innerHTML = this.cart.items.length;
             },
-            getCartItem: function () {
+            getCartItem: function (product) {
                 for (var i = 0; i < this.cart.items.length; i++) {
                     if (this.cart.items[i].product.id === product.id) {
                         return this.cart.items[i];
@@ -53,15 +53,17 @@ window.onload = function () {
 
                 return null;
             },
-            increaseQTY: function(cartItem) {
+            changeQTY: function (cartItem) {
 
             },
-            removeItemFromCart: function(cartItem) {
+            removeItemFromCart: function (cartItem) {
                 var index = this.cart.items.indexOf(cartItem);
 
                 if (index !== -1) {
                     this.cart.items.splice(index, 1);
                 }
+
+                cartIconTotal.innerHTML = this.cart.items.length;
             }
         },
         computed: {
@@ -77,7 +79,7 @@ window.onload = function () {
         }
     });
 
-    // DOM Interactions with Vue Instance
+    // DOM Interactions with mainVue Instance
 
     cartIconTotal.innerHTML = mainVue.cart.items.length;
 
@@ -92,6 +94,29 @@ window.onload = function () {
         event.preventDefault();
 
         mainVue.addProductsToCart(mainVue.products[1]);
+    });
+
+    // Checkout Vue Instance
+
+    var checkoutVue = new Vue({
+        el: '#vue-checkout',
+        data: {
+            cart: mainVue.cart,
+            customer: {
+                email: '',
+                fname: '',
+                lname: '',
+                street: '',
+                city: '',
+                state: '',
+                zip: ''
+            }
+        },
+        computed: {
+            cartTotal: function() {
+               return mainVue.cartTotal;
+            }
+        }
     });
 
 
