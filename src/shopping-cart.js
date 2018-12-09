@@ -110,7 +110,8 @@ window.onload = function () {
                 city: '',
                 state: '',
                 zip: ''
-            }
+            },
+            showEmail: true
         },
         computed: {
             cartTotal: function() {
