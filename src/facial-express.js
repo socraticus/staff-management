@@ -179,7 +179,8 @@ function triggerAnimation() {
 //************//
 
 //Initialize Stripe
-var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
+// var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
+var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
 var elements = stripe.elements();
 
 // Custom styling can be passed to options when creating an Element.
