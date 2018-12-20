@@ -7,16 +7,18 @@ var postURL = form.getAttribute('action');
 var fname = document.getElementById('express-first-name');
 var lname = document.getElementById('express-last-name');
 var emailValue = document.getElementById('express-email');
+var amount = 1000;
 
 //Shopping Cart
 
 //Adjust Total
 var addUpgrade = function () {
   $('#express-row-upgrade').css('display', 'flex');
-  $('#express-row-total').text('$42.00')
+  $('#express-row-total').text('$42.00');
   $('input[name=expressCart][value="4200"]').prop('checked', true);
   $('#express-checkbox-first').prop('checked', true);
-  $('#express-checkbox-second').prop('checked', true)
+  $('#express-checkbox-second').prop('checked', true);
+  amount = 4200;
 };
 
 var removeUpgrade = function () {
@@ -24,12 +26,13 @@ var removeUpgrade = function () {
   $('#express-row-total').text('$10.00')
   $('input[name=expressCart][value="1000"]').prop('checked', true);
   $('#express-checkbox-first').prop('checked', false);
-  $('#express-checkbox-second').prop('checked', false)
-}
+  $('#express-checkbox-second').prop('checked', false);
+  amount = 1000;
+};
 
-$('input[name=expressCart][value="1000"]').on('click', removeUpgrade)
+$('input[name=expressCart][value="1000"]').on('click', removeUpgrade);
 
-$('input[name=expressCart][value="4200"]').on('click', addUpgrade)
+$('input[name=expressCart][value="4200"]').on('click', addUpgrade);
 
 $('input[name=checkbox], input[name=checkbox-2]').change(function () {
   if ($(this).is(':checked')) {
@@ -180,8 +183,8 @@ function triggerAnimation() {
 //************//
 
 //Initialize Stripe
-// var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
-var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
+var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
+// var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
 var elements = stripe.elements();
 
 // Custom styling can be passed to options when creating an Element.
@@ -258,11 +261,8 @@ function stripeTokenHandler(token) {
 
 
   //Gather Form Data
-  // var emailValue = document.getElementById('express-email').value;
-  var amount = form.expressCart.value;
+  
   var nameInput = document.getElementById('express-card-name-2').value;
-  // var fname = document.getElementById('express-first-name').value;
-  // var lname = document.getElementById('express-last-name').value;
   var addressInput = document.getElementById('Express-Street-Address-2').value;
   var cityInput = document.getElementById('express-city').value;
   var stateInput = document.getElementById('express-state').value;
