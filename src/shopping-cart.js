@@ -111,7 +111,11 @@ window.onload = function () {
                 state: '',
                 zip: ''
             },
-            showEmail: true
+            showEmail: true,
+            activeCheckout: {
+                'background-color':'555',
+                'color':'white'
+            }
         },
         computed: {
             cartTotal: function() {
