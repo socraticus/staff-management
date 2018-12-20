@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const ExpressCustomer = require('./models/expresscustomer.js');
 const Counter = require('./models/counter.js');
+const Discount = require('./models/discount.js');
 const https = require("https");
 const request = require("request");
 const morgan = require("morgan");
@@ -70,6 +71,11 @@ app.get('/vouchers', (req, res) => {
             res.json(respObj);
         });
 });
+
+// Valid Discounts
+app.get('/discounts', (req, res) => {
+    Discount.
+})
 
 // Subscriber Global Object
 
