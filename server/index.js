@@ -26,16 +26,24 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 
-// CORS Middleware
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Headers', '*');
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'GET, PUT,POST, PATCH, DELETE');
-        res.status(200).json({});
-    }
+// // CORS Middleware
+// app.use(function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', "*");
+//     res.header('Access-Control-Allow-Headers', '*');
+//     if (req.method === 'OPTIONS') {
+//         res.header('Access-Control-Allow-Methods', 'GET, PUT,POST, PATCH, DELETE');
+//         res.status(200).json({});
+//     }
+//     next();
+// });
+
+// CORS Globally
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
-});
+  });
+  
 
 // Enable Logging
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),

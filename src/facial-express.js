@@ -53,7 +53,8 @@ voucherxhr.send();
 
 var updateVoucherCount = function (event) {
   console.log(event);
-  var reply = JSON.parse(event.currentTarget.response);
+  // var reply = JSON.parse(event.currentTarget.response);
+  var reply = JSON.parse(event.target.response);
   console.log(reply.message, reply.customerCount);
   cardErrors.innerHTML = reply.message;
 
