@@ -72,10 +72,10 @@ app.get('/vouchers', (req, res) => {
         });
 });
 
-// Valid Discounts
-app.get('/discounts', (req, res) => {
-    Discount.
-})
+// // Valid Discounts
+// app.get('/discounts', (req, res) => {
+//     Discount.
+// })
 
 // Subscriber Global Object
 
