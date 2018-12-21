@@ -218,7 +218,7 @@ app.post('/mailchimp', (req, res) => {
 
 
 // Charge Route
-app.post('/charge', (req, res) => {
+app.post('/', (req, res) => {
 
     // Parse POST form
     //const name = req.body.name;

@@ -307,7 +307,7 @@ function stripeTokenHandler(token) {
 
   cardErrors.innerHTML = "PROCESSING... Please do not reload";
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', postURL + '/charge', true);
+  xhr.open('POST', postURL + '/mailchimp', true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function (event) {
     updateVoucherCount(event);
