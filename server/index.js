@@ -85,6 +85,9 @@ app.get('/discounts', (req, res) => {
         };
         var today = Date.now();
         console.log(today);
+        console.log(result.createdAt);
+        console.log(result.beginning);
+        console.log(result.percentage);
         console.log(result.ending);
         console.log(result.ending >= today);
 
