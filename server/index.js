@@ -85,11 +85,11 @@ app.get('/discounts', (req, res) => {
         };
         var today = Date.now();
         console.log(today);
-        console.log(reslt.createdAt);
-        console.log(reslt.beginning);
-        console.log(reslt.percentage);
-        console.log(reslt.ending);
-        console.log(reslt.ending >= today);
+        console.log(reslt[0].createdAt);
+        console.log(reslt[0].beginning);
+        console.log(reslt[0].percentage);
+        console.log(reslt[0].ending);
+        console.log(reslt[0].ending >= today);
 
         if(!reslt) {
             respObj.message = 'The discount code could not be validated';
