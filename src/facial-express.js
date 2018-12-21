@@ -7,32 +7,41 @@ var postURL = form.getAttribute('action');
 var fname = document.getElementById('express-first-name');
 var lname = document.getElementById('express-last-name');
 var emailValue = document.getElementById('express-email');
+var discountBtn = document.getElementById('express-discount-btn');
+var discountField = document.getElementById('express-discount-field');
 var amount = 1000;
+var validDiscounts = [];
 
 //Shopping Cart
 
 //Adjust Total
 var addUpgrade = function () {
   $('#express-row-upgrade').css('display', 'flex');
-  $('#express-row-total').text('$42.00');
-  $('input[name=expressCart][value="4200"]').prop('checked', true);
+  $('#express-row-gratuity').hide();
+  $('#express-row-total').text('$35.00');
+  $('input[name=expressCart][value="3500"]').prop('checked', true);
   $('#express-checkbox-first').prop('checked', true);
   $('#express-checkbox-second').prop('checked', true);
-  amount = 4200;
+  amount = 3500;
 };
 
 var removeUpgrade = function () {
   $('#express-row-upgrade').hide();
-  $('#express-row-total').text('$10.00')
+  $('#express-row-gratuity').css('display', 'flex');
+  $('#express-row-total').text('$10.00');
   $('input[name=expressCart][value="1000"]').prop('checked', true);
   $('#express-checkbox-first').prop('checked', false);
   $('#express-checkbox-second').prop('checked', false);
   amount = 1000;
 };
 
+var applyDiscount = function () {
+
+};
+
 $('input[name=expressCart][value="1000"]').on('click', removeUpgrade);
 
-$('input[name=expressCart][value="4200"]').on('click', addUpgrade);
+$('input[name=expressCart][value="3500"]').on('click', addUpgrade);
 
 $('input[name=checkbox], input[name=checkbox-2]').change(function () {
   if ($(this).is(':checked')) {
@@ -56,7 +65,6 @@ voucherxhr.send();
 
 var updateVoucherCount = function (event) {
   console.log(event);
-  // var reply = JSON.parse(event.currentTarget.response);
   var reply = JSON.parse(event.target.response);
   console.log(reply.message, reply.customerCount);
   cardErrors.innerHTML = reply.message;
@@ -78,6 +86,50 @@ var updateVoucherCount = function (event) {
 
 
 };
+
+// Apply Discount Code to Order
+discountBtn.addEventListener('click', function (event) {
+  event.preventDefault();
+
+  cardErrors.innerHTML = "PROCESSING... Validating your discount";
+
+  // AJAX request to Validate Discount code
+  var discountURL = form.getAttribute('action') + "/discounts/?discountCode=" + discountField.value;
+  var discountxhr = new XMLHttpRequest();
+  discountxhr.open('GET', discountURL, true);
+  discountxhr.onload = function (evt) {
+    var reply = JSON.parse(evt.target.response);
+    cardErrors.innerHTML = reply.message;
+    if (reply === 'Your discount has been validated') {
+      var calculatedDisc = 0;
+      if (amount === 1000) {
+        cardErrors.innerHTML = 'This discount applies only to the Deep Cleansing Facial. Please add it to the cart and reapply discount';
+        return;
+      } else {
+        $('#express-row-discount').css('display', 'flex');
+
+        $('#express-discount-value').text(function () {
+          if (reply.percentage === true) {
+            calculatedDisc = amount * reply.discountAmount / 100;
+            return "-" + calculatedDisc;
+          } else {
+            calculatedDisc = reply.discountAmount;
+            return "-" + calculatedDisc;
+          }
+        });
+
+        $('#express-row-total').text(amount - calculatedDisc);
+
+      }
+    }
+  };
+
+  discountxhr.send();
+
+});
+
+
+
 
 // *******
 // Webflow Animation of finish Quiz
@@ -261,7 +313,7 @@ function stripeTokenHandler(token) {
 
 
   //Gather Form Data
-  
+
   var nameInput = document.getElementById('express-card-name-2').value;
   var addressInput = document.getElementById('Express-Street-Address-2').value;
   var cityInput = document.getElementById('express-city').value;

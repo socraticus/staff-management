@@ -74,10 +74,28 @@ app.get('/vouchers', (req, res) => {
 
 // Valid Discounts
 app.get('/discounts', (req, res) => {
-    Discount.find({ending: {$gt: Date.now()}}).then(function(result) {
-        
-    })
-})
+    Discount.find({discountCode: req.query.discountCode}).limit(1).
+    then( function(result) {
+        var respObj = {
+            message: '',
+            discountAmount: 0,
+            percentage: true
+        };
+
+        if(!result) {
+            respObj.message = 'The discount code could not be validated';
+            res.json(respObj);
+        } else if(result.ending > Date.now()) {
+            respObj.message = 'Your discount has been validated';
+            respObj.discountAmount = result.discountAmount;
+            respObj.percentage = result.percentage;
+            res.json(respObj);
+        } else {
+            respObj.message = 'This discount code has expired';
+            res.json(respObj);
+        }
+    });
+});
 
 // Subscriber Global Object
 
