@@ -76,16 +76,20 @@ app.get('/vouchers', (req, res) => {
 app.get('/discounts', (req, res) => {
     Discount.find({discountCode: req.query.discountCode}).limit(1).
     then( function(result) {
+        console.log(result);
+
         var respObj = {
             message: '',
             discountAmount: 0,
             percentage: true
         };
+        var today = Date.now();
+        console.log(today);
 
         if(!result) {
             respObj.message = 'The discount code could not be validated';
             res.json(respObj);
-        } else if(result.ending < Date.now()) {
+        } else if(result.ending >= today) {
             respObj.message = 'Your discount has been validated';
             respObj.discountAmount = result.discountAmount;
             respObj.percentage = result.percentage;
