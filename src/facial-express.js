@@ -10,7 +10,6 @@ var emailValue = document.getElementById('express-email');
 var discountBtn = document.getElementById('express-discount-btn');
 var discountField = document.getElementById('express-discount-field');
 var amount = 1000;
-var validDiscounts = [];
 
 //Shopping Cart
 
@@ -98,7 +97,7 @@ discountBtn.addEventListener('click', function (event) {
   var discountxhr = new XMLHttpRequest();
   discountxhr.open('GET', discountURL, true);
   discountxhr.onload = function (evt) {
-    console.log(evt)
+    console.log(evt);
     var reply = JSON.parse(evt.target.response);
     console.log(reply)
     cardErrors.innerHTML = reply.message;
@@ -112,15 +111,16 @@ discountBtn.addEventListener('click', function (event) {
 
         $('#express-discount-value').text(function () {
           if (reply.percentage === true) {
-            calculatedDisc = amount * reply.discountAmount / 100;
-            return "-" + calculatedDisc;
+            calculatedDisc = parseFloat(amount * reply.discountAmount / 10000).toFixed(2);
+            return "-$" + calculatedDisc;
           } else {
             calculatedDisc = reply.discountAmount;
-            return "-" + calculatedDisc;
+            return "-$" + calculatedDisc;
           }
         });
 
-        $('#express-row-total').text(amount - calculatedDisc);
+        $('#express-row-total').text("$" + parseFloat(amount / 100 - calculatedDisc).toFixed(2));
+        amount = amount - (calculatedDisc * 100)
 
       }
     }
@@ -237,8 +237,8 @@ function triggerAnimation() {
 //************//
 
 //Initialize Stripe
-var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
-// var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
+// var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
+var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
 var elements = stripe.elements();
 
 // Custom styling can be passed to options when creating an Element.
