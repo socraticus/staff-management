@@ -74,7 +74,7 @@ app.get('/vouchers', (req, res) => {
 
 // Valid Discounts
 app.get('/discounts', (req, res) => {
-    Discount.find({discountCode: req.query.discountCode}).limit(1).
+    Discount.find({discountCode: req.query.discountCode}).
     then( function(result) {
         console.log(result);
 
