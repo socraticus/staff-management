@@ -13,6 +13,6 @@ const DiscountSchema = new Schema({
     discountCode: String
 });
 
-const Discount = mongoose.model('expresscustomers', DiscountSchema)
+const Discount = mongoose.model('discounts', DiscountSchema)
 
 module.exports = Discount;
