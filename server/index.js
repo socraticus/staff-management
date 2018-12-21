@@ -75,8 +75,8 @@ app.get('/vouchers', (req, res) => {
 // Valid Discounts
 app.get('/discounts', (req, res) => {
     Discount.find({discountCode: req.query.discountCode}).
-    then( function(result) {
-        console.log(result);
+    then( function(reslt) {
+        console.log(reslt);
 
         var respObj = {
             message: '',
@@ -85,19 +85,19 @@ app.get('/discounts', (req, res) => {
         };
         var today = Date.now();
         console.log(today);
-        console.log(result.createdAt);
-        console.log(result.beginning);
-        console.log(result.percentage);
-        console.log(result.ending);
-        console.log(result.ending >= today);
+        console.log(reslt.createdAt);
+        console.log(reslt.beginning);
+        console.log(reslt.percentage);
+        console.log(reslt.ending);
+        console.log(reslt.ending >= today);
 
-        if(!result) {
+        if(!reslt) {
             respObj.message = 'The discount code could not be validated';
             res.json(respObj);
-        } else if(result.ending >= today) {
+        } else if(reslt.ending >= today) {
             respObj.message = 'Your discount has been validated';
-            respObj.discountAmount = result.discountAmount;
-            respObj.percentage = result.percentage;
+            respObj.discountAmount = reslt.discountAmount;
+            respObj.percentage = reslt.percentage;
             res.json(respObj);
         } else {
             respObj.message = 'This discount code has expired';
