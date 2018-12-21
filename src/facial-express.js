@@ -330,7 +330,7 @@ function stripeTokenHandler(token) {
 
   console.log(voucher);
 
-  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue.value + "&" + "amount=" + amount +
+  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue.value + "&" + "amount=" + 1000 +
     "&" + "name=" + nameInput + "&fname=" + fname.value + "&lname=" + lname.value + "&street=" + addressInput + "&city=" + cityInput +
     "&state=" + stateInput + "&zip_code=" + zipInput + "&createdAt=" + createdAt + "&voucher=" + voucher));
 
