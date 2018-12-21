@@ -98,9 +98,11 @@ discountBtn.addEventListener('click', function (event) {
   var discountxhr = new XMLHttpRequest();
   discountxhr.open('GET', discountURL, true);
   discountxhr.onload = function (evt) {
+    console.log(evt)
     var reply = JSON.parse(evt.target.response);
+    console.log(reply)
     cardErrors.innerHTML = reply.message;
-    if (reply === 'Your discount has been validated') {
+    if (reply.message === 'Your discount has been validated') {
       var calculatedDisc = 0;
       if (amount === 1000) {
         cardErrors.innerHTML = 'This discount applies only to the Deep Cleansing Facial. Please add it to the cart and reapply discount';

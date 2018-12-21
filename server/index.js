@@ -91,8 +91,8 @@ app.get('/discounts', (req, res) => {
             res.json(respObj);
         } else if(reslt[0].ending >= today) {
             respObj.message = 'Your discount has been validated';
-            respObj.discountAmount = reslt.discountAmount;
-            respObj.percentage = reslt.percentage;
+            respObj.discountAmount = reslt[0].discountAmount;
+            respObj.percentage = reslt[0].percentage;
             res.json(respObj);
         } else {
             respObj.message = 'This discount code has expired';
