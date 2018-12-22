@@ -112,15 +112,42 @@ window.onload = function () {
                 zip: ''
             },
             showEmail: true,
-            activeCheckout: {
-                'background-color':'555',
-                'color':'white'
-            }
+            showPayment: true
+            
         },
         computed: {
             cartTotal: function() {
                return mainVue.cartTotal;
+            },
+            activeCheckout: function() {
+                if(this.showEmail) {
+                    return {
+                        'background-color': 'white',
+                        color: '#999'
+                    };
+                } else {
+                    return {
+                        'background-color': '#777',
+                        color: 'white'
+                    };
+                }
+                
+            },
+            activePayment: function() {
+                if(this.showPayment) {
+                    return {
+                        'background-color': 'white',
+                        color: '#999'
+                    };
+                } else {
+                    return {
+                        'background-color': '#777',
+                        color: 'white'
+                    };
+                }
+                
             }
+
         }
     });
 
