@@ -4,6 +4,7 @@ var form = document.getElementById('shopping-cart-tab2');
 var formTab1 = document.getElementById('shopping-cart-tab1');
 var cardErrors = document.getElementById('express-card-errors');
 var cardErrors1rstTab = document.getElementById('express-card-errors-1stTab');
+var cardErrorsDiscount = document.getElementById('express-card-errors-discount');
 var serverURL = 'https://ananda-spa-backend.herokuapp.com';
 var fname = document.getElementById('express-first-name');
 var lname = document.getElementById('express-last-name');
@@ -91,7 +92,7 @@ var updateVoucherCount = function (event) {
 discountBtn.addEventListener('click', function (event) {
   event.preventDefault();
 
-  cardErrors.innerHTML = "PROCESSING... Validating your discount";
+  cardErrorsDiscount.innerHTML = "PROCESSING... Validating your discount";
 
   // AJAX request to Validate Discount code
   var discountURL = serverURL + "/discounts/?discountCode=" + discountField.value;
@@ -100,12 +101,12 @@ discountBtn.addEventListener('click', function (event) {
   discountxhr.onload = function (evt) {
     console.log(evt);
     var reply = JSON.parse(evt.target.response);
-    console.log(reply)
-    cardErrors.innerHTML = reply.message;
+    console.log(reply);
+    cardErrorsDiscount.innerHTML = reply.message;
     if (reply.message === 'Your discount has been validated') {
       var calculatedDisc = 0;
       if (amount === 1000) {
-        cardErrors.innerHTML = 'This discount applies only to the Deep Cleansing Facial. Please add it to the cart and reapply discount';
+        cardErrorsDiscount.innerHTML = 'This discount applies only to the Deep Cleansing Facial. Please add it to the cart and reapply discount';
         return;
       } else {
         $('#express-row-discount').css('display', 'flex');
@@ -238,8 +239,8 @@ function triggerAnimation() {
 //************//
 
 //Initialize Stripe
-// var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
-var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
+var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
+// stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
 var elements = stripe.elements();
 
 // Custom styling can be passed to options when creating an Element.
