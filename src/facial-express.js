@@ -1,6 +1,7 @@
 
 // DOM Variable Declarations
-var form = document.getElementById('wf-form-shopping-cart-tab2');
+var form = document.getElementById('shopping-cart-tab2');
+var formTab1 = document.getElementById('shopping-cart-tab1');
 var cardErrors = document.getElementById('express-card-errors');
 var cardErrors1rstTab = document.getElementById('express-card-errors-1stTab');
 var postURL = form.getAttribute('action');
@@ -86,7 +87,7 @@ var updateVoucherCount = function (event) {
 
 };
 
-// Apply Discount Code to Order
+/* // Apply Discount Code to Order
 discountBtn.addEventListener('click', function (event) {
   event.preventDefault();
 
@@ -130,7 +131,7 @@ discountBtn.addEventListener('click', function (event) {
 
 });
 
-
+*/
 
 
 // *******
@@ -307,7 +308,7 @@ function stripeTokenHandler(token) {
 
   cardErrors.innerHTML = "PROCESSING... Please do not reload";
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', postURL + '/mailchimp', true);
+  xhr.open('POST', postURL + '/charge', true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function (event) {
     updateVoucherCount(event);
@@ -330,7 +331,7 @@ function stripeTokenHandler(token) {
 
   console.log(voucher);
 
-  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue.value + "&" + "amount=" + 1000 +
+  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue.value + "&" + "amount=" + amount +
     "&" + "name=" + nameInput + "&fname=" + fname.value + "&lname=" + lname.value + "&street=" + addressInput + "&city=" + cityInput +
     "&state=" + stateInput + "&zip_code=" + zipInput + "&createdAt=" + createdAt + "&voucher=" + voucher));
 
