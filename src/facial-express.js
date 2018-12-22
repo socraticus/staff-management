@@ -4,7 +4,7 @@ var form = document.getElementById('shopping-cart-tab2');
 var formTab1 = document.getElementById('shopping-cart-tab1');
 var cardErrors = document.getElementById('express-card-errors');
 var cardErrors1rstTab = document.getElementById('express-card-errors-1stTab');
-var postURL = form.getAttribute('action');
+var serverURL = 'https://ananda-spa-backend.herokuapp.com';
 var fname = document.getElementById('express-first-name');
 var lname = document.getElementById('express-last-name');
 var emailValue = document.getElementById('express-email');
@@ -52,9 +52,9 @@ $('input[name=checkbox], input[name=checkbox-2]').change(function () {
 });
 
 // AJAX request to Get Vouchers Left
-var getURL = form.getAttribute('action') + "/vouchers";
+
 var voucherxhr = new XMLHttpRequest();
-voucherxhr.open('GET', getURL, true);
+voucherxhr.open('GET', serverURL + "/vouchers", true);
 //voucherxhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 voucherxhr.onload = function (event) {
   updateVoucherCount(event);
@@ -87,14 +87,14 @@ var updateVoucherCount = function (event) {
 
 };
 
-/* // Apply Discount Code to Order
+// Apply Discount Code to Order
 discountBtn.addEventListener('click', function (event) {
   event.preventDefault();
 
   cardErrors.innerHTML = "PROCESSING... Validating your discount";
 
   // AJAX request to Validate Discount code
-  var discountURL = form.getAttribute('action') + "/discounts/?discountCode=" + discountField.value;
+  var discountURL = serverURL + "/discounts/?discountCode=" + discountField.value;
   var discountxhr = new XMLHttpRequest();
   discountxhr.open('GET', discountURL, true);
   discountxhr.onload = function (evt) {
@@ -121,7 +121,7 @@ discountBtn.addEventListener('click', function (event) {
         });
 
         $('#express-row-total').text("$" + parseFloat(amount / 100 - calculatedDisc).toFixed(2));
-        amount = amount - (calculatedDisc * 100)
+        amount = amount - (calculatedDisc * 100);
 
       }
     }
@@ -131,7 +131,7 @@ discountBtn.addEventListener('click', function (event) {
 
 });
 
-*/
+
 
 
 // *******
@@ -308,7 +308,7 @@ function stripeTokenHandler(token) {
 
   cardErrors.innerHTML = "PROCESSING... Please do not reload";
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', postURL + '/charge', true);
+  xhr.open('POST', serverURL + '/charge', true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function (event) {
     updateVoucherCount(event);
@@ -358,7 +358,7 @@ $('#express-golden-button1').on('click', function (evt) {
     // Send Form Tab 1 to Server
 
     var xhr1 = new XMLHttpRequest();
-    xhr1.open('POST', postURL + '/mailchimp', true);
+    xhr1.open('POST', serverURL + '/mailchimp', true);
     xhr1.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr1.onload = function (event) {
       var mailchimpQueryresponse = JSON.parse(event.currentTarget.response);

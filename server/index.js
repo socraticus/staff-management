@@ -72,7 +72,7 @@ app.get('/vouchers', (req, res) => {
         });
 });
 
-/* // Valid Discounts
+// Valid Discounts
 app.get('/discounts', (req, res) => {
     Discount.find({discountCode: req.query.discountCode}).
     then( function(reslt) {
@@ -99,7 +99,7 @@ app.get('/discounts', (req, res) => {
             res.json(respObj);
         }
     });
-}); */
+});
 
 // Subscriber Global Object
 
