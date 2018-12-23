@@ -146,6 +146,17 @@ window.onload = function () {
                     };
                 }
                 
+            },
+            activeSeparator: function() {
+                if(this.showPayment) {
+                    return {
+                        height: '1px'
+                    };
+                } else {
+                    return {
+                        height: '0.5px'
+                    };
+                }
             }
 
         }
