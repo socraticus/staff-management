@@ -1,59 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<!-- link to the SqPaymentForm library -->
-<script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
-</script> 
+    <!-- JQuery for troubleshooting -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous">
+        </script>
 
-<!-- link to the local SqPaymentForm initialization -->
-<script type="text/javascript" src="https://ananda-spa-user-profile.firebaseapp.com/sqpaymentform-basic.js">
-</script> 
+    <!-- link to the SqPaymentForm library -->
+    <script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
+    </script>
 
-<!-- link to the custom styles for SqPaymentForm  
+    <!-- link to the local SqPaymentForm initialization -->
+    <script type="text/javascript" src="https://ananda-spa-user-profile.firebaseapp.com/sqpaymentform-basic.js">
+    </script>
+
+    <!-- link to the custom styles for SqPaymentForm  
 <link rel="stylesheet" type="text/css" href="https://ananda-spa-user-profile.firebaseapp.com/styles/sqpaymentform-basic.css">
    -->
 </head>
+
 <body>
-        <div id="form-container">
-                <div id="sq-ccbox">
-                  <!--
+    <div id="form-container">
+        <div id="sq-ccbox">
+            <!--
                     Be sure to replace the action attribute of the form with the path of
                     the Transaction API charge endpoint URL you want to POST the nonce to
                     (for example, "/process-card")
                   -->
-                  <form id="nonce-form" novalidate action="https://ananda-spa-backend.herokuapp.com/square/process-payment" method="post">
-                    <fieldset>
-                      <span class="label">Card Number</span>
-                      <div id="sq-card-number"></div>
-              
-                      <div class="third">
+            <form id="nonce-form" novalidate action="https://ananda-spa-backend.herokuapp.com/square/process-payment"
+                method="post">
+                <fieldset>
+                    <span class="label">Card Number</span>
+                    <div id="sq-card-number"></div>
+
+                    <div class="third">
                         <span class="label">Expiration</span>
                         <div id="sq-expiration-date"></div>
-                      </div>
-              
-                      <div class="third">
+                    </div>
+
+                    <div class="third">
                         <span class="label">CVV</span>
                         <div id="sq-cvv"></div>
-                      </div>
-              
-                      <div class="third">
+                    </div>
+
+                    <div class="third">
                         <span class="label">Postal</span>
                         <div id="sq-postal-code"></div>
-                      </div>
-                    </fieldset>
-              
-                    <button id="sq-creditcard" class="button-credit-card" onclick="requestCardNonce(event)">Pay $1.00</button>
-              
-                    <div id="error"></div>
-              
-                    <!--
+                    </div>
+                </fieldset>
+
+                <button id="sq-creditcard" class="button-credit-card" onclick="requestCardNonce(event)">Pay $1.00</button>
+
+                <div id="error"></div>
+
+                <!--
                       After a nonce is generated it will be assigned to this hidden input field.
                     -->
-                    <input type="hidden" id="card-nonce" name="nonce">
-                  </form>
-                </div> <!-- end #sq-ccbox -->
-              
-              </div> <!-- end #form-container -->
+                <input type="hidden" id="card-nonce" name="nonce">
+            </form>
+        </div> <!-- end #sq-ccbox -->
+
+    </div> <!-- end #form-container -->
 
 </body>
 <footer>
@@ -61,4 +69,5 @@
         buildForm();
         </script> -->
 </footer>
+
 </html>
