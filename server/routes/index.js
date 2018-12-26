@@ -16,7 +16,7 @@ router.use(bodyParser.json());
 /* GET home page of square route. */
 router.get('/', function(req, res, next) {
 	// Set the app and location ids for sqpaymentform.js to use
-	res.json('index', {
+	res.send('index', {
 		'title': 'Make Payment',
 		'square_application_id': process.env.square_application_id_sandbox,
 		'square_location_id': process.env.square_location_id_sandbox
@@ -41,13 +41,13 @@ router.post('/process-payment', function(req,res,next){
 	};
 	transactions_api.charge(process.env.square_location_id_sandbox, request_body).then(function(data) {
 		console.log(util.inspect(data, false, null));
-		res.json('process-payment', {
+		res.send('process-payment', {
 			'title': 'Payment Successful',
 			'result': "Payment Successful (see console for transaction output)"
 		});
 	}, function(error) {
 		console.log(util.inspect(error.status, false, null));
-		res.json('process-payment', {
+		res.send('process-payment', {
 			'title': 'Payment Failure',
 			'result': "Payment Failed (see console for error output)"
 		});
