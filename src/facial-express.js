@@ -366,7 +366,7 @@ $('#express-golden-button1').on('click', function (evt) {
       if (mailchimpQueryresponse.message === 'First Step Completed') {
         cardErrors1rstTab.innerHTML = mailchimpQueryresponse.message;
         $('#express-Tab2').triggerHandler('click');
-        window.location.href = "https://www.anandaspamiami.com/offers/express-tab2";
+        window.location.href = "https://www.anandaspamiami.com/offers/free-facial-express#express-tab2";
       } else {
         cardErrors1rstTab.innerHTML = mailchimpQueryresponse.message;
       }
