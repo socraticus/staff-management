@@ -16,7 +16,7 @@ router.use(bodyParser.json());
 /* GET home page of square route. */
 router.get('/', function(req, res, next) {
 	// Set the app and location ids for sqpaymentform.js to use
-	res.render('index', {
+	res.json('index', {
 		'title': 'Make Payment',
 		'square_application_id': process.env.square_application_id_sandbox,
 		'square_location_id': process.env.square_location_id_sandbox
