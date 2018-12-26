@@ -12,12 +12,13 @@ const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
 const SquareConnect = require('square-connect');
+const cors = require('cors');
 mongoose.Promise = global.Promise;
 
 const app = express();
 
 // Keep Alive app in Heroku
-setInterval(function() {
+setInterval(function () {
     https.get("https://ananda-spa-backend.herokuapp.com");
 }, 300000); // every 5 minutes (300000)
 
@@ -29,15 +30,28 @@ app.use(bodyParser.urlencoded({
 }))
 
 // CORS Middleware
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', "https://www.anandaspamiami.com");
-    res.header('Access-Control-Allow-Headers', '*');
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'GET, PUT,POST, PATCH, DELETE');
-        res.status(200).json({});
-    }
-    next();
-});
+var whitelist = ['https://www.anandaspamiami.com', 'https://ananda-spa-user-profile.firebaseapp.com'];
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
+
+// app.use(function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', "https://www.anandaspamiami.com");
+//     res.header('Access-Control-Allow-Headers', '*');
+//     if (req.method === 'OPTIONS') {
+//         res.header('Access-Control-Allow-Methods', 'GET, PUT,POST, PATCH, DELETE');
+//         res.status(200).json({});
+//     }
+//     next();
+// });
 
 // Enable Logging
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
@@ -71,31 +85,31 @@ app.get('/vouchers', (req, res) => {
 
 // Valid Discounts
 app.get('/discounts', (req, res) => {
-    Discount.find({discountCode: req.query.discountCode}).
-    then( function(reslt) {
-        console.log(reslt);
+    Discount.find({ discountCode: req.query.discountCode }).
+        then(function (reslt) {
+            console.log(reslt);
 
-        var respObj = {
-            message: '',
-            discountAmount: 0,
-            percentage: true
-        };
-        var today = Date.now();
-       
+            var respObj = {
+                message: '',
+                discountAmount: 0,
+                percentage: true
+            };
+            var today = Date.now();
 
-        if(!reslt) {
-            respObj.message = 'The discount code could not be validated';
-            res.json(respObj);
-        } else if(reslt[0].ending >= today) {
-            respObj.message = 'Your discount has been validated';
-            respObj.discountAmount = reslt[0].discountAmount;
-            respObj.percentage = reslt[0].percentage;
-            res.json(respObj);
-        } else {
-            respObj.message = 'This discount code has expired';
-            res.json(respObj);
-        }
-    });
+
+            if (!reslt) {
+                respObj.message = 'The discount code could not be validated';
+                res.json(respObj);
+            } else if (reslt[0].ending >= today) {
+                respObj.message = 'Your discount has been validated';
+                respObj.discountAmount = reslt[0].discountAmount;
+                respObj.percentage = reslt[0].percentage;
+                res.json(respObj);
+            } else {
+                respObj.message = 'This discount code has expired';
+                res.json(respObj);
+            }
+        });
 });
 
 // Subscriber Global Object
@@ -323,13 +337,13 @@ app.post('/charge', (req, res) => {
                 //Reset subscriber object
 
                 subscriber.fname = "";
-                subscriber.lname= "";
-                subscriber.email= "";
-                subscriber.id= "";
-                subscriber.voucher= "";
-                subscriber.address= "";
-                subscriber.freevoucher= false;
-                subscriber.upgraded= false; 
+                subscriber.lname = "";
+                subscriber.email = "";
+                subscriber.id = "";
+                subscriber.voucher = "";
+                subscriber.address = "";
+                subscriber.freevoucher = false;
+                subscriber.upgraded = false;
 
 
 
@@ -357,10 +371,10 @@ oauth2.accessToken = process.env.SQUARE_SANDBOX_TOKEN;
 
 const api = new SquareConnect.LocationsApi();
 
-api.listLocations().then(function(data) {
-  console.log('API called successfully. Returned data: ' + data);
-}, function(error) {
-  console.error(error);
+api.listLocations().then(function (data) {
+    console.log('API called successfully. Returned data: ' + data);
+}, function (error) {
+    console.error(error);
 });
 
 // // Square POST charge route
