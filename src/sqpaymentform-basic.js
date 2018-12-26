@@ -1,25 +1,20 @@
+// DOM variable declarations
+var serverURL = 'https://ananda-spa-backend.herokuapp.com';
+var cardErrors = document.getElementById('error');
+
 // Set the application ID
 var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
 
 // Set the location ID
 var locationId = "CBASELrQQ0UM52FOTsL42WvyaysgAQ";
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
   if (SqPaymentForm.isSupportedBrowser()) {
     paymentForm.build();
     //paymentForm.recalculateSize();
   }
 });
 
-
-
-
-function buildForm(form) {
-  if (SqPaymentForm.isSupportedBrowser()) {
-    form.build();
-    form.recalculateSize();
-  }
-}
 
 /*
  * function: requestCardNonce
@@ -133,13 +128,23 @@ var paymentForm = new SqPaymentForm({
       // Assign the nonce value to the hidden form field
       document.getElementById('card-nonce').value = nonce;
 
-      // Ariel trouble shooting
-      console.log(document.getElementById('card-nonce').value);
-      var data = $("#nonce-form :input").serializeArray();
-      console.log(data);
+      // AJAX Submit to Server
+      // cardErrors.innerHTML = "PROCESSING... Please do not reload";
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', serverURL + '/square/process-payment', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onload = function (event) {
+        console.log(event);
+        var reply = JSON.parse(event.target.response);
+        console.log(reply.title);
+        cardErrors.innerHTML = reply.title;
+      };
+      xhr.send(encodeURI('nonce=' + nonce));
+
+
 
       // POST the nonce form to the payment processing page
-      document.getElementById('nonce-form').submit();
+      //document.getElementById('nonce-form').submit();
 
     },
 

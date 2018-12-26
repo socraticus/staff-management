@@ -41,13 +41,13 @@ router.post('/process-payment', function(req,res,next){
 	};
 	transactions_api.charge(process.env.square_location_id_sandbox, request_body).then(function(data) {
 		console.log(util.inspect(data, false, null));
-		res.send( {
+		res.json( {
 			'title': 'Payment Successful',
 			'result': "Payment Successful (see console for transaction output)"
 		});
 	}, function(error) {
 		console.log(util.inspect(error.status, false, null));
-		res.send( {
+		res.json( {
 			'title': 'Payment Failure',
 			'result': "Payment Failed (see console for error output)"
 		});
