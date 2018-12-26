@@ -16,12 +16,6 @@ mongoose.Promise = global.Promise;
 
 const app = express();
 
-// Routes Declarations
-const routes = require('./routes/index');
-app.use('/square', routes);
-
-
-
 // Keep Alive app in Heroku
 setInterval(function() {
     https.get("https://ananda-spa-backend.herokuapp.com");
@@ -45,7 +39,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-
 // Enable Logging
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
     { flags: 'a' }
@@ -56,6 +49,10 @@ app.get('/', (req, res) => {
     console.log("Connection established");
     res.status(200).send("Express Server Working");
 });
+
+// Payment Route
+const routes = require('./routes/index');
+app.use('/square', routes);
 
 // Vouchers Left Route
 app.get('/vouchers', (req, res) => {
