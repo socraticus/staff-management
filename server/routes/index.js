@@ -3,8 +3,15 @@ const router = express.Router();
 const util = require('util');
 const crypto = require('crypto');
 const SquareConnect = require('square-connect');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+// Body Parser Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
 
 /* GET home page of square route. */
 router.get('/', function(req, res, next) {
