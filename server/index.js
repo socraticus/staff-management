@@ -17,8 +17,8 @@ mongoose.Promise = global.Promise;
 const app = express();
 
 // Routes Declarations
-// var routes = require('./routes/index');
-// app.use('/square', routes);
+const routes = require('./routes/index');
+app.use('/square', routes);
 
 
 
@@ -366,11 +366,11 @@ api.listLocations().then(function(data) {
   console.error(error);
 });
 
-// Square POST charge route
-app.post('/square/process-payment', (req, res) => {
-    console.log(req.body.nonce);
-    res.send('square route hit');
-});
+// // Square POST charge route
+// app.post('/square/process-payment', (req, res) => {
+//     console.log(req.body.nonce);
+//     res.send('square route hit');
+// });
 
 // Connect to MongoDB Atlas
 const mongoURI = process.env.MONGODB_CONECT;

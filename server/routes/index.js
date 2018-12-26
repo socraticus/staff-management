@@ -8,10 +8,10 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // Body Parser Middleware
-app.use(bodyParser.urlencoded({
+router.use(bodyParser.urlencoded({
     extended: false
 }));
-app.use(bodyParser.json());
+router.use(bodyParser.json());
 
 /* GET home page of square route. */
 router.get('/', function(req, res, next) {
