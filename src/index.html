@@ -5,103 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <!-- link to the SqPaymentForm library -->
+<script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
+</script>
+
+<!-- link to the local SqPaymentForm initialization -->
+<script type="text/javascript" src="https://ananda-spa-user-profile.firebaseapp.com/sqpaymentform-basic.js">
+</script>
+
+<!-- link to the custom styles for SqPaymentForm -->
+<link rel="stylesheet" type="text/css" href="https://ananda-spa-user-profile.firebaseapp.com/styles/sqpaymentform-basic.css">
 </head>
 <body>
-    <h1>This is the Index</h1>
-<form id="test-form" method="POST" action="https://67d1d798.ngrok.io/submit" enctype="application/x-www-form-urlencoded">
-        <input type="text" name="field">
-        <input type="text" name="field2">
-        <input type="submit" value="Submit">
-        <input type="button" value=""> 
-        <button id="SubmitBtn" type="button">Submit Btn</button>
-        <p id="message" name="message"></p>
-    </form>
+        <div id="form-container">
+                <div id="sq-ccbox">
+                  <!--
+                    Be sure to replace the action attribute of the form with the path of
+                    the Transaction API charge endpoint URL you want to POST the nonce to
+                    (for example, "/process-card")
+                  -->
+                  <form id="nonce-form" novalidate action="/square/process-payment" method="post">
+                    <fieldset>
+                      <span class="label">Card Number</span>
+                      <div id="sq-card-number"></div>
+              
+                      <div class="third">
+                        <span class="label">Expiration</span>
+                        <div id="sq-expiration-date"></div>
+                      </div>
+              
+                      <div class="third">
+                        <span class="label">CVV</span>
+                        <div id="sq-cvv"></div>
+                      </div>
+              
+                      <div class="third">
+                        <span class="label">Postal</span>
+                        <div id="sq-postal-code"></div>
+                      </div>
+                    </fieldset>
+              
+                    <button id="sq-creditcard" class="button-credit-card" onclick="requestCardNonce(event)">Pay $1.00</button>
+              
+                    <div id="error"></div>
+              
+                    <!--
+                      After a nonce is generated it will be assigned to this hidden input field.
+                    -->
+                    <input type="hidden" id="card-nonce" name="nonce">
+                  </form>
+                </div> <!-- end #sq-ccbox -->
+              
+              </div> <!-- end #form-container -->
 
-    <!-- Begin Mailchimp Signup Form -->
-<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
-	/* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
-	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-</style>
-<div id="mc_embed_signup">
-<form action="https://facebook.us15.list-manage.com/subscribe/post?u=d5b762386ac2d583f577a2dfa&amp;id=060133e14a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-    <div id="mc_embed_signup_scroll">
-	<h2>Subscribe to our mailing list</h2>
-<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
-<div class="mc-field-group">
-	<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
-</label>
-	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
-</div>
-<div class="mc-field-group">
-	<label for="mce-FNAME">First Name </label>
-	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
-</div>
-<div class="mc-field-group">
-	<label for="mce-LNAME">Last Name </label>
-	<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
-</div>
-	<div id="mce-responses" class="clear">
-		<div class="response" id="mce-error-response" style="display:none"></div>
-		<div class="response" id="mce-success-response" style="display:none"></div>
-	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_d5b762386ac2d583f577a2dfa_060133e14a" tabindex="-1" value=""></div>
-    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-    </div>
-</form>
-</div>
-<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
-<!--End mc_embed_signup-->
-
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-    <script>
-        var btn = document.getElementById('SubmitBtn');
-        var form = document.forms[0]
-
-        var xhr = new XMLHttpRequest();
-        var serverURL = form.getAttribute('action');
-
-        // onsubmit="yourJsFunction();return false"
-        function yourJsFunction() {
-            console.log("form sent");
-            return false
-        }
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            var field = form.field.value
-            var field2 = form.field2.value
-            var postString = "name="+field+"&"+"last name="+field2;
-            console.log(postString)
-
-            xhr.open('POST', serverURL, true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send(postString);
-            console.log('submitted')
-
-            xhr.onload = function() {
-                var reply = JSON.parse(this.response)
-                console.log(reply.message)
-                var message = document.getElementById('message');
-                message.innerHTML = reply.message
-            }
-        })
-
-
-        // form.addEventListener('submit', function(event) {
-        //      event.preventDefault()
-        //     console.log('form submitted');
-        //     form.submit();
-        //     form.preventDefault
-        //     return false
-        //  })
-
-         
-    </script>
 </body>
 </html>

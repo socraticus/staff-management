@@ -11,9 +11,14 @@ const request = require("request");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
+const SquareConnect = require('square-connect');
 mongoose.Promise = global.Promise;
 
 const app = express();
+
+// Routes Declarations
+var routes = require('./routes/index');
+app.use('/square', routes);
 
 // Keep Alive app in Heroku
 setInterval(function() {
@@ -38,13 +43,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-// CORS Globally
-// app.all('*', function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//     next();
-//   });
-  
 
 // Enable Logging
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
@@ -347,6 +345,26 @@ app.post('/charge', (req, res) => {
         })
 });
 
+//*************
+// Square API Payment Processing
+//*************
+
+// Set Square Connect credentials
+const defaultClient = SquareConnect.ApiClient.instance;
+
+// Configure OAuth2 access token for authorization: oauth2
+var oauth2 = defaultClient.authentications['oauth2'];
+oauth2.accessToken = process.env.SQUARE_SANDBOX_TOKEN;
+
+const api = new SquareConnect.LocationsApi();
+
+api.listLocations().then(function(data) {
+  console.log('API called successfully. Returned data: ' + data);
+}, function(error) {
+  console.error(error);
+});
+
+
 // Connect to MongoDB Atlas
 const mongoURI = process.env.MONGODB_CONECT;
 mongoose.connect(mongoURI);
@@ -356,44 +374,3 @@ mongoose.connection.once('open', function () {
     console.log('Connection error: ', error);
 })
 
-// const ExpressCustomer = require('./models/expresscustomer.js');
-// var cust = new ExpressCustomer({
-//             name: 'Tatiana',
-//             email: 'tatiana@gmail.com',
-//             amount: 4200,
-//             address: {
-//                 street: '16120 SW 98th Ct',
-//                 city: 'Miami',
-//                 state: 'FL',
-//                 zip_code: '33157'
-//             },
-//             createdAt: 12300000000
-// });
-// cust.save(function(err) {
-//     if(err) return handleError(err);
-//     console.log('Record saved: ', cust)
-// });
-
-
-
-
-
-var server = app.listen(process.env.PORT || '5000', function () {
-    console.log('Server started on port %s', server.address().port);
-})
-
-
-
-
-
-// const token = request.body.stripeToken;
-
-// const charge = stripe.charges.create({
-//     amount: 999,
-//     currency: 'usd',
-//     description: 'Example charge',
-//     source: token,
-//   }, function(err, charge) {
-//     // asynchronously called
-//     }  
-//   );

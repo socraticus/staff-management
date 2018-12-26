@@ -1,8 +1,8 @@
 // Set the application ID
-var applicationId = "REPLACE_ME";
+var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
 
 // Set the location ID
-var locationId = "REPLACE_ME";
+var locationId = "CBASELrQQ0UM52FOTsL42WvyaysgAQ";
 
 
 function buildForm(form) {
