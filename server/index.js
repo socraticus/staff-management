@@ -368,7 +368,7 @@ api.listLocations().then(function(data) {
 
 // Square POST charge route
 app.post('/square/process-payment', (req, res) => {
-    console.log(req.body);
+    console.log(req.body.nonce);
     res.send('square route hit');
 });
 
