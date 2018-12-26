@@ -372,5 +372,9 @@ mongoose.connection.once('open', function () {
     console.log('Connected to MongoDB');
 }).on('error', function (error) {
     console.log('Connection error: ', error);
-})
+});
 
+// Establish Listening PORT
+var server = app.listen(process.env.PORT || '5000', function () {
+    console.log('Server started on port %s', server.address().port);
+})
