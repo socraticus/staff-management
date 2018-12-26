@@ -8,10 +8,10 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // Body Parser Middleware
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
-}))
+}));
+app.use(bodyParser.json());
 
 /* GET home page of square route. */
 router.get('/', function(req, res, next) {
@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/process-payment', function(req,res,next){
-    console.log(req);
+    console.log(req.body);
 	var request_params = req.body;
 
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
