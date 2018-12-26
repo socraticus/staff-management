@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const util = require('util');
 const crypto = require('crypto');
+const SquareConnect = require('square-connect');
 
 const app = express();
 
@@ -21,7 +22,7 @@ router.post('/process-payment', function(req,res,next){
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
 	// Charge the customer's card
-	var transactions_api = new squareConnect.TransactionsApi();
+	var transactions_api = new SquareConnect.TransactionsApi();
 	var request_body = {
 		card_nonce: request_params.nonce,
 		amount_money: {

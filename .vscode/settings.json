@@ -1,8 +1,8 @@
 {
     "liveServer.settings.https": {
         "enable": true,
-        "cert": "/certificates/server.cert",
-        "key": "/certificates/server.cert",
+        "cert": "C:\\Users\\Ariel\\Projects\\staff-management\\certificates\\server.cert",
+        "key": "C:\\Users\\Ariel\\Projects\\staff-management\\certificates\\server.key",
         "passphrase": "12345"
     }
 }

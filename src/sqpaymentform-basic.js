@@ -4,6 +4,15 @@ var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
 // Set the location ID
 var locationId = "CBASELrQQ0UM52FOTsL42WvyaysgAQ";
 
+document.addEventListener("DOMContentLoaded", function(event) {
+  if (SqPaymentForm.isSupportedBrowser()) {
+    paymentForm.build();
+    //paymentForm.recalculateSize();
+  }
+});
+
+
+
 
 function buildForm(form) {
   if (SqPaymentForm.isSupportedBrowser()) {
