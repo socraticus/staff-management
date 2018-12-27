@@ -1,6 +1,7 @@
 // DOM variable declarations
 var serverURL = 'https://ananda-spa-backend.herokuapp.com';
 var cardErrors = document.getElementById('error');
+var submitSquare = document.getElementById('sq-creditcard');
 
 // Set the application ID
 var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
@@ -8,6 +9,7 @@ var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
 // Set the location ID
 var locationId = "CBASELrQQ0UM52FOTsL42WvyaysgAQ";
 
+// Load Square Form
 document.addEventListener("DOMContentLoaded", function (event) {
   if (SqPaymentForm.isSupportedBrowser()) {
     paymentForm.build();
@@ -126,7 +128,7 @@ var paymentForm = new SqPaymentForm({
         return;
       }
       // Assign the nonce value to the hidden form field
-      document.getElementById('card-nonce').value = nonce;
+      // document.getElementById('card-nonce').value = nonce;
 
       // AJAX Submit to Server
       // cardErrors.innerHTML = "PROCESSING... Please do not reload";
@@ -137,7 +139,7 @@ var paymentForm = new SqPaymentForm({
         console.log(event);
         var reply = JSON.parse(event.target.response);
         console.log(reply.title);
-        cardErrors.innerHTML = reply.title;
+        document.getElementById('error').innerHTML = reply.title;
       };
       xhr.send(encodeURI('nonce=' + nonce));
 
