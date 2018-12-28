@@ -2,6 +2,7 @@
 var serverURL = 'https://ananda-spa-backend.herokuapp.com';
 var cardErrors = document.getElementById('error');
 var submitSquare = document.getElementById('sq-creditcard');
+var formBuilt = false;
 
 // Set the application ID
 var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
@@ -9,13 +10,33 @@ var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
 // Set the location ID
 var locationId = "CBASELrQQ0UM52FOTsL42WvyaysgAQ";
 
-// Load Square Form
-document.addEventListener("DOMContentLoaded", function (event) {
-  if (SqPaymentForm.isSupportedBrowser()) {
+// // Load Square Form in dedicated checkout page
+// document.addEventListener("DOMContentLoaded", function (event) {
+//   if (SqPaymentForm.isSupportedBrowser()) {
+//     paymentForm.build();
+//     //paymentForm.recalculateSize();
+//   }
+// });
+
+// Load Square Form in hidden div
+function buildForm() {
+  // Check if form was already built
+  if (formBuilt === true) {
+    return;
+  } else if (SqPaymentForm.isSupportedBrowser()) {
+    var paymentDiv = document.getElementById("modal-wrapper-checkout");
+    if (paymentDiv.style.display === "none") {
+      paymentDiv.style.display = "block";
+    }
     paymentForm.build();
-    //paymentForm.recalculateSize();
+    paymentForm.recalculateSize();
+    formBuilt = true;
+  } else {
+    // Show a "Browser is not supported" message to your buyer
   }
-});
+
+
+}
 
 
 /*
@@ -47,13 +68,13 @@ var paymentForm = new SqPaymentForm({
 
   // Customize the CSS for SqPaymentForm iframe elements
   inputStyles: [{
-    fontSize: '16px',
-    fontFamily: 'Helvetica Neue',
-    padding: '16px',
-    color: '#373F4A',
+    fontSize: '14px',
+    fontFamily: 'Helvetica',
+    //padding: '8px 12px',
+    color: '#888',
     backgroundColor: 'transparent',
-    lineHeight: '24px',
-    placeholderColor: '#CCC',
+    lineHeight: '20px',
+    placeholderColor: '#888',
     _webkitFontSmoothing: 'antialiased',
     _mozOsxFontSmoothing: 'grayscale'
   }],
@@ -146,7 +167,7 @@ var paymentForm = new SqPaymentForm({
 
 
       // POST the nonce form to the payment processing page
-      //document.getElementById('nonce-form').submit();
+      // document.getElementById('nonce-form').submit();
 
     },
 
