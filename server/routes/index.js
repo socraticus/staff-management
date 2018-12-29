@@ -55,7 +55,8 @@ router.post('/process-payment', function(req,res,next){
 			currency: 'USD'
 		},
 		idempotency_key: idempotency_key
-	};
+    };
+    console.log(request_body);
 	transactions_api.charge(process.env.square_location_id_sandbox, request_body).then(function(data) {
 		console.log(util.inspect(data, false, null));
 		res.json( {
