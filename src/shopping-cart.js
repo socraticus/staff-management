@@ -50,8 +50,27 @@ window.onload = function () {
                     id: '2',
                     name: 'Dermapen',
                     price: 69
+                },
+                {
+                    id: '3',
+                    name: 'Discount',
+                    price: 10
                 }
-            ]
+            ],
+            discountCode: '',
+            discountMessage: '',
+            discountResponse: {
+                message: '',
+                discountAmount: 0,
+                percentage: true
+            }
+        },
+        watch: {
+            discountCode: function () {
+                if (this.discountCode.length === 5) {
+                    this.validateDiscount();
+                }
+            }
         },
         methods: {
             addProductsToCart: function (product) {
@@ -88,6 +107,35 @@ window.onload = function () {
                 }
 
                 cartIconTotal.innerHTML = this.cart.items.length;
+            },
+            validateDiscount: function () {
+                setTimeout(function () {
+
+                    this.discountMessage = 'Validating...';
+
+                    axios.get(serverURL + "/discounts/?discountCode=" + this.discountCode)
+                        .then(function (response) {
+
+                            // Populate discountResponse property
+                            this.discountResponse.message = response.message;
+                            this.discountResponse.discountAmount = response.discountAmount;
+                            this.discountResponse.percentage = response.percentage;
+
+                            this.discountMessage = response.message;
+
+                            if (this.cartTotal === 0) {
+                                this.discountCode = 'You must add services to the cart first';
+                                return;
+                            } else {
+                                if (this.discountMessage === 'Your discount has been validated') {
+                                    
+                                    this.products[2].price = this.calculateDiscount;
+                                    this.addProductsToCart(this.products[2]);
+                                }
+
+                            }
+                        });
+                }, 500);
             }
         },
         computed: {
@@ -99,6 +147,14 @@ window.onload = function () {
                 });
 
                 return total;
+            },
+            calculateDiscount: function () {
+
+                if (this.discountResponse.percentage === true) {
+                    return (this.discountResponse.discountAmount * this.cartTotal / 100) * (-1);
+                } else
+                    return (this.discountResponse.discountAmount) * (-1);
+
             }
         }
     });
