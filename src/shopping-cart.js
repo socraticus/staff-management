@@ -77,7 +77,7 @@ window.onload = function () {
                     this.discountMessage = '';
 
                     if (this.discountCode.length === 8) {
-                        this.discountMessage = 'Validating...';
+                        // this.discountMessage = 'Validating...';
                         this.validateDiscount();
                     }
                 }
@@ -140,10 +140,10 @@ window.onload = function () {
 
                             console.log(responsethisVue1.discountResponse);
 
-                            if (this.discountMessage === 'Your discount has been validated') {
+                            if (thisVue1.discountMessage === 'Your discount has been validated') {
 
-                                this.products[2].price = this.calculateDiscount;
-                                this.addProductsToCart(this.products[2]);
+                                thisVue1.products[2].price = thisVue1.calculateDiscount;
+                                thisVue1.addProductsToCart(thisVue1.products[2]);
                             }
                         });
                 }, 500);
