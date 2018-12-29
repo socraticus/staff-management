@@ -28,7 +28,7 @@ const corsOptions = {
     // optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 // router.use(cors(corsOptions));
-//router.use(cors())
+router.use(cors());
 
 /* GET home page of square route. */
 router.get('/', function(req, res, next) {
@@ -63,6 +63,7 @@ router.post('/process-payment', function(req,res,next){
 			'result': "Payment Successful (see console for transaction output)"
 		});
 	}, function(error) {
+        console.log(error);
 		console.log(util.inspect(error.status, false, null));
 		res.json( {
 			'title': 'Payment Failure',

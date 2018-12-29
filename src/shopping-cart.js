@@ -273,13 +273,13 @@ window.onload = function () {
                                 return;
                             }
                             // POST the nonce form to the payment processing page
-                                axios.post(serverURL + '/square/process-payment', {
-                                    body: {
-                                        nonce: nonce
-                                    }
-                                }).then(function(response) {
-                                    console.log(response);
-                                });
+                            axios.post(serverURL + '/square/process-payment', {
+
+                                nonce: nonce
+
+                            }).then(function (response) {
+                                console.log(response);
+                            });
 
                             // document.getElementById("nonce-form").submit();
                         },
