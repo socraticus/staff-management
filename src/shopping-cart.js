@@ -67,16 +67,21 @@ window.onload = function () {
         },
         watch: {
             discountCode: function () {
-                if (this.discountCode.length === 8) {
-                    if (this.cartTotal === 0) {
-
-                        this.discountMessage = 'You must add services to the cart first';
-                        this.discountCode = '';
-                        return;
-                        
-                    }
-                    this.validateDiscount();
+                if (this.discountCode.length >= 1 && this.cartTotal === 0) {
+                    this.discountMessage = 'You must add services to the cart first';
+                    this.discountCode = '';
+                    return;
                 }
+                if (this.discountCode.length >= 1 && this.cartTotal > 0) {
+
+                    this.discountMessage = '';
+
+                    if (this.discountCode.length === 8) {
+                        this.discountMessage = 'Validating...';
+                        this.validateDiscount();
+                    }
+                }
+                
             }
         },
         methods: {
@@ -116,19 +121,24 @@ window.onload = function () {
                 cartIconTotal.innerHTML = this.cart.items.length;
             },
             validateDiscount: function () {
+
+                var thisVue1 = this;
+
                 setTimeout(function () {
 
-                    this.discountMessage = 'Validating...';
+                    thisVue1.discountMessage = 'Validating...';
 
-                    axios.get(serverURL + "/discounts/?discountCode=" + this.discountCode)
+                    axios.get(serverURL + "/discounts/?discountCode=" + thisVue1.discountCode)
                         .then(function (response) {
 
                             // Populate discountResponse property
-                            this.discountResponse.message = response.message;
-                            this.discountResponse.discountAmount = response.discountAmount;
-                            this.discountResponse.percentage = response.percentage;
+                            thisVue1.discountResponse.message = response.message;
+                            thisVue1.discountResponse.discountAmount = response.discountAmount;
+                            thisVue1.discountResponse.percentage = response.percentage;
 
-                            this.discountMessage = response.message;
+                            thisVue1.discountMessage = response.message;
+
+                            console.log(responsethisVue1.discountResponse);
 
                             if (this.discountMessage === 'Your discount has been validated') {
 
