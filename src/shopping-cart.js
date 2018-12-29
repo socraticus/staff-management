@@ -190,6 +190,7 @@ window.onload = function () {
                 }
             },
             paymentForm: function () {
+                var that = this;
                 var paymentForm = new SqPaymentForm({
                     autoBuild: false,
                     applicationId: applicationId,
@@ -273,11 +274,12 @@ window.onload = function () {
                                 return;
                             }
                             // POST the nonce form to the payment processing page
+                            console.log(that.cartTotal, that.customer);
                             axios.post(serverURL + '/square/process-payment', {
                                 body: {
                                     nonce: nonce,
-                                    amount: this.cartTotal,
-                                    customer: this.customer
+                                    amount: that.cartTotal,
+                                    customer: that.customer
                                 }
                             }).then(function (response) {
                                 console.log(response);
