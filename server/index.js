@@ -82,8 +82,8 @@ app.get('/vouchers', (req, res) => {
 
 // Valid Discounts
 app.get('/discounts', (req, res) => {
-    Discount.find({ discountCode: req.query.discountCode }).
-        then(function (reslt) {
+    Discount.findOne({ discountCode: req.query.discountCode }).orFail(new Error('No docs found!'))
+    .then(function (reslt) {
             console.log(reslt);
 
             var respObj = {
@@ -94,7 +94,7 @@ app.get('/discounts', (req, res) => {
             var today = Date.now();
 
 
-            if (reslt === null) {
+            if (reslt == []) {
                 respObj.message = 'The discount code could not be validated';
                 res.json(respObj);
             } else if (reslt[0].ending >= today) {
