@@ -82,6 +82,12 @@ app.get('/vouchers', (req, res) => {
 
 // Valid Discounts
 app.get('/discounts', (req, res) => {
+    var respObj = {
+        message: '',
+        discountAmount: 0,
+        percentage: true
+    };
+    var today = Date.now();
 
     var findDiscount = function () {
         return Discount.findOne({ discountCode: req.query.discountCode }).orFail(new Error('No docs found!'))
@@ -90,13 +96,6 @@ app.get('/discounts', (req, res) => {
     findDiscount()
         .then(function (reslt) {
             console.log(reslt);
-
-            var respObj = {
-                message: '',
-                discountAmount: 0,
-                percentage: true
-            };
-            var today = Date.now();
 
             if (reslt[0].ending >= today) {
                 respObj.message = 'Your discount has been validated';
