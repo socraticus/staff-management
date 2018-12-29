@@ -94,7 +94,7 @@ app.get('/discounts', (req, res) => {
             var today = Date.now();
 
 
-            if (reslt === []) {
+            if (reslt === null) {
                 respObj.message = 'The discount code could not be validated';
                 res.json(respObj);
             } else if (reslt[0].ending >= today) {
