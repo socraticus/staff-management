@@ -49,7 +49,7 @@ router.post('/process-payment', function(req,res,next){
 	// Charge the customer's card
 	var transactions_api = new SquareConnect.TransactionsApi();
 	var request_body = {
-		card_nonce: request_params.nonce,
+		card_nonce: request_params.body.nonce,
 		amount_money: {
 			amount: 100, // $1.00 charge
 			currency: 'USD'
