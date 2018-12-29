@@ -51,7 +51,7 @@ router.post('/process-payment', function(req,res,next){
 	var request_body = {
 		card_nonce: request_params.body.nonce,
 		amount_money: {
-			amount: 100, // $1.00 charge
+			amount: request_params.body.amount * 100,
 			currency: 'USD'
 		},
 		idempotency_key: idempotency_key
