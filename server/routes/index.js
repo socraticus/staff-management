@@ -4,6 +4,7 @@ const util = require('util');
 const crypto = require('crypto');
 const SquareConnect = require('square-connect');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 
@@ -12,6 +13,21 @@ router.use(bodyParser.urlencoded({
     extended: false
 }));
 router.use(bodyParser.json());
+
+// CORS Middleware
+// CORS Middleware
+const whitelist = ['https://www.anandaspamiami.com', 'https://ananda-spa-user-profile.firebaseapp.com'];
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+    // optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+router.use(cors(corsOptions));
 
 /* GET home page of square route. */
 router.get('/', function(req, res, next) {
