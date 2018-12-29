@@ -82,31 +82,38 @@ app.get('/vouchers', (req, res) => {
 
 // Valid Discounts
 app.get('/discounts', (req, res) => {
-    Discount.findOne({ discountCode: req.query.discountCode }).orFail(new Error('No docs found!'))
-    .then(function (reslt) {
-            console.log(reslt);
 
-            var respObj = {
-                message: '',
-                discountAmount: 0,
-                percentage: true
-            };
-            var today = Date.now();
+    var findDiscount = function () {
+        return Discount.findOne({ discountCode: req.query.discountCode }).orFail(new Error('No docs found!'))
+    };
 
+    findDiscount().then(function (reslt) {
+        console.log(reslt);
 
-            if (reslt == []) {
-                respObj.message = 'The discount code could not be validated';
-                res.json(respObj);
-            } else if (reslt[0].ending >= today) {
-                respObj.message = 'Your discount has been validated';
-                respObj.discountAmount = reslt[0].discountAmount;
-                respObj.percentage = reslt[0].percentage;
-                res.json(respObj);
-            } else {
-                respObj.message = 'This discount code has expired';
-                res.json(respObj);
-            }
-        });
+        var respObj = {
+            message: '',
+            discountAmount: 0,
+            percentage: true
+        };
+        var today = Date.now();
+
+        if (reslt[0].ending >= today) {
+            respObj.message = 'Your discount has been validated';
+            respObj.discountAmount = reslt[0].discountAmount;
+            respObj.percentage = reslt[0].percentage;
+            res.json(respObj);
+        } else {
+            respObj.message = 'This discount code has expired';
+            res.json(respObj);
+        }
+    })
+    .catch(function(err) {
+        // if (reslt == []) {
+        //     respObj.message = 'The discount code could not be validated';
+        //     res.json(respObj);
+        // } else
+        console.log(err);
+    });
 });
 
 // Subscriber Global Object
