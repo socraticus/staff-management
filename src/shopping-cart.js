@@ -58,7 +58,7 @@ window.onload = function () {
                 }
             ],
             discountCode: '',
-            discountMessage: '',
+            discountMessage: 'test',
             discountResponse: {
                 message: '',
                 discountAmount: 0,
@@ -67,7 +67,14 @@ window.onload = function () {
         },
         watch: {
             discountCode: function () {
-                if (this.discountCode.length === 5) {
+                if (this.discountCode.length === 8) {
+                    if (this.cartTotal === 0) {
+
+                        this.discountMessage = 'You must add services to the cart first';
+                        this.discountCode = '';
+                        return;
+                        
+                    }
                     this.validateDiscount();
                 }
             }
@@ -123,16 +130,10 @@ window.onload = function () {
 
                             this.discountMessage = response.message;
 
-                            if (this.cartTotal === 0) {
-                                this.discountCode = 'You must add services to the cart first';
-                                return;
-                            } else {
-                                if (this.discountMessage === 'Your discount has been validated') {
-                                    
-                                    this.products[2].price = this.calculateDiscount;
-                                    this.addProductsToCart(this.products[2]);
-                                }
+                            if (this.discountMessage === 'Your discount has been validated') {
 
+                                this.products[2].price = this.calculateDiscount;
+                                this.addProductsToCart(this.products[2]);
                             }
                         });
                 }, 500);
