@@ -12,7 +12,21 @@ var locationId = "CBASELrQQ0UM52FOTsL42WvyaysgAQ";
 
 // Initialize Vue instance
 
+
+function testingVue() {
+    console.log('accessed from HTML');
+    checkoutVue.testing();
+}
+
+
 window.onload = function () {
+
+    // Proxying Vue instance
+    var shoppingCartBtn = document.getElementById('shopping-cart-btn');
+    shoppingCartBtn.addEventListener('click', function () {
+        console.log('accessed from HTML');
+        checkoutVue.buildForm();
+    });
 
     // DOM Variable Declarations
     var cartIconTotal = document.getElementById('shopping-cart-total-items');
@@ -130,25 +144,7 @@ window.onload = function () {
 
         },
         watch: {
-            formBuild: function () {
-                // Check if form was already built
-                if (showPaymentForm) {
-                    return;
-                } else {
-                    if (SqPaymentForm.isSupportedBrowser()) {
-                        var paymentDiv = document.getElementById("modal-wrapper-checkout");
-                        if (paymentDiv.style.display === "none") {
-                          paymentDiv.style.display = "block";
-                        }
-                        this.paymentForm.build();
-                        this.paymentForm.recalculateSize();
-                        this.showPaymentForm = !showPaymentForm;
-                      } else {
-                        // Show a "Browser is not supported" message to your buyer
-                      }
-                    
-                }
-            }
+
         },
         computed: {
             cartTotal: function () {
@@ -192,13 +188,9 @@ window.onload = function () {
                         height: '0.5px'
                     };
                 }
-            }
-
-        },
-        methods: {
-            mounted: function () {
-                var that = this;
-                this.paymentForm = new SqPaymentForm({
+            },
+            paymentForm: function () {
+                var paymentForm = new SqPaymentForm({
                     autoBuild: false,
                     applicationId: applicationId,
                     locationId: locationId,
@@ -251,8 +243,8 @@ window.onload = function () {
                         methodsSupported: function (methods) {
                             // Only show the button if Apple Pay for Web is enabled
                             // Otherwise, display the wallet not enabled message.
-                            that.applePay = methods.applePay;
-                            that.masterpass = methods.masterpass;
+                            // that.applePay = methods.applePay;
+                            // that.masterpass = methods.masterpass;
                         },
 
                         /*
@@ -280,11 +272,16 @@ window.onload = function () {
                                 });
                                 return;
                             }
-                            // Assign the nonce value to the hidden form field
-                            document.getElementById("card-nonce").value = nonce;
-
                             // POST the nonce form to the payment processing page
-                            document.getElementById("nonce-form").submit();
+                                axios.post(serverURL + '/square/process-payment', {
+                                    body: {
+                                        nonce: nonce
+                                    }
+                                }).then(function(response) {
+                                    console.log(response);
+                                });
+
+                            // document.getElementById("nonce-form").submit();
                         },
                         /*
                            * callback function: paymentFormLoaded
@@ -296,6 +293,34 @@ window.onload = function () {
                         }
                     }
                 });
+
+                return paymentForm;
+            }
+
+
+        },
+        methods: {
+            testing: function () {
+                console.log('Vue accessed');
+            },
+            buildForm: function () {
+                // Check if form was already built
+                if (this.showPaymentForm) {
+                    return;
+                } else {
+                    if (SqPaymentForm.isSupportedBrowser()) {
+                        var paymentDiv = document.getElementById("modal-wrapper-checkout");
+                        if (paymentDiv.style.display === "none") {
+                            paymentDiv.style.display = "block";
+                        }
+                        this.paymentForm.build();
+                        this.paymentForm.recalculateSize();
+                        this.showPaymentForm = !this.showPaymentForm;
+                    } else {
+                        // Show a "Browser is not supported" message to your buyer
+                    }
+
+                }
             },
             requestCardNonce: function (event) {
                 // Don't submit the form until SqPaymentForm returns with a nonce

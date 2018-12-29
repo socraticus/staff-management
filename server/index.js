@@ -30,16 +30,16 @@ app.use(bodyParser.urlencoded({
 }))
 
 // CORS Middleware
-var whitelist = ['https://www.anandaspamiami.com', 'https://ananda-spa-user-profile.firebaseapp.com'];
-var corsOptions = {
+const whitelist = ['https://www.anandaspamiami.com', 'https://ananda-spa-user-profile.firebaseapp.com'];
+const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
-    },
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+    }
+    // optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
 
@@ -63,10 +63,6 @@ app.get('/', (req, res) => {
     console.log("Connection established");
     res.status(200).send("Express Server Working");
 });
-
-// Payment Route
-const routes = require('./routes/index');
-app.use('/square', routes);
 
 // Vouchers Left Route
 app.get('/vouchers', (req, res) => {
@@ -216,9 +212,6 @@ app.post('/mailchimp', (req, res) => {
                 res.json({ 'message': 'First Step Completed' });
             }
         }
-
-        //const emailID = response.body.exact_matches.members[0].id;
-        //console.log(emailID);
 
 
     });
@@ -376,6 +369,10 @@ api.listLocations().then(function (data) {
 }, function (error) {
     console.error(error);
 });
+
+// Square Payment Route
+const routes = require('./routes/index');
+app.use('/square', cors(corsOptions), routes);
 
 // // Square POST charge route
 // app.post('/square/process-payment', (req, res) => {
