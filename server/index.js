@@ -1,6 +1,6 @@
 const express = require('express');
-// const stripe = require("stripe")(process.env.STRIPE_LIVE_SECRET);
-const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET);
+const stripe = require("stripe")(process.env.STRIPE_LIVE_SECRET);
+// const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET);
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const ExpressCustomer = require('./models/expresscustomer.js');

@@ -13,6 +13,7 @@ var discountBtn = document.getElementById('express-discount-btn');
 var discountField = document.getElementById('express-discount-field');
 var drawer = document.getElementById('drawer-outside-slip');
 var drawerBtn = document.getElementById('drawer-discount-btn');
+var drawerWrapper = document.getElementById('drawer-wrapper');
 var amount = 1000;
 
 //Shopping Cart
@@ -30,16 +31,13 @@ var addUpgrade = function () {
 
 var removeUpgrade = function () {
   $('#express-row-upgrade').hide();
+  $('#express-row-discount').hide();
   $('#express-row-gratuity').css('display', 'flex');
   $('#express-row-total').text('$10.00');
   $('input[name=expressCart][value="1000"]').prop('checked', true);
   $('#express-checkbox-first').prop('checked', false);
   $('#express-checkbox-second').prop('checked', false);
   amount = 1000;
-};
-
-var applyDiscount = function () {
-
 };
 
 $('input[name=expressCart][value="1000"]').on('click', removeUpgrade);
@@ -94,53 +92,84 @@ var updateVoucherCount = function (event) {
 discountBtn.addEventListener('click', function (event) {
   event.preventDefault();
 
-  cardErrorsDiscount.innerHTML = "PROCESSING... Validating your discount";
+  if ($('#express-row-discount').css('display') === 'flex') {
+    cardErrorsDiscount.innerHTML = "Discount has already been applied";
+    return;
+  } else {
+    cardErrorsDiscount.innerHTML = "PROCESSING... Validating your discount";
 
-  // AJAX request to Validate Discount code
-  var discountURL = serverURL + "/discounts/?discountCode=" + discountField.value;
-  var discountxhr = new XMLHttpRequest();
-  discountxhr.open('GET', discountURL, true);
-  discountxhr.onload = function (evt) {
-    console.log(evt);
-    var reply = JSON.parse(evt.target.response);
-    console.log(reply);
-    cardErrorsDiscount.innerHTML = reply.message;
-    if (reply.message === 'Your discount has been validated') {
-      var calculatedDisc = 0;
-      if (amount === 1000) {
-        cardErrorsDiscount.innerHTML = 'This discount applies only to the Deep Cleansing Facial. Please add it to the cart and reapply discount';
-        return;
-      } else {
-        $('#express-row-discount').css('display', 'flex');
+    // AJAX request to Validate Discount code
+    var discountURL = serverURL + "/discounts/?discountCode=" + discountField.value;
+    var discountxhr = new XMLHttpRequest();
+    discountxhr.open('GET', discountURL, true);
+    discountxhr.onload = function (evt) {
+      console.log(evt);
+      var reply = JSON.parse(evt.target.response);
+      console.log(reply);
+      cardErrorsDiscount.innerHTML = reply.message;
+      if (reply.message === 'Your discount has been validated') {
+        var calculatedDisc = 0;
+        if (amount === 1000) {
+          cardErrorsDiscount.innerHTML = 'This discount applies only to the Deep Cleansing Facial. Please add it to the cart and reapply discount';
+          return;
+        } else {
+          $('#express-row-discount').css('display', 'flex');
 
-        $('#express-discount-value').text(function () {
-          if (reply.percentage === true) {
-            calculatedDisc = parseFloat(amount * reply.discountAmount / 10000).toFixed(2);
-            return "-$" + calculatedDisc;
-          } else {
-            calculatedDisc = reply.discountAmount;
-            return "-$" + calculatedDisc;
-          }
-        });
+          $('#express-discount-value').text(function () {
+            if (reply.percentage === true) {
+              calculatedDisc = parseFloat(amount * reply.discountAmount / 10000).toFixed(2);
+              return "-$" + calculatedDisc;
+            } else {
+              calculatedDisc = reply.discountAmount;
+              return "-$" + calculatedDisc;
+            }
+          });
 
-        $('#express-row-total').text("$" + parseFloat(amount / 100 - calculatedDisc).toFixed(2));
-        amount = amount - (calculatedDisc * 100);
+          $('#express-row-total').text("$" + parseFloat(amount / 100 - calculatedDisc).toFixed(2));
+          amount = amount - (calculatedDisc * 100);
 
+        }
       }
-    }
-  };
+    };
 
-  discountxhr.send();
+    discountxhr.send();
 
+  }
 });
 
 // Apply discount from Drawer
 function discountFromDrawer() {
-  addUpgrade();
-  var disc = drawerBtn.getAttribute('data')
-  discountField.value = disc;
-  simulate(discountBtn, 'click');
+  if ($('#express-row-discount').css('display') === 'flex') {
+    cardErrorsDiscount.innerHTML = "Discount has already been applied";
+    return;
+  } else {
+    addUpgrade();
+    var disc = drawerBtn.getAttribute('data');
+    discountField.value = disc;
+    simulate(discountBtn, 'click');
+  }
 }
+
+// DOM manipulation after finishing loading
+$(document).ready(function(){
+
+// Fix problem with G in Google Reviews
+$('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
+  
+// Link to Tab2 from Button in Tab1
+$('#express-Tab2').addClass('inactiveLink');
+
+// Toggle Drawer open and closed
+
+
+
+});
+
+
+
+
+
+
 
 // *******
 // Webflow Animation of finish Quiz
@@ -246,8 +275,8 @@ function triggerAnimation() {
 //************//
 
 //Initialize Stripe
-// var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
-var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
+var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
+// var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
 var elements = stripe.elements();
 
 // Custom styling can be passed to options when creating an Element.
@@ -346,14 +375,6 @@ function stripeTokenHandler(token) {
 }
 
 
-// Fix problem with G in Google Reviews
-$('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
-
-
-// Link to Tab2 from Button in Tab1
-$('#express-Tab2').addClass('inactiveLink');
-
-
 $('#express-golden-button1').on('click', function (evt) {
   evt.preventDefault();
 
@@ -379,8 +400,26 @@ $('#express-golden-button1').on('click', function (evt) {
 
         // Simulate click on drawer element
         setTimeout(function () {
-          simulate(drawer, "click");
+          // Verify Drawer is closed
+          if(drawerWrapper.style.transform.match(/(0px, 0px, 0px)/) === null) {
+            console.log('drawer is closed')
+            simulate(drawer, "click");
+            console.log('clicked to open')
+          } else {
+            return;
+          }
         }, 15000);
+
+        setTimeout(function () {
+          // Verify Drawer is closed
+          if(drawerWrapper.style.transform.match(/(0px, 0px, 0px)/) === null) {
+            console.log('drawer is closed')
+            return;
+          } else {
+            simulate(drawer, "click")
+            console.log('clicked to close')
+          }
+        }, 30000)
 
 
       } else {
