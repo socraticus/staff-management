@@ -1,6 +1,6 @@
 const express = require('express');
-const stripe = require("stripe")(process.env.STRIPE_LIVE_SECRET);
-// const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET);
+// const stripe = require("stripe")(process.env.STRIPE_LIVE_SECRET);
+const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET);
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const ExpressCustomer = require('./models/expresscustomer.js');
@@ -88,8 +88,6 @@ app.get('/discounts', (req, res) => {
         percentage: true
     };
     var today = Date.now();
-
-    console.log(req.query);
 
     var findDiscount = function () {
         return Discount.findOne({ discountCode: req.query.discountCode }).orFail(new Error('No docs found!'))
