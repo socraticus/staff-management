@@ -11,6 +11,8 @@ var lname = document.getElementById('express-last-name');
 var emailValue = document.getElementById('express-email');
 var discountBtn = document.getElementById('express-discount-btn');
 var discountField = document.getElementById('express-discount-field');
+var drawer = document.getElementById('drawer-outside-slip');
+var drawerBtn = document.getElementById('drawer-discount-btn');
 var amount = 1000;
 
 //Shopping Cart
@@ -132,8 +134,13 @@ discountBtn.addEventListener('click', function (event) {
 
 });
 
-
-
+// Apply discount from Drawer
+function discountFromDrawer() {
+  addUpgrade();
+  var disc = drawerBtn.getAttribute('data')
+  discountField.value = disc;
+  simulate(discountBtn, 'click');
+}
 
 // *******
 // Webflow Animation of finish Quiz
@@ -350,6 +357,8 @@ $('#express-Tab2').addClass('inactiveLink');
 $('#express-golden-button1').on('click', function (evt) {
   evt.preventDefault();
 
+
+
   // Validade form fields
 
   if (fname.value === '' || lname.value === '' || emailValue.value === '') {
@@ -367,6 +376,13 @@ $('#express-golden-button1').on('click', function (evt) {
         cardErrors1rstTab.innerHTML = mailchimpQueryresponse.message;
         $('#express-Tab2').triggerHandler('click');
         window.location.href = "https://www.anandaspamiami.com/offers/free-facial-express#express-tab2";
+
+        // Simulate click on drawer element
+        setTimeout(function () {
+          simulate(drawer, "click");
+        }, 15000);
+
+
       } else {
         cardErrors1rstTab.innerHTML = mailchimpQueryresponse.message;
       }
@@ -383,3 +399,59 @@ $('#express-golden-button1').on('click', function (evt) {
 
 
 });
+
+// Simulate Click Event. Helper function to trigger Webflow animations
+function simulate(element, eventName) {
+  var options = extend(defaultOptions, arguments[2] || {});
+  var oEvent, eventType = null;
+
+  for (var name in eventMatchers) {
+    if (eventMatchers[name].test(eventName)) { eventType = name; break; }
+  }
+
+  if (!eventType)
+    throw new SyntaxError('Only HTMLEvents and MouseEvents interfaces are supported');
+
+  if (document.createEvent) {
+    oEvent = document.createEvent(eventType);
+    if (eventType == 'HTMLEvents') {
+      oEvent.initEvent(eventName, options.bubbles, options.cancelable);
+    }
+    else {
+      oEvent.initMouseEvent(eventName, options.bubbles, options.cancelable, document.defaultView,
+        options.button, options.pointerX, options.pointerY, options.pointerX, options.pointerY,
+        options.ctrlKey, options.altKey, options.shiftKey, options.metaKey, options.button, element);
+    }
+    element.dispatchEvent(oEvent);
+  }
+  else {
+    options.clientX = options.pointerX;
+    options.clientY = options.pointerY;
+    var evt = document.createEventObject();
+    oEvent = extend(evt, options);
+    element.fireEvent('on' + eventName, oEvent);
+  }
+  return element;
+}
+
+function extend(destination, source) {
+  for (var property in source)
+    destination[property] = source[property];
+  return destination;
+}
+
+var eventMatchers = {
+  'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+  'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
+}
+var defaultOptions = {
+  pointerX: 0,
+  pointerY: 0,
+  button: 0,
+  ctrlKey: false,
+  altKey: false,
+  shiftKey: false,
+  metaKey: false,
+  bubbles: true,
+  cancelable: true
+}

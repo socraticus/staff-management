@@ -89,6 +89,8 @@ app.get('/discounts', (req, res) => {
     };
     var today = Date.now();
 
+    console.log(req.query);
+
     var findDiscount = function () {
         return Discount.findOne({ discountCode: req.query.discountCode }).orFail(new Error('No docs found!'))
     };
