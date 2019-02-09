@@ -198,6 +198,9 @@ window.onload = function () {
             addButtons[i].addEventListener('click', function () {
                 console.log('clicked')
                 console.log(productID);
+                axios.get(serverURL + '/square/services-list').then(function (response) {
+                    console.log(response);
+                });
             })
         }
         console.log(addButtons)

@@ -381,8 +381,8 @@ api.listLocations().then(function (data) {
 });
 
 // Square Payment Route
-const routes = require('./routes/index');
-app.use('/square', routes);
+const routeSquare = require('./routes/square');
+app.use('/square', routeSquare);
 
 // // Square POST charge route
 // app.post('/square/process-payment', (req, res) => {
