@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const SquareConnect = require('square-connect');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const Service = require('./models/service.js');
 
 const app = express();
 
