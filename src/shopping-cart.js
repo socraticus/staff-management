@@ -21,6 +21,9 @@ function testingVue() {
 
 window.onload = function () {
 
+    // Add Listeners to addButtons
+    addClickedProduct()
+
     // Proxying Vue instance
     var shoppingCartBtn = document.getElementById('shopping-cart-btn');
     shoppingCartBtn.addEventListener('click', function () {
@@ -63,7 +66,8 @@ window.onload = function () {
                 message: '',
                 discountAmount: 0,
                 percentage: true
-            }
+            },
+            showDiscount: false
         },
         watch: {
             discountCode: function () {
@@ -141,9 +145,8 @@ window.onload = function () {
                             console.log(responsethisVue1.discountResponse);
 
                             if (thisVue1.discountMessage === 'Your discount has been validated') {
-
-                                thisVue1.products[2].price = thisVue1.calculateDiscount;
-                                thisVue1.addProductsToCart(thisVue1.products[2]);
+                                thisVue1.showDiscount = true;
+                                console.log(thisVue1.showDiscount)
                             }
                         });
                 }, 500);
@@ -162,10 +165,22 @@ window.onload = function () {
             calculateDiscount: function () {
 
                 if (this.discountResponse.percentage === true) {
-                    return (this.discountResponse.discountAmount * this.cartTotal / 100) * (-1);
+                    return (this.discountResponse.discountAmount * this.cartTotal / 100);
                 } else
-                    return (this.discountResponse.discountAmount) * (-1);
+                    return (this.discountResponse.discountAmount);
 
+            },
+            cartTotalFinal: function () {
+                return this.cartTotal - this.calculateDiscount;
+            }
+        },
+        filters: {
+            twoDecimals: function (value) {
+                if (value % 1 === 0) {
+                    return value;
+                } else {
+                    return parseFloat(Math.round(value * 100) / 100).toFixed(2);
+                }
             }
         }
     });
@@ -174,18 +189,32 @@ window.onload = function () {
 
     cartIconTotal.innerHTML = mainVue.cart.items.length;
 
+    function addClickedProduct() {
+        var addButtons = document.querySelectorAll("a[productID]");
 
-    addCartDeepCleansing.addEventListener('click', function (event) {
-        event.preventDefault();
+        for (var i = 0; i < addButtons.length; i++) {
+            var productID = addButtons[i].getAttribute('productid')
+            
+            addButtons[i].addEventListener('click', function (event) {
+                console.log('clicked')
+                console.log(productID);
+                console.log(event)
+            })
+        }
+        console.log(addButtons)
+    }
 
-        mainVue.addProductsToCart(mainVue.products[0]);
-    });
+    // addCartDeepCleansing.addEventListener('click', function (event) {
+    //     event.preventDefault();
 
-    addCartDermapen.addEventListener('click', function (event) {
-        event.preventDefault();
+    //     mainVue.addProductsToCart(mainVue.products[0]);
+    // });
 
-        mainVue.addProductsToCart(mainVue.products[1]);
-    });
+    // addCartDermapen.addEventListener('click', function (event) {
+    //     event.preventDefault();
+
+    //     mainVue.addProductsToCart(mainVue.products[1]);
+    // });
 
     // Checkout Vue Instance
 
@@ -208,14 +237,37 @@ window.onload = function () {
             masterpass: false,
             applePay: false,
             showPaymentForm: false,
-
         },
-        watch: {
-
+        filters: {
+            twoDecimals: function (value) {
+                if (value % 1 === 0) {
+                    return value;
+                } else {
+                    return parseFloat(Math.round(value * 100) / 100).toFixed(2);
+                }
+            }
         },
         computed: {
             cartTotal: function () {
                 return mainVue.cartTotal;
+            },
+            cartTotalFinal: function () {
+                return mainVue.cartTotalFinal;
+            },
+            calculateDiscount: function () {
+                return mainVue.calculateDiscount;
+            },
+            discountCode: function () {
+                return mainVue.discountCode;
+            },
+            showDiscount: function () {
+                if ((mainVue.cartTotal - mainVue.cartTotalFinal) === 0) {
+                    console.log("false")
+                    return false;
+                } else {
+                    console.log("true")
+                    return true;
+                }
             },
             activeCheckout: function () {
                 if (this.showEmail) {

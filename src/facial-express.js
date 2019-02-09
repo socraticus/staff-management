@@ -141,11 +141,13 @@ discountBtn.addEventListener('click', function (event) {
 function discountFromDrawer() {
   if ($('#express-row-discount').css('display') === 'flex') {
     cardErrorsDiscount.innerHTML = "Discount has already been applied";
+    discountField.setAttribute('data', 'Applied-2nd-Time');
     return;
   } else {
     addUpgrade();
     var disc = drawerBtn.getAttribute('data');
     discountField.value = disc;
+    discountField.setAttribute('data', disc);
     simulate(discountBtn, 'click');
   }
 }
