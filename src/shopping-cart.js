@@ -195,10 +195,9 @@ window.onload = function () {
         for (var i = 0; i < addButtons.length; i++) {
             var productID = addButtons[i].getAttribute('productid')
             
-            addButtons[i].addEventListener('click', function (event) {
+            addButtons[i].addEventListener('click', function () {
                 console.log('clicked')
                 console.log(productID);
-                console.log(event)
             })
         }
         console.log(addButtons)
