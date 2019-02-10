@@ -46,6 +46,7 @@ router.post('/process-payment', function(req,res,next){
 	var request_params = req.body;
 	console.log("THIS IS THE TYPE " + typeof(request_params.body.amount))
 	console.log("THIS IS PARSED " + parseInt(request_params.body.amount * 100))
+	var parsedAmount = parseInt(request_params.body.amount * 100))
     
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
@@ -54,7 +55,7 @@ router.post('/process-payment', function(req,res,next){
 	var request_body = {
 		card_nonce: request_params.body.nonce,
 		amount_money: {
-			amount: parseInt(request_params.body.amount * 100),
+			amount: parsedAmount,
 			currency: 'USD'
 		},
 		idempotency_key: idempotency_key
@@ -67,7 +68,7 @@ router.post('/process-payment', function(req,res,next){
 			'result': "Payment Successful (see console for transaction output)"
 		});
 	}, function(error) {
-        // console.log(error);
+        console.log(error);
 		// console.log(util.inspect(error.status, false, null));
 		res.json( {
 			'title': 'Payment Failure',
