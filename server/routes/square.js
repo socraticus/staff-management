@@ -42,8 +42,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/process-payment', function(req,res,next){
-    console.log(req.body);
-    var request_params = req.body;
+    // console.log(req.body);
+	var request_params = req.body;
+	console.log(typeof(request_params.body.amount))
     
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
@@ -57,7 +58,7 @@ router.post('/process-payment', function(req,res,next){
 		},
 		idempotency_key: idempotency_key
     };
-    console.log(request_body);
+    // console.log(request_body);
 	transactions_api.charge(process.env.square_location_id_sandbox, request_body).then(function(data) {
 		console.log(util.inspect(data, false, null));
 		res.json( {
