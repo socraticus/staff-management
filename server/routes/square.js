@@ -44,7 +44,8 @@ router.get('/', function(req, res, next) {
 router.post('/process-payment', function(req,res,next){
     // console.log(req.body);
 	var request_params = req.body;
-	console.log("THIS IS THE TYPE" + typeof(request_params.body.amount))
+	console.log("THIS IS THE TYPE " + typeof(request_params.body.amount))
+	console.log("THIS IS PARSED " + parseInt(request_params.body.amount * 100))
     
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
@@ -53,7 +54,7 @@ router.post('/process-payment', function(req,res,next){
 	var request_body = {
 		card_nonce: request_params.body.nonce,
 		amount_money: {
-			amount: Number(request_params.body.amount) * 100,
+			amount: parseInt(request_params.body.amount * 100),
 			currency: 'USD'
 		},
 		idempotency_key: idempotency_key
