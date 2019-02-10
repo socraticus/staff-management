@@ -77,7 +77,6 @@ router.post('/process-payment', function(req,res,next){
 
 router.get('/services-list', function (req, res, next) {
 	Service.find().then(function(result) {
-		console.log(result);
 		res.send(result);
 	})
 })

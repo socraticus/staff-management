@@ -43,23 +43,7 @@ window.onload = function () {
             cart: {
                 items: []
             },
-            products: [
-                {
-                    id: '1',
-                    name: 'Deep Cleansing Facial',
-                    price: 35
-                },
-                {
-                    id: '2',
-                    name: 'Dermapen',
-                    price: 69
-                },
-                {
-                    id: '3',
-                    name: 'Discount',
-                    price: 10
-                }
-            ],
+            products: [],
             discountCode: '',
             discountMessage: 'test',
             discountResponse: {
@@ -85,7 +69,7 @@ window.onload = function () {
                         this.validateDiscount();
                     }
                 }
-                
+
             }
         },
         methods: {
@@ -105,7 +89,7 @@ window.onload = function () {
             },
             getCartItem: function (product) {
                 for (var i = 0; i < this.cart.items.length; i++) {
-                    if (this.cart.items[i].product.id === product.id) {
+                    if (this.cart.items[i].product._id === product._id) {
                         return this.cart.items[i];
                     }
                 }
@@ -193,30 +177,43 @@ window.onload = function () {
         var addButtons = document.querySelectorAll("a[productID]");
 
         for (var i = 0; i < addButtons.length; i++) {
-            var productID = addButtons[i].getAttribute('productid')
-            
-            addButtons[i].addEventListener('click', function () {
+
+
+            addButtons[i].addEventListener('click', function (event) {
                 console.log('clicked')
-                console.log(productID);
-                axios.get(serverURL + '/square/services-list').then(function (response) {
-                    console.log(response);
-                });
+                var productID = event.srcElement.attributes.productid.nodeValue;
+
+
+
+                function filterService() {
+                    mainVue.products.filter(function (item, index) {
+                        if (item._id == productID) {
+                            console.log(index);
+                            console.log(mainVue.products[index]);
+                            mainVue.addProductsToCart(mainVue.products[index]);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                }
+
+                // Verify if product data has been loaded, if not, load it
+
+                if (mainVue.products.length === 0) {
+                    axios.get(serverURL + '/square/services-list').then(function (response) {
+                        mainVue.products = response;
+                        console.log(mainVue.products);
+                        filterService()
+                    });
+                } else {
+                    console.log('already loaded')
+                    filterService()
+                }
             })
         }
         console.log(addButtons)
     }
-
-    // addCartDeepCleansing.addEventListener('click', function (event) {
-    //     event.preventDefault();
-
-    //     mainVue.addProductsToCart(mainVue.products[0]);
-    // });
-
-    // addCartDermapen.addEventListener('click', function (event) {
-    //     event.preventDefault();
-
-    //     mainVue.addProductsToCart(mainVue.products[1]);
-    // });
 
     // Checkout Vue Instance
 
@@ -395,11 +392,11 @@ window.onload = function () {
                                 return;
                             }
                             // POST the nonce form to the payment processing page
-                            console.log(that.cartTotal, that.customer);
+                            console.log(that.cartTotalFinal, that.customer);
                             axios.post(serverURL + '/square/process-payment', {
                                 body: {
                                     nonce: nonce,
-                                    amount: that.cartTotal,
+                                    amount: that.cartTotalFinal,
                                     customer: that.customer
                                 }
                             }).then(function (response) {
