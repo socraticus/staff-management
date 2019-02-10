@@ -46,7 +46,7 @@ router.post('/process-payment', function(req,res,next){
 	var request_params = req.body;
 	console.log("THIS IS THE TYPE " + typeof(request_params.body.amount))
 	console.log("THIS IS PARSED " + parseInt(request_params.body.amount * 100))
-	var parsedAmount = parseInt(request_params.body.amount * 100))
+	var parsedAmount = parseInt(request_params.body.amount * 100);
     
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
