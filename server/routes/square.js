@@ -44,7 +44,7 @@ router.get('/', function(req, res, next) {
 router.post('/process-payment', function(req,res,next){
     // console.log(req.body);
 	var request_params = req.body;
-	console.log(typeof(request_params.body.amount))
+	console.log("THIS IS THE TYPE" + typeof(request_params.body.amount))
     
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
