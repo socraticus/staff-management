@@ -245,13 +245,24 @@ window.onload = function () {
         data: {
             cart: mainVue.cart,
             customer: {
-                email: '',
-                fname: '',
-                lname: '',
-                street: '',
-                city: '',
-                state: '',
-                zip: ''
+                // Doc Reference:
+                // https://github.com/square/connect-javascript-sdk/blob/master/docs/Address.md
+                billing_address: {
+                    first_name: '',
+                    last_name: '',
+                    address_line_1: '',
+                    locality: '',
+                    administrative_district_level_1: '',
+                    postal_code: ''
+                },
+                buyer_email_address: ''
+                // email: '',
+                // fname: '',
+                // lname: '',
+                // street: '',
+                // city: '',
+                // state: '',
+                // zip: ''
             },
             showEmail: true,
             showPayment: true,

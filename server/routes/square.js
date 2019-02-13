@@ -58,6 +58,8 @@ router.post('/process-payment', function(req,res,next){
 	var request_params = req.body;
 	console.log("THIS IS THE TYPE " + typeof(request_params.body.amount))
 	console.log("THIS IS PARSED " + parseInt(request_params.body.amount * 100))
+	console.log("Email is: " + request_params.body.customer.buyer_email_address);
+	console.log("Billing is: " + request_params.body.customer.billing_address);
 	var parsedAmount = parseInt(request_params.body.amount * 100);
     
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
@@ -70,7 +72,9 @@ router.post('/process-payment', function(req,res,next){
 			amount: parsedAmount,
 			currency: 'USD'
 		},
-		idempotency_key: idempotency_key
+		idempotency_key: idempotency_key,
+		buyer_email_address: request_params.body.customer.buyer_email_address,
+		billing_address: request_params.body.customer.billing_address
     };
     // console.log(request_body);
 	transactions_api.charge(locationId, request_body).then(function(data) {
