@@ -66,7 +66,12 @@ router.post('/process-payment', function(req,res,next){
 
 	// Create new customer
 	var customers_api = new SquareConnect.CustomersApi();
-	var customer_body = new SquareConnect.CreateCustomerRequest();
+	var customer_body = new SquareConnect.CreateCustomerRequest({
+		given_name: request_params.body.customer.billing_address.first_name,
+		family_name: request_params.body.customer.billing_address.last_name,
+		email_address: request_params.body.customer.buyer_email_address,
+		address: request_params.body.customer.billing_address
+	});
 
 	console.log(customer_body);
 
