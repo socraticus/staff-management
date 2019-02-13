@@ -31,13 +31,25 @@ const corsOptions = {
 // router.use(cors(corsOptions));
 router.use(cors());
 
+// Select betwen production and sandbox credentials
+
+// Set the sandbox application ID
+// var applicationId = process.env.square_application_id_sandbox;
+// Set the production application ID
+var applicationId = process.env.SQUARE_PROD_APP_ID;
+
+// Set the sandbox location ID
+// var locationId = process.env.square_location_id_sandbox;
+// Set the production location ID
+var locationId = process.env.SQUARE_PROD_LOCATION_ID;
+
 /* GET home page of square route. */
 router.get('/', function(req, res, next) {
 	// Set the app and location ids for sqpaymentform.js to use
 	res.send( {
 		'title': 'Make Payment',
-		'square_application_id': process.env.square_application_id_sandbox,
-		'square_location_id': process.env.square_location_id_sandbox
+		'square_application_id': applicationId,
+		'square_location_id': locationId
 	});
 });
 
@@ -61,7 +73,7 @@ router.post('/process-payment', function(req,res,next){
 		idempotency_key: idempotency_key
     };
     // console.log(request_body);
-	transactions_api.charge(process.env.square_location_id_sandbox, request_body).then(function(data) {
+	transactions_api.charge(locationId, request_body).then(function(data) {
 		// console.log(util.inspect(data, false, null));
 		res.json( {
 			'title': 'Payment Successful',

@@ -4,11 +4,16 @@ var cardErrors = document.getElementById('error');
 var submitSquare = document.getElementById('sq-creditcard');
 var formBuilt = false;
 
-// Set the application ID
-var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
 
-// Set the location ID
-var locationId = "CBASELrQQ0UM52FOTsL42WvyaysgAQ";
+// Set the sandbox application ID
+// var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
+// Set the production application ID
+var applicationId = "sq0idp-Scby0qkWLgtWN2hvzeimag";
+
+// Set the sandbox location ID
+// var locationId = "CBASELrQQ0UM52FOTsL42WvyaysgAQ";
+// Set the production location ID
+var locationId = "8A9DH6GQH6J54";
 
 // Initialize Vue instance
 
@@ -21,9 +26,6 @@ function testingVue() {
 
 window.onload = function () {
 
-    // Add Listeners to addButtons
-    addClickedProduct()
-
     // Proxying Vue instance
     var shoppingCartBtn = document.getElementById('shopping-cart-btn');
     shoppingCartBtn.addEventListener('click', function () {
@@ -31,10 +33,9 @@ window.onload = function () {
         checkoutVue.buildForm();
     });
 
-    // DOM Variable Declarations
+    // Variable DOM declarations
     var cartIconTotal = document.getElementById('shopping-cart-total-items');
-    var addCartDeepCleansing = document.getElementById('add-cart-deep-cleansing');
-    var addCartDermapen = document.getElementById('add-cart-dermapen');
+    var shoppingCartIcon = document.getElementById('shopping-cart-icon-wrap');
 
     var mainVue = new Vue({
         el: '#vue-app',
@@ -45,13 +46,13 @@ window.onload = function () {
             },
             products: [],
             discountCode: '',
-            discountMessage: 'test',
+            appliedCode: '',
+            discountMessage: '',
             discountResponse: {
                 message: '',
                 discountAmount: 0,
                 percentage: true
             },
-            showDiscount: false
         },
         watch: {
             discountCode: function () {
@@ -72,6 +73,9 @@ window.onload = function () {
 
             }
         },
+        created: function () {
+            this.cart.items = JSON.parse(localStorage.getItem('cartItems') || '[]');
+        },
         methods: {
             addProductsToCart: function (product) {
                 var cartItem = this.getCartItem(product);
@@ -86,6 +90,7 @@ window.onload = function () {
                 }
 
                 cartIconTotal.innerHTML = this.cart.items.length;
+                localStorage.setItem('cartItems', JSON.stringify(this.cart.items));
             },
             getCartItem: function (product) {
                 for (var i = 0; i < this.cart.items.length; i++) {
@@ -105,7 +110,7 @@ window.onload = function () {
                 if (index !== -1) {
                     this.cart.items.splice(index, 1);
                 }
-
+                localStorage.setItem('cartItems', JSON.stringify(this.cart.items));
                 cartIconTotal.innerHTML = this.cart.items.length;
             },
             validateDiscount: function () {
@@ -126,15 +131,16 @@ window.onload = function () {
 
                             thisVue1.discountMessage = response.message;
 
-                            console.log(responsethisVue1.discountResponse);
+                            console.log(thisVue1.discountResponse);
 
                             if (thisVue1.discountMessage === 'Your discount has been validated') {
-                                thisVue1.showDiscount = true;
-                                console.log(thisVue1.showDiscount)
+                                mainVue.appliedCode = mainVue.discountCode;
+                                mainVue.discountCode = "";
+                                console.log(mainVue.appliedCode);
                             }
                         });
                 }, 500);
-            }
+            },
         },
         computed: {
             cartTotal: function () {
@@ -156,6 +162,22 @@ window.onload = function () {
             },
             cartTotalFinal: function () {
                 return this.cartTotal - this.calculateDiscount;
+            },
+            discountType: function () {
+                if (this.discountResponse.percentage === true) {
+                    return this.discountResponse.discountAmount + "%";
+                } else {
+                    return "-$" + this.discountResponse.discountAmount;
+                }
+            },
+            showDiscount: function () {
+                if ((this.cartTotal - this.cartTotalFinal) === 0) {
+                    console.log("false")
+                    return false;
+                } else {
+                    console.log("true")
+                    return true;
+                }
             }
         },
         filters: {
@@ -165,54 +187,55 @@ window.onload = function () {
                 } else {
                     return parseFloat(Math.round(value * 100) / 100).toFixed(2);
                 }
-            }
+            },
         }
     });
 
     // DOM Interactions with mainVue Instance
 
     cartIconTotal.innerHTML = mainVue.cart.items.length;
+    
+    // Add Listeners to addButtons
+    addClickedProduct();
 
     function addClickedProduct() {
-        var addButtons = document.querySelectorAll("a[productID]");
 
-        for (var i = 0; i < addButtons.length; i++) {
+        // Verify if product data has been loaded, if not, load it
+
+        if (mainVue.products.length === 0) {
+            axios.get(serverURL + '/square/services-list').then(function (response) {
+                mainVue.products = response;
+                console.log(mainVue.products);
+            }).then(function () {
+
+                var addButtons = document.querySelectorAll("a[productID]");
+
+                for (var i = 0; i < addButtons.length; i++) {
+                    addButtons[i].addEventListener('click', function (event) {
+                        console.log('clicked')
+                        var productID = event.srcElement.attributes.productid.nodeValue;
+                        console.log(productID)
+                        console.log(mainVue.products)
+                        mainVue.products.filter(function (item, index) {
+                            if (item._id == productID) {
+                                console.log(index);
+                                console.log(mainVue.products[index]);
+                                mainVue.addProductsToCart(mainVue.products[index]);
+                                simulate(shoppingCartIcon, 'click');
+                                return true;
+                            } else {
+                                console.log('false')
+                                return false;
+                            }
+                        });
 
 
-            addButtons[i].addEventListener('click', function (event) {
-                console.log('clicked')
-                var productID = event.srcElement.attributes.productid.nodeValue;
-
-
-
-                function filterService() {
-                    mainVue.products.filter(function (item, index) {
-                        if (item._id == productID) {
-                            console.log(index);
-                            console.log(mainVue.products[index]);
-                            mainVue.addProductsToCart(mainVue.products[index]);
-                            return true;
-                        } else {
-                            return false;
-                        }
                     });
                 }
-
-                // Verify if product data has been loaded, if not, load it
-
-                if (mainVue.products.length === 0) {
-                    axios.get(serverURL + '/square/services-list').then(function (response) {
-                        mainVue.products = response;
-                        console.log(mainVue.products);
-                        filterService()
-                    });
-                } else {
-                    console.log('already loaded')
-                    filterService()
-                }
-            })
+            });
+        } else {
+            console.log('already loaded')
         }
-        console.log(addButtons)
     }
 
     // Checkout Vue Instance
@@ -260,13 +283,10 @@ window.onload = function () {
                 return mainVue.discountCode;
             },
             showDiscount: function () {
-                if ((mainVue.cartTotal - mainVue.cartTotalFinal) === 0) {
-                    console.log("false")
-                    return false;
-                } else {
-                    console.log("true")
-                    return true;
-                }
+                return mainVue.showDiscount;
+            },
+            appliedCode: function () {
+                return mainVue.appliedCode;
             },
             activeCheckout: function () {
                 if (this.showEmail) {
@@ -454,5 +474,60 @@ window.onload = function () {
         }
     });
 
+    // Simulate Click Event. Helper function to trigger Webflow animations
+    function simulate(element, eventName) {
+        var options = extend(defaultOptions, arguments[2] || {});
+        var oEvent, eventType = null;
+
+        for (var name in eventMatchers) {
+            if (eventMatchers[name].test(eventName)) { eventType = name; break; }
+        }
+
+        if (!eventType)
+            throw new SyntaxError('Only HTMLEvents and MouseEvents interfaces are supported');
+
+        if (document.createEvent) {
+            oEvent = document.createEvent(eventType);
+            if (eventType == 'HTMLEvents') {
+                oEvent.initEvent(eventName, options.bubbles, options.cancelable);
+            }
+            else {
+                oEvent.initMouseEvent(eventName, options.bubbles, options.cancelable, document.defaultView,
+                    options.button, options.pointerX, options.pointerY, options.pointerX, options.pointerY,
+                    options.ctrlKey, options.altKey, options.shiftKey, options.metaKey, options.button, element);
+            }
+            element.dispatchEvent(oEvent);
+        }
+        else {
+            options.clientX = options.pointerX;
+            options.clientY = options.pointerY;
+            var evt = document.createEventObject();
+            oEvent = extend(evt, options);
+            element.fireEvent('on' + eventName, oEvent);
+        }
+        return element;
+    }
+
+    function extend(destination, source) {
+        for (var property in source)
+            destination[property] = source[property];
+        return destination;
+    }
+
+    var eventMatchers = {
+        'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+        'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
+    }
+    var defaultOptions = {
+        pointerX: 0,
+        pointerY: 0,
+        button: 0,
+        ctrlKey: false,
+        altKey: false,
+        shiftKey: false,
+        metaKey: false,
+        bubbles: true,
+        cancelable: true
+    }
 
 };

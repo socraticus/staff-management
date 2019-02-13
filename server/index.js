@@ -365,12 +365,18 @@ app.post('/charge', (req, res) => {
 // Square API Payment Processing
 //*************
 
+// Select Bewteen sandbox and production
+// Sandbox
+// var squareAccessToken = process.env.SQUARE_SANDBOX_TOKEN;
+// Production
+var squareAccessToken = SQUARE_PROD_TOKEN;
+
 // Set Square Connect credentials
 const defaultClient = SquareConnect.ApiClient.instance;
 
 // Configure OAuth2 access token for authorization: oauth2
 var oauth2 = defaultClient.authentications['oauth2'];
-oauth2.accessToken = process.env.SQUARE_SANDBOX_TOKEN;
+oauth2.accessToken = process.env.squareAccessToken;
 
 const api = new SquareConnect.LocationsApi();
 
