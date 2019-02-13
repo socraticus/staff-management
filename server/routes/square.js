@@ -64,6 +64,13 @@ router.post('/process-payment', function(req,res,next){
     
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
+	// Create new customer
+	var customers_api = new SquareConnect.CustomersApi();
+	var customer_body = new SquareConnect.CreateCustomerRequest();
+
+	console.log(customer_body);
+
+	/*
 	// Charge the customer's card
 	var transactions_api = new SquareConnect.TransactionsApi();
 	var request_body = {
@@ -91,6 +98,7 @@ router.post('/process-payment', function(req,res,next){
 			'result': "Payment Failed (see console for error output)"
 		});
 	});
+	*/
 
 });
 
