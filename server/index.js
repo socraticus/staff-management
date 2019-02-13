@@ -369,7 +369,7 @@ app.post('/charge', (req, res) => {
 // Sandbox
 // var squareAccessToken = process.env.SQUARE_SANDBOX_TOKEN;
 // Production
-var squareAccessToken = SQUARE_PROD_TOKEN;
+var squareAccessToken = process.env.SQUARE_PROD_TOKEN;
 
 // Set Square Connect credentials
 const defaultClient = SquareConnect.ApiClient.instance;
