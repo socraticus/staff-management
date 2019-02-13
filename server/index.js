@@ -376,7 +376,7 @@ const defaultClient = SquareConnect.ApiClient.instance;
 
 // Configure OAuth2 access token for authorization: oauth2
 var oauth2 = defaultClient.authentications['oauth2'];
-oauth2.accessToken = process.env.squareAccessToken;
+oauth2.accessToken = squareAccessToken;
 
 const api = new SquareConnect.LocationsApi();
 
