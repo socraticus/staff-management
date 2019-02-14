@@ -73,13 +73,10 @@ router.post('/process-payment', function(req,res,next){
 	customer_body.email_address = request_params.body.customer.buyer_email_address
 	customer_body.address = request_params.body.customer.billing_address;
 
-
-	console.log(customer_body);
-
 	customers_api.createCustomer(customer_body).then(function(data) {
 		console.log('API called successfully. Returned data: ' + (data));
 		var parsedData = JSON.stringify(data);
-		console.log(parsedData);
+		// console.log(parsedData);
 		console.log(data.customer)
 	  }, function(error) {
 		console.error(error);
