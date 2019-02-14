@@ -154,7 +154,7 @@ router.post('/process-payment', function (req, res, next) {
 			}
 		]
 
-		// console.log("This is order_body " + JSON.stringify(order_body));
+		console.log("This is order_body " + JSON.stringify(order_body));
 		// console.log("This is line_item " + JSON.stringify(line_item_body));
 
 		orders_api.createOrder(locationId, order_body).then(function (data) {
