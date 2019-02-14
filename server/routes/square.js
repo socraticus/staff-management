@@ -143,7 +143,7 @@ router.post('/process-payment', function (req, res, next) {
 
 		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
 		// order_body.order.line_items
-		order_body.total_money = parsedAmount;
+		// order_body.total_money = parsedAmount;
 		// order_body.discounts.amount_money = request_params.body.discount;
 		order_body.line_items = [
 			line_item_body
