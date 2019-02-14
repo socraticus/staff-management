@@ -151,7 +151,7 @@ router.post('/process-payment', function (req, res, next) {
 				}
 			];
 		}
-		
+
 		order_body.line_items = new Array();
 
 		for (i = 0; i < request_params.body.cart.length; i++) {
@@ -165,53 +165,47 @@ router.post('/process-payment', function (req, res, next) {
 			};
 			order_body.line_items.push(line_item_body);
 		}
-		
-
-		// line_item_body.name = "Ad Hoc Facial";
-		// line_item_body.quantity = "2";
-		// line_item_body.base_price_money = {
-		// 	amount: 36,
-		// 	currency: "USD"
-		// };
-		
-
 
 		console.log("This is order_body " + JSON.stringify(order_body));
 		// console.log("This is line_item " + JSON.stringify(line_item_body));
 
-		orders_api.createOrder(locationId, order_body).then(function (data) {
-			console.log('API called successfully. Returned data: ' + JSON.stringify(data));
+		orders_api.createOrder(locationId, order_body).then(function (order_data) {
+			console.log('CreateOrder API called successfully. Returned data: ' + JSON.stringify(order_data));
+
+			// Charge Transaction
+			// /*
+			var transactions_api = new SquareConnect.TransactionsApi();
+			var request_body = {
+				card_nonce: request_params.body.nonce,
+				amount_money: {
+					amount: order_data.order.total_money.amount,
+					currency: 'USD'
+				},
+				idempotency_key: idempotency_key,
+				customer_id: customer_id,
+				order_id: order_data.order.id
+			};
+			// console.log(request_body);
+			transactions_api.charge(locationId, request_body).then(function (data) {
+				console.log('Transactions API called successfully. Returned data: ' + JSON.stringify(data));
+				res.json({
+					'title': 'Payment Successful',
+					'result': "Payment Successful (see console for transaction output)"
+				});
+			}, function (error) {
+				// console.log(error);
+				console.log('Transactions API error. Returned data: ' + JSON.stringify(error));
+				res.json({
+					'title': 'Payment Failure',
+					'result': "Payment Failed (see console for error output)"
+				});
+			});
+			// */
 		}, function (error) {
-			console.error("This is the error: " + JSON.stringify(error));
+			console.error("This is the createOrder error: " + JSON.stringify(error));
 		});
 
-		/*
-		var transactions_api = new SquareConnect.TransactionsApi();
-		var request_body = {
-			card_nonce: request_params.body.nonce,
-			amount_money: {
-				amount: parsedAmount,
-				currency: 'USD'
-			},
-			idempotency_key: idempotency_key,
-			customer_id: customer_id
-		};
-		// console.log(request_body);
-		transactions_api.charge(locationId, request_body).then(function (data) {
-			// console.log(util.inspect(data, false, null));
-			res.json({
-				'title': 'Payment Successful',
-				'result': "Payment Successful (see console for transaction output)"
-			});
-		}, function (error) {
-			console.log(error);
-			// console.log(util.inspect(error.status, false, null));
-			res.json({
-				'title': 'Payment Failure',
-				'result': "Payment Failed (see console for error output)"
-			});
-		});
-		*/
+
 	};
 
 
