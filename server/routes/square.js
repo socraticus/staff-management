@@ -81,7 +81,7 @@ router.post('/process-payment', function (req, res, next) {
 		var filteredCustomer = data.customers.filter(function (item, index) {
 			if (item.given_name === customer_body.given_name && item.family_name === customer_body.family_name) {
 				var customer_id = item.id;
-				console.log(customer_id);
+				console.log("Filtered Item: " + item);
 				chargeCustomer(customer_id);
 				return true;
 			} else {
