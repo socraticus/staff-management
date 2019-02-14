@@ -76,7 +76,6 @@ router.post('/process-payment', function (req, res, next) {
 	// Verify if customer already exists
 	customers_api.listCustomers().then(function (data) {
 		console.log('API called successfully. Returned data: ' + data);
-		console.log(JSON.stringify(data));
 
 		var filteredCustomer = data.customers.filter(function (item, index) {
 			if (item.given_name === customer_body.given_name && item.family_name === customer_body.family_name) {
@@ -129,7 +128,7 @@ router.post('/process-payment', function (req, res, next) {
 	// Charge the customer's card
 	var chargeCustomer = function (customer_id) {
 		console.log("chargeCustomer called " + customer_id);
-		/*
+		// /*
 		var transactions_api = new SquareConnect.TransactionsApi();
 		var request_body = {
 			card_nonce: request_params.body.nonce,
@@ -155,8 +154,8 @@ router.post('/process-payment', function (req, res, next) {
 				'result': "Payment Failed (see console for error output)"
 			});
 		});
-		*/
-	}
+		// */
+	};
 
 
 });
