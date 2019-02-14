@@ -131,6 +131,9 @@ router.post('/process-payment', function (req, res, next) {
 		var order_body = new SquareConnect.CreateOrderRequest();
 		var line_item_body = new SquareConnect.OrderLineItem();
 
+		var line_items_array = new Array();
+		console.log("line items before loop: " + line_items_array)
+
 		for (i = 0; i < request_params.body.cart.length; i++) {
 			line_item_body = {
 				name: request_params.body.cart[i].product.name,
@@ -140,6 +143,7 @@ router.post('/process-payment', function (req, res, next) {
 					currency: "USD"
 				}
 			};
+			console.log("line items inside loop: " + line_items_array)
 			line_items_array.push(line_item_body);
 		}
 		
@@ -154,7 +158,7 @@ router.post('/process-payment', function (req, res, next) {
 
 		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
 		// order_body.discounts.amount_money = request_params.body.discount;
-		var line_items_array = new Array();
+		
 		order_body.line_items = line_items_array;
 		order_body.discounts = [
 			{
