@@ -140,7 +140,7 @@ router.post('/process-payment', function (req, res, next) {
 					currency: "USD"
 				}
 			};
-			line_items_array.push(line_item_body);
+			this.line_items_array.push(line_item_body);
 		}
 		
 
