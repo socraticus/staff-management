@@ -54,13 +54,12 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/process-payment', function (req, res, next) {
-	// console.log(req.body);
 	var request_params = req.body;
 	var parsedAmount = parseInt(request_params.body.amount * 100);
 
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
-	console.log("This is request_params: " + request_params)
+	console.log("This is request_params: " + JSON.stringify(request_params));
 
 	// Create new customer
 	var customers_api = new SquareConnect.CustomersApi();
@@ -138,7 +137,14 @@ router.post('/process-payment', function (req, res, next) {
 			amount: 36,
 			currency: "USD"
 		};
-		line_item_body.discounts = [
+		
+
+		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
+		// order_body.discounts.amount_money = request_params.body.discount;
+		order_body.line_items = [
+			line_item_body
+		];
+		order_body.discounts = [
 			{
 				name: 'DIS12345',
 				amount_money: {
@@ -148,14 +154,8 @@ router.post('/process-payment', function (req, res, next) {
 			}
 		]
 
-		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
-		// order_body.discounts.amount_money = request_params.body.discount;
-		order_body.line_items = [
-			line_item_body
-		];
-
-		console.log("This is order_body " + JSON.stringify(order_body));
-		console.log("This is line_item " + JSON.stringify(line_item_body));
+		// console.log("This is order_body " + JSON.stringify(order_body));
+		// console.log("This is line_item " + JSON.stringify(line_item_body));
 
 		orders_api.createOrder(locationId, order_body).then(function (data) {
 			console.log('API called successfully. Returned data: ' + JSON.stringify(data));
