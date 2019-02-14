@@ -82,7 +82,7 @@ router.post('/process-payment', function (req, res, next) {
 			if (item.given_name === customer_body.given_name && item.family_name === customer_body.family_name) {
 				var customer_id = item.id;
 				console.log("Filtered Item: " + JSON.stringify(item));
-				chargeCustomer(customer_id);
+				// chargeCustomer(customer_id);
 				return true;
 			} else {
 				return false;
@@ -103,7 +103,15 @@ router.post('/process-payment', function (req, res, next) {
 				console.error(error);
 			});
 		} else {
-			console.log('something went wrong');
+			// Eliminate duplicates if existing
+			for (i = 1; i < filteredCustomer.length; i++) {
+				customers_api.deleteCustomer(filteredCustomer[i].id).then(function(data) {
+					console.log('API called successfully. Returned data: ' + JSON.stringify(data));
+				  }, function(error) {
+					console.error(error);
+				  });
+			}
+			console.log('Finished Eliminating ' + (filteredCustomer - 1) + " duplicates");
 			return;
 		}
 
