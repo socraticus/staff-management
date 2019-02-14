@@ -128,7 +128,7 @@ router.post('/process-payment', function (req, res, next) {
 	// Charge the customer's card
 	var chargeCustomer = function (customer_id) {
 		console.log("chargeCustomer called " + customer_id);
-		// /*
+		/*
 		var transactions_api = new SquareConnect.TransactionsApi();
 		var request_body = {
 			card_nonce: request_params.body.nonce,
@@ -154,7 +154,7 @@ router.post('/process-payment', function (req, res, next) {
 				'result': "Payment Failed (see console for error output)"
 			});
 		});
-		// */
+		*/
 	};
 
 
