@@ -131,15 +131,19 @@ router.post('/process-payment', function (req, res, next) {
 		var order_body = new SquareConnect.CreateOrderRequest();
 		var line_item_body = new SquareConnect.OrderLineItem();
 
-		line_item_body = {
-			name: "Ad Hoc Facial",
-			quantity: "2",
-			base_price_money: {
-				amount: 36,
-				currency: "USD"
-			}
+		for (i = 0; i < request_params.body.cart.length; i++) {
+			line_item_body = {
+				name: request_params.body.cart[i].product.name,
+				quantity: request_params.body.cart[i].quantity.toString(),
+				base_price_money: {
+					amount: request_params.body.cart[i].product.price,
+					currency: "USD"
+				}
+			};
+			order_body.line_items.push(line_item_body)
 		}
 		
+
 		// line_item_body.name = "Ad Hoc Facial";
 		// line_item_body.quantity = "2";
 		// line_item_body.base_price_money = {
@@ -150,9 +154,7 @@ router.post('/process-payment', function (req, res, next) {
 
 		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
 		// order_body.discounts.amount_money = request_params.body.discount;
-		order_body.line_items = [
-			line_item_body
-		];
+		order_body.line_items = [];
 		order_body.discounts = [
 			{
 				name: 'DIS12345',
