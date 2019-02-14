@@ -131,12 +131,21 @@ router.post('/process-payment', function (req, res, next) {
 		var order_body = new SquareConnect.CreateOrderRequest();
 		var line_item_body = new SquareConnect.OrderLineItem();
 
-		line_item_body.name = "Ad Hoc Facial";
-		line_item_body.quantity = "2";
-		line_item_body.base_price_money = {
-			amount: 36,
-			currency: "USD"
-		};
+		line_item_body = {
+			name: "Ad Hoc Facial",
+			quantity: "2",
+			base_price_money: {
+				amount: 36,
+				currency: "USD"
+			}
+		}
+		
+		// line_item_body.name = "Ad Hoc Facial";
+		// line_item_body.quantity = "2";
+		// line_item_body.base_price_money = {
+		// 	amount: 36,
+		// 	currency: "USD"
+		// };
 		
 
 		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
