@@ -140,7 +140,7 @@ router.post('/process-payment', function (req, res, next) {
 					currency: "USD"
 				}
 			};
-			this.line_items_array.push(line_item_body);
+			line_items_array.push(line_item_body);
 		}
 		
 
@@ -154,7 +154,7 @@ router.post('/process-payment', function (req, res, next) {
 
 		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
 		// order_body.discounts.amount_money = request_params.body.discount;
-		var line_items_array = [];
+		var line_items_array = new Array();
 		order_body.line_items = line_items_array;
 		order_body.discounts = [
 			{
