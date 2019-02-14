@@ -194,7 +194,7 @@ window.onload = function () {
     // DOM Interactions with mainVue Instance
 
     cartIconTotal.innerHTML = mainVue.cart.items.length;
-    
+
     // Add Listeners to addButtons
     addClickedProduct();
 
@@ -430,7 +430,10 @@ window.onload = function () {
                                     amount: that.cartTotalFinal,
                                     customer: that.customer,
                                     cart: that.cart.items,
-                                    discount: that.calculateDiscount
+                                    discount: {
+                                        amount: that.calculateDiscount,
+                                        appliedCode: that.appliedCode
+                                    }
                                 }
                             }).then(function (response) {
                                 console.log(response);

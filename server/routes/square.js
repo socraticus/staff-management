@@ -131,7 +131,16 @@ router.post('/process-payment', function (req, res, next) {
 		var order_body = new SquareConnect.CreateOrderRequest();
 		var line_item_body = new SquareConnect.OrderLineItem();
 
-		// var line_items_array = new Array();
+		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
+		order_body.discounts = [
+			{
+				name: request_params.body.discount.appliedCode,
+				amount_money: {
+					amount: request_params.body.discount.amount,
+					currency: "USD"
+				}
+			}
+		]
 		order_body.line_items = new Array();
 
 		for (i = 0; i < request_params.body.cart.length; i++) {
@@ -143,7 +152,6 @@ router.post('/process-payment', function (req, res, next) {
 					currency: "USD"
 				}
 			};
-			console.log(line_item_body)
 			order_body.line_items.push(line_item_body);
 		}
 		
@@ -156,19 +164,6 @@ router.post('/process-payment', function (req, res, next) {
 		// };
 		
 
-		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
-		// order_body.discounts.amount_money = request_params.body.discount;
-		
-		
-		order_body.discounts = [
-			{
-				name: 'DIS12345',
-				amount_money: {
-					amount: 10,
-					currency: "USD"
-				}
-			}
-		]
 
 		console.log("This is order_body " + JSON.stringify(order_body));
 		// console.log("This is line_item " + JSON.stringify(line_item_body));
