@@ -133,7 +133,6 @@ router.post('/process-payment', function (req, res, next) {
 
 		// var line_items_array = new Array();
 		order_body.line_items = new Array();
-		console.log("line items before loop: " + line_items_array)
 
 		for (i = 0; i < request_params.body.cart.length; i++) {
 			line_item_body = {
@@ -145,7 +144,6 @@ router.post('/process-payment', function (req, res, next) {
 				}
 			};
 			console.log(line_item_body)
-			console.log("line items inside loop: " + line_items_array)
 			order_body.line_items.push(line_item_body);
 		}
 		
