@@ -137,7 +137,7 @@ router.post('/process-payment', function (req, res, next) {
 		line_item_body.name = "Ad Hoc Facial";
 		line_item_body.quantity = "2";
 		line_item_body.base_price_money = {
-			amount: "36",
+			amount: 36,
 			currency: "USD"
 		};
 
