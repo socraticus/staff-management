@@ -428,7 +428,9 @@ window.onload = function () {
                                 body: {
                                     nonce: nonce,
                                     amount: that.cartTotalFinal,
-                                    customer: that.customer
+                                    customer: that.customer,
+                                    cart: that.cart.items,
+                                    discount: that.calculateDiscount
                                 }
                             }).then(function (response) {
                                 console.log(response);

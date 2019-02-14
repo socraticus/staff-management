@@ -128,7 +128,34 @@ router.post('/process-payment', function (req, res, next) {
 	// Charge the customer's card
 	var chargeCustomer = function (customer_id) {
 		console.log("chargeCustomer called " + customer_id);
-		// /*
+
+		// Create new order
+		var orders_api = new SquareConnect.OrdersApi();
+		var order_body = new SquareConnect.CreateOrderRequest();
+		var line_item_body = new SquareConnect.OrderLineItem();
+
+		line_item_body.name = "Ad Hoc Facial";
+		line_item_body.quantity = 2;
+		line_item_body.base_price_money = 36;
+
+		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
+		// order_body.order.line_items
+		order_body.total_money = parsedAmount;
+		order_body.discounts.amount_money = request_params.body.discount;
+		order_body.line_items = [
+			line_item_body
+		];
+
+		console.log("This is order_body " + order_body)
+		console.log("This is line_item " + line_item_body)
+
+		orders_api.createOrder(locationId, order_body).then(function(data) {
+			console.log('API called successfully. Returned data: ' + JSON.stringify(data));
+		  }, function(error) {
+			console.error(error);
+		  });
+
+		/*
 		var transactions_api = new SquareConnect.TransactionsApi();
 		var request_body = {
 			card_nonce: request_params.body.nonce,
@@ -154,7 +181,7 @@ router.post('/process-payment', function (req, res, next) {
 				'result': "Payment Failed (see console for error output)"
 			});
 		});
-		// */
+		*/
 	};
 
 
