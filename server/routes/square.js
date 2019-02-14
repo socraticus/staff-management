@@ -34,14 +34,14 @@ router.use(cors());
 // Select betwen production and sandbox credentials
 
 // Set the sandbox application ID
-var applicationId = process.env.square_application_id_sandbox;
+// var applicationId = process.env.square_application_id_sandbox;
 // Set the production application ID
-// var applicationId = process.env.SQUARE_PROD_APP_ID;
+var applicationId = process.env.SQUARE_PROD_APP_ID;
 
 // Set the sandbox location ID
-var locationId = process.env.square_location_id_sandbox;
+// var locationId = process.env.square_location_id_sandbox;
 // Set the production location ID
-// var locationId = process.env.SQUARE_PROD_LOCATION_ID;
+var locationId = process.env.SQUARE_PROD_LOCATION_ID;
 
 /* GET home page of square route. */
 router.get('/', function (req, res, next) {
@@ -113,9 +113,11 @@ router.post('/process-payment', function (req, res, next) {
 
 
 
-	// /*
+
 	// Charge the customer's card
 	var chargeCustomer = function (customer_id) {
+		console.log("chargeCustomer called " + customer_id);
+		/*
 		var transactions_api = new SquareConnect.TransactionsApi();
 		var request_body = {
 			card_nonce: request_params.body.nonce,
@@ -127,22 +129,23 @@ router.post('/process-payment', function (req, res, next) {
 			customer_id: customer_id
 		};
 		// console.log(request_body);
-		transactions_api.charge(locationId, request_body).then(function(data) {
+		transactions_api.charge(locationId, request_body).then(function (data) {
 			// console.log(util.inspect(data, false, null));
-			res.json( {
+			res.json({
 				'title': 'Payment Successful',
 				'result': "Payment Successful (see console for transaction output)"
 			});
-		}, function(error) {
+		}, function (error) {
 			console.log(error);
 			// console.log(util.inspect(error.status, false, null));
-			res.json( {
+			res.json({
 				'title': 'Payment Failure',
 				'result': "Payment Failed (see console for error output)"
 			});
 		});
+		*/
 	}
-	// */
+
 
 });
 

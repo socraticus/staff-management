@@ -6,14 +6,14 @@ var formBuilt = false;
 
 
 // Set the sandbox application ID
-var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
+// var applicationId = "sandbox-sq0idp-Scby0qkWLgtWN2hvzeimag";
 // Set the production application ID
-// var applicationId = "sq0idp-Scby0qkWLgtWN2hvzeimag";
+var applicationId = "sq0idp-Scby0qkWLgtWN2hvzeimag";
 
 // Set the sandbox location ID
-var locationId = "CBASELrQQ0UM52FOTsL42WvyaysgAQ";
+// var locationId = "CBASELrQQ0UM52FOTsL42WvyaysgAQ";
 // Set the production location ID
-// var locationId = "8A9DH6GQH6J54";
+var locationId = "8A9DH6GQH6J54";
 
 // Initialize Vue instance
 
