@@ -78,8 +78,9 @@ router.post('/process-payment', function(req,res,next){
 
 	customers_api.createCustomer(customer_body).then(function(data) {
 		console.log('API called successfully. Returned data: ' + (data));
-		var parsedData = JSON.parse(data);
+		var parsedData = JSON.stringify(data);
 		console.log(parsedData);
+		console.log(data.customer)
 	  }, function(error) {
 		console.error(error);
 	  });
