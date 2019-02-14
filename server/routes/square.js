@@ -107,11 +107,11 @@ router.post('/process-payment', function (req, res, next) {
 					var customer_id = filteredCustomer[0].id;
 					chargeCustomer(customer_id);
 				} else {
-					customers_api.deleteCustomer(filteredCustomer[i].id).then(function(data) {
+					customers_api.deleteCustomer(filteredCustomer[i].id).then(function (data) {
 						console.log('API called successfully. Returned data: ' + JSON.stringify(data));
-					  }, function(error) {
+					}, function (error) {
 						console.error(error);
-					  });
+					});
 				}
 			}
 			console.log('Finished Eliminating ' + (filteredCustomer.length - 1) + " duplicates");
@@ -140,10 +140,17 @@ router.post('/process-payment', function (req, res, next) {
 			amount: 36,
 			currency: "USD"
 		};
+		line_item_body.discounts = [
+			{
+				name: 'DIS12345',
+				amount_money: {
+					amount: 10,
+					currency: "USD"
+				}
+			}
+		]
 
 		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
-		// order_body.order.line_items
-		// order_body.total_money = parsedAmount;
 		// order_body.discounts.amount_money = request_params.body.discount;
 		order_body.line_items = [
 			line_item_body
@@ -152,11 +159,11 @@ router.post('/process-payment', function (req, res, next) {
 		console.log("This is order_body " + JSON.stringify(order_body));
 		console.log("This is line_item " + JSON.stringify(line_item_body));
 
-		orders_api.createOrder(locationId, order_body).then(function(data) {
+		orders_api.createOrder(locationId, order_body).then(function (data) {
 			console.log('API called successfully. Returned data: ' + JSON.stringify(data));
-		  }, function(error) {
+		}, function (error) {
 			console.error("This is the error: " + JSON.stringify(error));
-		  });
+		});
 
 		/*
 		var transactions_api = new SquareConnect.TransactionsApi();
