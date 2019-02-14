@@ -132,15 +132,26 @@ router.post('/process-payment', function (req, res, next) {
 		var line_item_body = new SquareConnect.OrderLineItem();
 
 		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
-		order_body.discounts = [
-			{
-				name: request_params.body.discount.appliedCode,
-				amount_money: {
-					amount: request_params.body.discount.amount,
-					currency: "USD"
+
+		if (request_params.body.discount.details.percentage === true) {
+			order_body.discounts = [
+				{
+					name: request_params.body.discount.appliedCode,
+					percentage: request_params.body.discount.details.discountAmount.toString()
 				}
-			}
-		]
+			];
+		} else {
+			order_body.discounts = [
+				{
+					name: request_params.body.discount.appliedCode,
+					amount_money: {
+						amount: request_params.body.discount.amount,
+						currency: "USD"
+					}
+				}
+			]
+		}
+		
 		order_body.line_items = new Array();
 
 		for (i = 0; i < request_params.body.cart.length; i++) {

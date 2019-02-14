@@ -299,6 +299,9 @@ window.onload = function () {
             appliedCode: function () {
                 return mainVue.appliedCode;
             },
+            discountResponse: function () {
+                return mainVue.discountResponse;
+            },
             activeCheckout: function () {
                 if (this.showEmail) {
                     return {
@@ -432,7 +435,8 @@ window.onload = function () {
                                     cart: that.cart.items,
                                     discount: {
                                         amount: that.calculateDiscount,
-                                        appliedCode: that.appliedCode
+                                        appliedCode: that.appliedCode,
+                                        details: that.discountResponse
                                     }
                                 }
                             }).then(function (response) {
