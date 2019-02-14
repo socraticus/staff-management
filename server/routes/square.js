@@ -149,7 +149,7 @@ router.post('/process-payment', function (req, res, next) {
 						currency: "USD"
 					}
 				}
-			]
+			];
 		}
 		
 		order_body.line_items = new Array();
@@ -159,7 +159,7 @@ router.post('/process-payment', function (req, res, next) {
 				name: request_params.body.cart[i].product.name,
 				quantity: request_params.body.cart[i].quantity.toString(),
 				base_price_money: {
-					amount: request_params.body.cart[i].product.price,
+					amount: request_params.body.cart[i].product.price * 100,
 					currency: "USD"
 				}
 			};
