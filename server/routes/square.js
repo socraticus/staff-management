@@ -143,6 +143,7 @@ router.post('/process-payment', function (req, res, next) {
 					currency: "USD"
 				}
 			};
+			console.log(line_item_body)
 			console.log("line items inside loop: " + line_items_array)
 			line_items_array.push(line_item_body);
 		}
