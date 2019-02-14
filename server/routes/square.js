@@ -77,7 +77,9 @@ router.post('/process-payment', function(req,res,next){
 	console.log(customer_body);
 
 	customers_api.createCustomer(customer_body).then(function(data) {
-		console.log('API called successfully. Returned data: ' + JSON.stringify(data));
+		console.log('API called successfully. Returned data: ' + (data));
+		var parsedData = JSON.parse(data);
+		console.log(parsedData);
 	  }, function(error) {
 		console.error(error);
 	  });
@@ -92,8 +94,7 @@ router.post('/process-payment', function(req,res,next){
 			currency: 'USD'
 		},
 		idempotency_key: idempotency_key,
-		buyer_email_address: request_params.body.customer.buyer_email_address,
-		billing_address: request_params.body.customer.billing_address
+		customer_id: 
     };
     // console.log(request_body);
 	transactions_api.charge(locationId, request_body).then(function(data) {
