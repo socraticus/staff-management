@@ -131,7 +131,8 @@ router.post('/process-payment', function (req, res, next) {
 		var order_body = new SquareConnect.CreateOrderRequest();
 		var line_item_body = new SquareConnect.OrderLineItem();
 
-		var line_items_array = new Array();
+		// var line_items_array = new Array();
+		order_body.line_items = new Array();
 		console.log("line items before loop: " + line_items_array)
 
 		for (i = 0; i < request_params.body.cart.length; i++) {
@@ -145,7 +146,7 @@ router.post('/process-payment', function (req, res, next) {
 			};
 			console.log(line_item_body)
 			console.log("line items inside loop: " + line_items_array)
-			line_items_array.push(line_item_body);
+			order_body.line_items.push(line_item_body);
 		}
 		
 
@@ -160,7 +161,7 @@ router.post('/process-payment', function (req, res, next) {
 		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
 		// order_body.discounts.amount_money = request_params.body.discount;
 		
-		order_body.line_items = line_items_array;
+		
 		order_body.discounts = [
 			{
 				name: 'DIS12345',
