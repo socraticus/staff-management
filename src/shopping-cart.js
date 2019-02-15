@@ -440,7 +440,12 @@ window.onload = function () {
                                     }
                                 }
                             }).then(function (response) {
-                                console.log(response);
+                                var string = JSON.stringify(response.response.text)
+                                console.log(string);
+                                var parsed = JSON.parse(string)
+                                console.log(parsed);
+                                console.log(parsed[errors]);
+                                console.log(response.response.text);
                             });
 
                             // document.getElementById("nonce-form").submit();

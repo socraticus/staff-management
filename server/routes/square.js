@@ -133,24 +133,27 @@ router.post('/process-payment', function (req, res, next) {
 
 		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
 
-		if (request_params.body.discount.details.percentage === true) {
-			order_body.discounts = [
-				{
-					name: request_params.body.discount.appliedCode,
-					percentage: request_params.body.discount.details.discountAmount.toString()
-				}
-			];
-		} else {
-			order_body.discounts = [
-				{
-					name: request_params.body.discount.appliedCode,
-					amount_money: {
-						amount: request_params.body.discount.amount,
-						currency: "USD"
+		if (request_params.body.discount.amount === 0) {
+			return;
+		} else if (request_params.body.discount.details.percentage === true) {
+				order_body.discounts = [
+					{
+						name: request_params.body.discount.appliedCode,
+						percentage: request_params.body.discount.details.discountAmount.toString()
 					}
-				}
-			];
-		}
+				];
+			} else {
+				order_body.discounts = [
+					{
+						name: request_params.body.discount.appliedCode,
+						amount_money: {
+							amount: request_params.body.discount.amount,
+							currency: "USD"
+						}
+					}
+				];
+			}
+
 
 		order_body.line_items = new Array();
 
