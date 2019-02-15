@@ -134,6 +134,8 @@ router.post('/process-payment', function (req, res, next) {
 		order_body.idempotency_key = crypto.randomBytes(64).toString('hex');
 
 		// Add discount to order
+		console.log(request_params.body.discount.amount);
+
 		if (request_params.body.discount.amount === 0) {
 			return;
 		} else if (request_params.body.discount.details.percentage === true) {
