@@ -136,26 +136,24 @@ router.post('/process-payment', function (req, res, next) {
 		// Add discount to order
 		console.log(request_params.body.discount.amount);
 
-		if (request_params.body.discount.amount === 0) {
-			return;
-		} else if (request_params.body.discount.details.percentage === true) {
-				order_body.discounts = [
-					{
-						name: request_params.body.discount.appliedCode,
-						percentage: request_params.body.discount.details.discountAmount.toString()
+		if (request_params.body.discount.details.percentage === true && request_params.body.discount.details.discountAmount !== 0) {
+			order_body.discounts = [
+				{
+					name: request_params.body.discount.appliedCode,
+					percentage: request_params.body.discount.details.discountAmount.toString()
+				}
+			];
+		} else {
+			order_body.discounts = [
+				{
+					name: request_params.body.discount.appliedCode,
+					amount_money: {
+						amount: request_params.body.discount.amount,
+						currency: "USD"
 					}
-				];
-			} else {
-				order_body.discounts = [
-					{
-						name: request_params.body.discount.appliedCode,
-						amount_money: {
-							amount: request_params.body.discount.amount,
-							currency: "USD"
-						}
-					}
-				];
-			}
+				}
+			];
+		}
 
 		// Add line items to order
 		order_body.line_items = new Array();
