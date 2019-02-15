@@ -185,7 +185,6 @@ router.post('/process-payment', function (req, res, next) {
 				customer_id: customer_id,
 				order_id: order_data.order.id
 			};
-			// console.log(request_body);
 			transactions_api.charge(locationId, request_body).then(function (data) {
 				console.log('Transactions API called successfully. Returned data: ' + JSON.stringify(data));
 				res.json({
@@ -193,12 +192,12 @@ router.post('/process-payment', function (req, res, next) {
 					'result': "Payment Successful (see console for transaction output)"
 				});
 			}, function (error) {
-				// console.log(error);
 				console.log('Transactions API error. Returned data: ' + JSON.stringify(error));
-				res.json({
-					'title': 'Payment Failure',
-					'result': "Payment Failed (see console for error output)"
-				});
+				// res.json({
+				// 	'title': 'Payment Failure',
+				// 	'result': "Payment Failed (see console for error output)"
+				// });
+				res.json(error);
 			});
 			// */
 		}, function (error) {

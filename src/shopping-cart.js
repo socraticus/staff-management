@@ -462,9 +462,6 @@ window.onload = function () {
 
         },
         methods: {
-            testing: function () {
-                console.log('Vue accessed');
-            },
             buildForm: function () {
                 // Check if form was already built
                 if (this.showPaymentForm) {
@@ -490,6 +487,22 @@ window.onload = function () {
 
                 // Request a nonce from the SqPaymentForm object
                 this.paymentForm.requestCardNonce();
+            },
+            paymentResult: function (text) {
+                var index = text.indexOf("\\");
+                while (index >= 0) {
+                    text = text.replace("\\", "");
+                    index = text.indexOf("\\");
+                }
+                return text;
+            },
+            cleanUpErrorText: function (text) {
+                var index = text.indexOf("\\");
+                while (index >= 0) {
+                    text = text.replace("\\", "");
+                    index = text.indexOf("\\");
+                }
+                return text;
             }
         }
     });
