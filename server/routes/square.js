@@ -55,7 +55,6 @@ router.get('/', function (req, res, next) {
 
 router.post('/process-payment', function (req, res, next) {
 	var request_params = req.body;
-	var parsedAmount = parseInt(request_params.body.amount * 100);
 
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
