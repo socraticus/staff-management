@@ -454,7 +454,8 @@ window.onload = function () {
                                     that.paymentResponse.btn = "NEW ORDER"
                                     that.paymentResponse.body = {
                                         errors: []
-                                    }
+                                    };
+                                    that.showPaymentResponse = true
                                 } else {
                                     var text = JSON.stringify(response.response.text)
                                     console.log(text);
