@@ -198,6 +198,7 @@ router.post('/process-payment', function (req, res, next) {
 			transactions_api.charge(locationId, request_body).then(function (data) {
 				console.log('Transactions API called successfully. Returned data: ' + JSON.stringify(data));
 				res.json({
+					'status': 200,
 					'title': 'Payment Successful',
 					'result': "Payment Successful (see console for transaction output)"
 				});

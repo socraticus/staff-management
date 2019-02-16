@@ -270,6 +270,12 @@ window.onload = function () {
             masterpass: false,
             applePay: false,
             showPaymentForm: false,
+            paymentResponse: {
+                status: '',
+                btn: '',
+                body: {}
+            },
+            showPaymentResponse: false
         },
         filters: {
             twoDecimals: function (value) {
@@ -440,12 +446,28 @@ window.onload = function () {
                                     }
                                 }
                             }).then(function (response) {
-                                var string = JSON.stringify(response.response.text)
-                                console.log(string);
-                                var parsed = JSON.parse(string)
-                                console.log(parsed);
-                                console.log(parsed[errors]);
-                                console.log(response.response.text);
+                                console.log(response)
+                                console.log(JSON.stringify(response))
+
+                                if (response.status === 200) {
+                                    that.paymentResponse.status = "PAYMENT SUCCESSFUL"
+                                    that.paymentResponse.btn = "NEW ORDER"
+                                    that.paymentResponse.body = {
+                                        errors: []
+                                    }
+                                } else {
+                                    var text = JSON.stringify(response.response.text)
+                                    console.log(text);
+                                    console.log(typeof text);
+
+                                    console.log(JSON.parse(JSON.parse(text)))
+                                    console.log(typeof JSON.parse(JSON.parse(text)))
+
+                                    that.paymentResponse.body = JSON.parse(JSON.parse(text))
+                                    that.paymentResponse.status = "PAYMENT METHOD FAILED"
+                                    that.paymentResponse.btn = "TRY AGAIN"
+                                    that.showPaymentResponse = true
+                                }
                             });
 
                             // document.getElementById("nonce-form").submit();
@@ -501,14 +523,14 @@ window.onload = function () {
                 }
                 return text;
             },
-            cleanUpErrorText: function (text) {
-                var index = text.indexOf("\\");
-                while (index >= 0) {
-                    text = text.replace("\\", "");
-                    index = text.indexOf("\\");
-                }
-                return text;
-            }
+            // cleanUpErrorText: function (text) {
+            //     var index = text.indexOf("\\");
+            //     while (index >= 0) {
+            //         text = text.replace("\\", "");
+            //         index = text.indexOf("\\");
+            //     }
+            //     return text;
+            // }
         }
     });
 
