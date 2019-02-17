@@ -316,8 +316,12 @@ window.onload = function () {
                     };
                 } else {
                     return {
-                        'background-color': '#777',
-                        color: 'white'
+                        // 'background-color': '#777',
+                        // 'background-color': 'silver',
+                        'background-color': "rgba(173, 20, 87, 0.50)",
+                        color: 'white',
+                        // 'border-color': "rgba(173, 20, 87, 0.50)"
+                        'border-color': "white"
                     };
                 }
 
@@ -330,11 +334,31 @@ window.onload = function () {
                     };
                 } else {
                     return {
-                        'background-color': '#777',
-                        color: 'white'
+                        // 'background-color': '#777',
+                        // 'background-color': 'silver',
+                        'background-color': "rgba(173, 20, 87, 0.50)",
+                        color: 'white',
+                        // 'border-color': "rgba(173, 20, 87, 0.50)"
+                        'border-color': "white"
                     };
                 }
-
+            },
+            activePaymentResponse: function () {
+                if (!this.showPaymentResponse) {
+                    return {
+                        'background-color': 'white',
+                        color: '#999'
+                    };
+                } else {
+                    return {
+                        // 'background-color': '#777',
+                        // 'background-color': 'silver',
+                        'background-color': "rgba(173, 20, 87, 0.50)",
+                        color: 'white',
+                        // 'border-color': "rgba(173, 20, 87, 0.50)"
+                        'border-color': "white"
+                    };
+                }
             },
             activeSeparator: function () {
                 if (this.showPayment) {

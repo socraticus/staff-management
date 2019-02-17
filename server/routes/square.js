@@ -220,6 +220,17 @@ router.post('/process-payment', function (req, res, next) {
 
 });
 
+router.use((error, req, res, next) => {
+	res.status(error.status || 500);
+	res.json({
+		errors: [
+			{
+				detail: "Personal fields missing"
+			}
+		]
+	})
+})
+
 router.get('/services-list', function (req, res, next) {
 	Service.find().then(function (result) {
 		res.send(result);
