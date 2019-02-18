@@ -94,7 +94,8 @@ router.post('/process-payment', function (req, res, next) {
 				console.log(customer_id)
 				chargeCustomer(customer_id);
 			}, function (error) {
-				console.error(error);
+				console.error(error)
+				res.json(error);
 			});
 		} else {
 			// Eliminate duplicates if existing
@@ -106,7 +107,8 @@ router.post('/process-payment', function (req, res, next) {
 					customers_api.deleteCustomer(filteredCustomer[i].id).then(function (data) {
 						console.log('API called successfully. Returned data: ' + JSON.stringify(data));
 					}, function (error) {
-						console.error(error);
+						console.error(error)
+						res.json(error)
 					});
 				}
 			}
