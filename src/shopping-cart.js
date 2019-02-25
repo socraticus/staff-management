@@ -256,13 +256,6 @@ window.onload = function () {
                     postal_code: ''
                 },
                 buyer_email_address: ''
-                // email: '',
-                // fname: '',
-                // lname: '',
-                // street: '',
-                // city: '',
-                // state: '',
-                // zip: ''
             },
             showEmail: true,
             showPayment: true,
@@ -275,7 +268,16 @@ window.onload = function () {
                 btn: '',
                 body: {}
             },
-            showPaymentResponse: false
+            showPaymentResponse: false,
+            emailError: false,
+            billingError: {
+                first_name: false,
+                last_name: false,
+                address_line_1: false,
+                locality: false,
+                administrative_district_level_1: false,
+                postal_code: false
+            }
         },
         filters: {
             twoDecimals: function (value) {
@@ -534,6 +536,20 @@ window.onload = function () {
                 }
             },
             requestCardNonce: function (event) {
+                // Client side form verification
+                var validationFailed = false
+                var validatedEmail = this.validEmail(this.customer.buyer_email_address);
+                var validatedBilling = this.validBilling()
+
+                if ( validatedEmail === false || validatedBilling != 0) {
+                    validationFailed = true
+                }
+
+                if (validationFailed) {
+                    event.preventDefault();
+                    return false;
+                 }
+
                 // Don't submit the form until SqPaymentForm returns with a nonce
                 event.preventDefault();
 
@@ -548,14 +564,50 @@ window.onload = function () {
                 }
                 return text;
             },
-            // cleanUpErrorText: function (text) {
-            //     var index = text.indexOf("\\");
-            //     while (index >= 0) {
-            //         text = text.replace("\\", "");
-            //         index = text.indexOf("\\");
-            //     }
-            //     return text;
-            // }
+            validEmail: function (email) {
+                console.log(email);
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if (re.test(email) === false) {
+                    this.emailError = true
+                } else {
+                    this.emailError = false
+                    this.showEmail = !this.showEmail
+                }
+                return re.test(email);
+            },
+            validBilling: function () {
+                // billing_address: {
+                //     first_name: '',
+                //     last_name: '',
+                //     address_line_1: '',
+                //     locality: '',
+                //     administrative_district_level_1: '',
+                //     postal_code: ''
+                // },
+
+                var totalErrors = 0
+
+                for (var prop in this.customer.billing_address) {
+                    if (this.customer.billing_address[prop] === '') {
+                        this.billingError[prop] = true;
+                        totalErrors += 1
+                        console.log(this.billingError)
+                        console.log(totalErrors)
+                    } else {
+                        this.billingError[prop] = false
+                        console.log(totalErrors)
+                    }
+                }
+
+                if (totalErrors === 0) {
+                    this.showPayment = !this.showPayment
+                }
+
+                return totalErrors
+            },
+            refreshPaymentForm: function () {
+                this.showPaymentResponse = false
+            }
         }
     });
 
