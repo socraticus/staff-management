@@ -139,7 +139,7 @@ router.post('/process-payment', function (req, res, next) {
 	mailchimp.request({
 		method: 'get',
 		path: 'https://us15.api.mailchimp.com/3.0/search-members',
-		path_params: {
+		query: {
 			list_id: '0dcc5d126d',
 			query: 'arielvv85@gmail.com'
 		}
