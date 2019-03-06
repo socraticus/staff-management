@@ -122,40 +122,11 @@ router.post('/process-payment', function (req, res, next) {
 	});
 
 	// Add Subscriber to Mailchimp
-	var mailchimp = new Mailchimp(process.env.MAILCHIMP_API_KEY);
-
-	// mailchimp.get(
-	// 	'https://us15.api.mailchimp.com/3.0/search-members',
-	// 	{
-	// 		list_id: '0dcc5d126d',
-	// 		query: 'arielvv85@gmail.com'
-	// 	}
-	// ).then(function (result) {
-	// 	console.log(JSON.stringify('This is Mailchimp response: ' + result))
-	// }).catch(function (err) {
-	// 	console.log(err)
-	// })
-
-	// mailchimp.request({
-	// 	method: 'get',
-	// 	path: 'https://us15.api.mailchimp.com/3.0/search-members',
-	// 	query: {
-	// 		list_id: '0dcc5d126d',
-	// 		query: 'arielvv85@gmail.com'
-	// 	}
-	// 	// query: {
-	// 	// 	query: 'arielvv85@gmail.com'
-	// 	// }
-	// }).then(function (result) {
-	// 	console.log(JSON.stringify('This is Mailchimp response: ' + result))
-	// }).catch(function (err) {
-	// 	console.log(JSON.stringify(err))
-	// })
 
 	var options = {
 		method: 'GET',
 		url: 'https://us15.api.mailchimp.com/3.0/search-members',
-		qs: { list_id: '0dcc5d126d', query: 'arielvv85@gmail.com' },
+		qs: { list_id: '0dcc5d126d', query: customer_body.email_address },
 		headers:
 		{
 			'Postman-Token': process.env.POSTMAN_TOKEN,
