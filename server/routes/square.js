@@ -124,28 +124,32 @@ router.post('/process-payment', function (req, res, next) {
 	// Add Subscriber to Mailchimp
 	var mailchimp = new Mailchimp(process.env.MAILCHIMP_API_KEY);
 
-	mailchimp.get(
-		'https://us15.api.mailchimp.com/3.0/search-members',
-		{
-			list_id: '0dcc5d126d',
+	// mailchimp.get(
+	// 	'https://us15.api.mailchimp.com/3.0/search-members',
+	// 	{
+	// 		list_id: '0dcc5d126d',
+	// 		query: 'arielvv85@gmail.com'
+	// 	}
+	// ).then(function (result) {
+	// 	console.log(JSON.stringify('This is Mailchimp response: ' + result))
+	// }).catch(function (err) {
+	// 	console.log(err)
+	// })
+
+	mailchimp.request({
+		method: 'get',
+		path: 'https://us15.api.mailchimp.com/3.0/search-members',
+		path_params: {
+			list_id: '0dcc5d126d'
+		},
+		query: {
 			query: 'arielvv85@gmail.com'
 		}
-	).then(function (result) {
+	}).then(function (result) {
 		console.log(JSON.stringify('This is Mailchimp response: ' + result))
 	}).catch(function (err) {
-		console.log(err)
+		console.log(JSON.stringify(err))
 	})
-
-	// mailchimp.request({
-	// 	method : 'get',
-	// 	path : 'https://us15.api.mailchimp.com/3.0/search-members',
-	// 	path_params : {
-	// 		list_id: '0dcc5d126d'
-	// 	},
-	// 	query : {
-	// 	  query: 'arielvv85@gmail.com'
-	// 	}
-	//   })
 
 
 
