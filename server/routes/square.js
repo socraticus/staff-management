@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const util = require('util');
+const Mailchimp = require('mailchimp-api-v3')
 const crypto = require('crypto');
 const SquareConnect = require('square-connect');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Service = require('../models/service.js');
+const request = require("request");
 
 const app = express();
 
@@ -120,6 +121,32 @@ router.post('/process-payment', function (req, res, next) {
 		console.error(error);
 	});
 
+	// Add Subscriber to Mailchimp
+	var mailchimp = new Mailchimp(process.env.MAILCHIMP_API_KEY);
+
+	mailchimp.get(
+		'https://us15.api.mailchimp.com/3.0/search-members',
+		{
+			list_id: '0dcc5d126d',
+			query: 'arielvv85@gmail.com'
+		}
+	).then(function (result) {
+		console.log(JSON.stringify('This is Mailchimp response: ' + result))
+	}).catch(function (err) {
+		console.log(err)
+	})
+
+	// mailchimp.request({
+	// 	method : 'get',
+	// 	path : 'https://us15.api.mailchimp.com/3.0/search-members',
+	// 	path_params : {
+	// 		list_id: '0dcc5d126d'
+	// 	},
+	// 	query : {
+	// 	  query: 'arielvv85@gmail.com'
+	// 	}
+	//   })
+
 
 
 
@@ -137,7 +164,7 @@ router.post('/process-payment', function (req, res, next) {
 		// Add discount to order
 		console.log(request_params.body.discount.amount);
 
-		if ( request_params.body.discount.amount !== 0) {
+		if (request_params.body.discount.amount !== 0) {
 			addDiscountToOrder()
 		}
 
@@ -198,6 +225,7 @@ router.post('/process-payment', function (req, res, next) {
 			};
 			transactions_api.charge(locationId, request_body).then(function (data) {
 				console.log('Transactions API called successfully. Returned data: ' + JSON.stringify(data));
+
 				res.json({
 					'status': 200,
 					'title': 'Payment Successful',
@@ -218,6 +246,8 @@ router.post('/process-payment', function (req, res, next) {
 
 
 	};
+
+
 
 
 });
