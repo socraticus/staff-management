@@ -136,22 +136,39 @@ router.post('/process-payment', function (req, res, next) {
 	// 	console.log(err)
 	// })
 
-	mailchimp.request({
-		method: 'get',
-		path: 'https://us15.api.mailchimp.com/3.0/search-members',
-		query: {
-			list_id: '0dcc5d126d',
-			query: 'arielvv85@gmail.com'
-		}
-		// query: {
-		// 	query: 'arielvv85@gmail.com'
-		// }
-	}).then(function (result) {
-		console.log(JSON.stringify('This is Mailchimp response: ' + result))
-	}).catch(function (err) {
-		console.log(JSON.stringify(err))
-	})
+	// mailchimp.request({
+	// 	method: 'get',
+	// 	path: 'https://us15.api.mailchimp.com/3.0/search-members',
+	// 	query: {
+	// 		list_id: '0dcc5d126d',
+	// 		query: 'arielvv85@gmail.com'
+	// 	}
+	// 	// query: {
+	// 	// 	query: 'arielvv85@gmail.com'
+	// 	// }
+	// }).then(function (result) {
+	// 	console.log(JSON.stringify('This is Mailchimp response: ' + result))
+	// }).catch(function (err) {
+	// 	console.log(JSON.stringify(err))
+	// })
 
+	var options = {
+		method: 'GET',
+		url: 'https://us15.api.mailchimp.com/3.0/search-members',
+		qs: { list_id: '0dcc5d126d', query: 'arielvv85@gmail.com' },
+		headers:
+		{
+			'Postman-Token': process.env.POSTMAN_TOKEN,
+			'cache-control': 'no-cache',
+			Authorization: process.env.POSTMAN_AUTH,
+		}
+	};
+
+	request(options, function (error, response, body) {
+		if (error) throw new Error(error);
+
+		console.log(body);
+	});
 
 
 
