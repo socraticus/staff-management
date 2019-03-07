@@ -141,7 +141,7 @@ router.post('/process-payment', function (req, res, next) {
 
 		if (error) throw new Error(error);
 
-		if (response.body.exact_matches.total_items === 0) {
+		if (body.exact_matches.total_items === 0) {
 			postMailchimp();
 		}
 
