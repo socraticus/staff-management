@@ -123,6 +123,10 @@ router.post('/process-payment', function (req, res, next) {
 
 	// Add Subscriber to Mailchimp
 
+	function addMailchimpSubscriber() {
+
+	}
+
 	var options = {
 		method: 'GET',
 		url: 'https://us15.api.mailchimp.com/3.0/search-members',
@@ -177,12 +181,18 @@ router.post('/process-payment', function (req, res, next) {
 							state: customer_body.address.administrative_district_level_1,
 							zip: customer_body.address.postal_code
 						} 
-					}
+					},
+					tags: [
+						{
+							name: "Deep Cleansing Facial"
+						}
+					],
 				},
 				json: true
 			};
 
 			request(options, function (error, response, body) {
+				console.log("this is Malchimp response: " + JSON.stringify(response))
 				if (error) throw new Error(error);
 				
 			});
