@@ -138,10 +138,50 @@ router.post('/process-payment', function (req, res, next) {
 	request(options, function (error, response, body) {
 		if (error) throw new Error(error);
 
+		if (!response.body.exact_matches.members[0]) {
+			postMailchimp();
+		}
+
 		console.log(body);
 	});
 
+	function postMailchimp() {
 
+			// Send POST request to Mailchimp
+			var options = {
+				method: 'POST',
+				url: 'https://us15.api.mailchimp.com/3.0/lists/0dcc5d126d/members/',
+				headers:
+				{
+					'postman-token': process.env.POSTMAN_TOKEN,
+					'cache-control': 'no-cache',
+					authorization: process.env.POSTMAN_AUTH,
+					'content-type': 'application/json'
+				},
+				body:
+				{
+					email_address: customer_body.email_address,
+					status: 'subscribed',
+					merge_fields: { 
+						FNAME: customer_body.given_name, 
+						LNAME: customer_body.family_name,
+						ADDRESS: {
+							addr1: customer_body.address.address_line_1,
+							city: customer_body.address.locality,
+							state: customer_body.address.administrative_district_level_1,
+							zip: customer_body.address.postal_code
+						} 
+					},
+				},
+				json: true
+			};
+
+			request(options, function (error, response, body) {
+				if (error) throw new Error(error);
+				
+			});
+
+	}
 
 	// Charge the customer's card
 	var chargeCustomer = function (customer_id) {
