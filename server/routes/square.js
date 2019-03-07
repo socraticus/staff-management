@@ -136,12 +136,12 @@ router.post('/process-payment', function (req, res, next) {
 	};
 
 	request(options, function (error, response, body) {
-		console.log('This is the body: ' + body);
+		console.log('This is the parsed body: ' + JSON.parse(body));
 		console.log('This is the response: ' + response);
 
 		if (error) throw new Error(error);
 
-		if (body.exact_matches.total_items === 0) {
+		if (JSON.parse(body).exact_matches.total_items === 0) {
 			postMailchimp();
 		}
 
