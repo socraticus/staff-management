@@ -145,6 +145,9 @@ router.post('/process-payment', function (req, res, next) {
 
 		if (JSON.parse(body).exact_matches.total_items === 0) {
 			postMailchimp();
+		} else {
+			mailchimpID = response.body.exact_matches.members[0].id;
+			console.log(mailchimpID);
 		}
 
 		
