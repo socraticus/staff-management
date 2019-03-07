@@ -184,9 +184,9 @@ router.post('/process-payment', function (req, res, next) {
 					},
 					tags: [
 						{
-							name: "Deep Cleansing Facial"
+							"name": "Deep Cleansing Facial"
 						}
-					],
+					]
 				},
 				json: true
 			};
