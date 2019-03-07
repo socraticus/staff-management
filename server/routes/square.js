@@ -177,13 +177,7 @@ router.post('/process-payment', function (req, res, next) {
 							state: customer_body.address.administrative_district_level_1,
 							zip: customer_body.address.postal_code
 						} 
-					},
-					tags: [
-						{
-							"name": "Facial with Dermapen",
-							"status": "active"
-						}
-					]
+					}
 				},
 				json: true
 			};
