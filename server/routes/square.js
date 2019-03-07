@@ -123,9 +123,7 @@ router.post('/process-payment', function (req, res, next) {
 
 	// Add Subscriber to Mailchimp
 
-	function addMailchimpSubscriber() {
-
-	}
+	var mailchimpID = null
 
 	var options = {
 		method: 'GET',
@@ -141,7 +139,7 @@ router.post('/process-payment', function (req, res, next) {
 
 	request(options, function (error, response, body) {
 		console.log('This is the body: ' + body);
-		console.log('This is the response: ' + response);
+		console.log('This is the query response: ' + JSON.stringify(response));
 
 		if (error) throw new Error(error);
 
@@ -192,6 +190,11 @@ router.post('/process-payment', function (req, res, next) {
 			request(options, function (error, response, body) {
 				console.log("this is Malchimp response: " + JSON.stringify(response))
 				if (error) throw new Error(error);
+
+				if (response.statusCode === 200) {
+					mailchimpID = response.body.id
+					console.log(mailchimpID)
+				}
 				
 			});
 
