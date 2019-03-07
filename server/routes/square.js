@@ -183,9 +183,7 @@ router.post('/process-payment', function (req, res, next) {
 						} 
 					},
 					tags: [
-						{
-							"name": "Deep Cleansing Facial"
-						}
+							"Deep Cleansing Facial"
 					]
 				},
 				json: true
