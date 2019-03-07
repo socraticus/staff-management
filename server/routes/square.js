@@ -175,6 +175,12 @@ router.post('/process-payment', function (req, res, next) {
 							zip: customer_body.address.postal_code
 						} 
 					},
+					tags: [
+						{
+							"name": "Facial with Dermapen",
+							"status": "active"
+						}
+					]
 				},
 				json: true
 			};
