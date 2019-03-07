@@ -151,6 +151,9 @@ router.post('/process-payment', function (req, res, next) {
 	function postMailchimp() {
 
 			// Send POST request to Mailchimp
+
+		console.log("postMailchimp function called")
+
 			var options = {
 				method: 'POST',
 				url: 'https://us15.api.mailchimp.com/3.0/lists/0dcc5d126d/members/',
