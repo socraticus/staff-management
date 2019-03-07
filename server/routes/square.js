@@ -146,8 +146,8 @@ router.post('/process-payment', function (req, res, next) {
 		if (JSON.parse(body).exact_matches.total_items === 0) {
 			postMailchimp();
 		} else {
-			mailchimpID = response.body.exact_matches.members[0].id;
-			console.log(mailchimpID);
+			mailchimpID = JSON.parse(body).exact_matches.members[0].id;
+			console.log('This is mailchimpID: ' + mailchimpID);
 		}
 
 		
@@ -196,7 +196,7 @@ router.post('/process-payment', function (req, res, next) {
 
 				if (response.statusCode === 200) {
 					mailchimpID = response.body.id
-					console.log(mailchimpID)
+					console.log('This is mailchimpID: ' + mailchimpID)
 				}
 				
 			});
