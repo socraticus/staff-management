@@ -150,57 +150,77 @@ router.post('/process-payment', function (req, res, next) {
 			console.log('This is mailchimpID: ' + mailchimpID);
 		}
 
-		
+
 	});
 
 	function postMailchimp() {
 
-			// Send POST request to Mailchimp
+		// Send POST request to Mailchimp
 
 		console.log("postMailchimp function called")
 
-			var options = {
-				method: 'POST',
-				url: 'https://us15.api.mailchimp.com/3.0/lists/0dcc5d126d/members/',
-				headers:
-				{
-					'postman-token': process.env.POSTMAN_TOKEN,
-					'cache-control': 'no-cache',
-					authorization: process.env.POSTMAN_AUTH,
-					'content-type': 'application/json'
-				},
-				body:
-				{
-					email_address: customer_body.email_address,
-					status: 'subscribed',
-					merge_fields: { 
-						FNAME: customer_body.given_name, 
-						LNAME: customer_body.family_name,
-						ADDRESS: {
-							addr1: customer_body.address.address_line_1,
-							city: customer_body.address.locality,
-							state: customer_body.address.administrative_district_level_1,
-							zip: customer_body.address.postal_code
-						} 
-					},
-					tags: [
-							"Deep Cleansing Facial"
-					]
-				},
-				json: true
-			};
-
-			request(options, function (error, response, body) {
-				console.log("this is Malchimp response: " + JSON.stringify(response))
-				if (error) throw new Error(error);
-
-				if (response.statusCode === 200) {
-					mailchimpID = response.body.id
-					console.log('This is mailchimpID: ' + mailchimpID)
+		var options = {
+			method: 'POST',
+			url: 'https://us15.api.mailchimp.com/3.0/lists/0dcc5d126d/members/',
+			headers:
+			{
+				'postman-token': process.env.POSTMAN_TOKEN,
+				'cache-control': 'no-cache',
+				authorization: process.env.POSTMAN_AUTH,
+				'content-type': 'application/json'
+			},
+			body:
+			{
+				email_address: customer_body.email_address,
+				status: 'subscribed',
+				merge_fields: {
+					FNAME: customer_body.given_name,
+					LNAME: customer_body.family_name,
+					ADDRESS: {
+						addr1: customer_body.address.address_line_1,
+						city: customer_body.address.locality,
+						state: customer_body.address.administrative_district_level_1,
+						zip: customer_body.address.postal_code
+					}
 				}
-				
-			});
+			},
+			json: true
+		};
 
+		request(options, function (error, response, body) {
+			console.log("this is Malchimp response: " + JSON.stringify(response))
+			if (error) throw new Error(error);
+
+			if (response.statusCode === 200) {
+				mailchimpID = response.body.id
+				console.log('This is mailchimpID: ' + mailchimpID)
+			}
+
+		});
+
+	}
+
+	// Modify Mailchimp Tags
+	function postMailchimpTags(tags) {
+		var options = {
+			method: 'POST',
+			url: 'https://us15.api.mailchimp.com/3.0/lists/0dcc5d126d/members/' + mailchimpID + '/tags',
+			headers:
+			{
+				'Postman-Token': process.env.POSTMAN_TOKEN,
+				'cache-control': 'no-cache',
+				Authorization: process.env.POSTMAN_AUTH,
+				'Content-Type': 'application/json'
+			},
+			body: { tags: tags },
+			json: true
+		};
+
+		request(options, function (error, response, body) {
+			if (error) throw new Error(error);
+
+			console.log(JSON.stringify(body));
+		});
 	}
 
 	// Charge the customer's card
@@ -285,6 +305,17 @@ router.post('/process-payment', function (req, res, next) {
 					'result': "Payment Successful (see console for transaction output)"
 				});
 			}, function (error) {
+
+				// Add Tags To Mailchimp Subscriber
+				var tags = order_body.line_items.map(tag => {
+					return {
+						name: tag.name,
+						status: "active"
+					}
+				})
+				console.log("These are the tags: " + tags)
+				postMailchimpTags(tags)
+
 				console.log('Transactions API error. Returned data: ' + JSON.stringify(error));
 				// res.json({
 				// 	'title': 'Payment Failure',
