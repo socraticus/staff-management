@@ -299,13 +299,6 @@ router.post('/process-payment', function (req, res, next) {
 			transactions_api.charge(locationId, request_body).then(function (data) {
 				console.log('Transactions API called successfully. Returned data: ' + JSON.stringify(data));
 
-				res.json({
-					'status': 200,
-					'title': 'Payment Successful',
-					'result': "Payment Successful (see console for transaction output)"
-				});
-			}, function (error) {
-
 				// Add Tags To Mailchimp Subscriber
 				var tags = order_body.line_items.map(tag => {
 					return {
@@ -314,6 +307,23 @@ router.post('/process-payment', function (req, res, next) {
 					}
 				})
 				console.log("These are the tags: " + tags)
+				postMailchimpTags(tags)
+
+				res.json({
+					'status': 200,
+					'title': 'Payment Successful',
+					'result': "Payment Successful (see console for transaction output)"
+				});
+			}, function (error) {
+
+				// Add Payment Failed Tag To Mailchimp Subscriber
+				var tags = [
+					{
+						name: "Payment Failed",
+						status: "active"
+					}
+				];
+
 				postMailchimpTags(tags)
 
 				console.log('Transactions API error. Returned data: ' + JSON.stringify(error));
