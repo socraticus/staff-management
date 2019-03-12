@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Service = require('../models/service.js');
 const request = require("request");
+const nodemailer = require('nodemailer');
+const xoauth2 = require('xoauth2')
 
 const app = express();
 
@@ -326,6 +328,8 @@ router.post('/process-payment', function (req, res, next) {
 
 				postMailchimpTags(tags)
 
+				sendMailReceipt()
+
 				console.log('Transactions API error. Returned data: ' + JSON.stringify(error));
 				// res.json({
 				// 	'title': 'Payment Failure',
@@ -345,6 +349,37 @@ router.post('/process-payment', function (req, res, next) {
 
 
 });
+
+//  Nodemailer send order receipts
+
+const transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		xoauth2: xoauth2.createXOAuth2Generator({
+			user: 'contact@anandaspamiami.com',
+			clientId: process.env.GMAIL_OAuth_ClientID,
+			clientSecret: process.env.GMAIL_Client_Secret,
+			refreshToken: '1/-iVwIat5bFwRAFZsgSfxw8VQr_EHRUx8aKUZdNTfu_c'
+		})
+	}
+})
+
+function sendMailReceipt () {
+	const mailOptions = {
+		from: 'Ananda Spa <contact@anandaspamiami.com>',
+		to: 'arielvv85@gmail.com',
+		subject: 'Nodemailer test',
+		text: 'Payment Failed'
+	}
+	
+	transporter.sendMail(mailOptions, function (err, res) {
+		if(err) {
+			console.log('Error: ' + JSON.stringify(err))
+		} else {
+			console.log('Email Sent')
+		}
+	})
+}
 
 app.use((error, req, res, next) => {
 	res.status(error.status || 500);
