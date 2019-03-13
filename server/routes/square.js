@@ -352,6 +352,8 @@ router.post('/process-payment', function (req, res, next) {
 
 //  Nodemailer send order receipts
 
+function sendMailReceipt () {
+	
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
@@ -366,7 +368,7 @@ const transporter = nodemailer.createTransport({
 	}
 })
 
-function sendMailReceipt () {
+
 	const mailOptions = {
 		from: 'Ananda Spa <contact@anandaspamiami.com>',
 		to: 'arielvv85@gmail.com',
