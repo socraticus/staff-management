@@ -352,51 +352,49 @@ router.post('/process-payment', function (req, res, next) {
 
 //  Nodemailer send order receipts
 
-function sendMailReceipt () {
+function sendMailReceipt() {
 
-// const transporter = nodemailer.createTransport({
-// 	service: 'gmail',
-// 	auth: {
-// 		xoauth2: xoauth2.createXOAuth2Generator({
-// 			type: 'OAuth2',
-// 			user: 'contact@anandaspamiami.com',
-// 			clientId: process.env.GMAIL_OAuth_ClientID,
-// 			clientSecret: process.env.GMAIL_Client_Secret,
-// 			refreshToken: '1/_eim3SumpBsCquSqJgjqEtqQq6wcS7XzhfMUiXmXyMs',
-// 			accessToken: 'ya29.GlvLBp_sAkUaPwDoT-U08q8APLfo2hve594we74kjKSLzNxdLmpnZDAr1F8ZIUMtaNvvDyMs9Mqts-M0u4X64eLMTELzQn1_TYilxbpiQ8hr53mN7Tgh8q7enlTq'
-// 		})
-// 	}
-// })
+	const transporter = nodemailer.createTransport({
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
 
-const transporter = nodemailer.createTransport({
-	host: 'smtp.gmail.com',
-	port: 465,
-	secure: true,
-
-	auth: {
-		type: 'OAuth2',
-		user: 'contact@anandaspamiami.com',
-		clientId: process.env.GMAIL_OAuth_ClientID,
-		clientSecret: process.env.GMAIL_Client_Secret,
-		refreshToken: '1/_eim3SumpBsCquSqJgjqEtqQq6wcS7XzhfMUiXmXyMs',
-	}
-})
-
-
-	const mailOptions = {
-		from: 'Ananda Spa <contact@anandaspamiami.com>',
-		to: 'arielvv85@gmail.com',
-		subject: 'Nodemailer test',
-		text: 'Payment Failed'
-	}
-	
-	transporter.sendMail(mailOptions, function (err, res) {
-		if(err) {
-			console.log('Error: ' + JSON.stringify(err))
-		} else {
-			console.log('Email Sent')
+		auth: {
+			type: 'OAuth2',
+			user: 'contact@anandaspamiami.com',
+			clientId: process.env.GMAIL_OAuth_ClientID,
+			clientSecret: process.env.GMAIL_Client_Secret,
+			refreshToken: '1/_eim3SumpBsCquSqJgjqEtqQq6wcS7XzhfMUiXmXyMs',
 		}
 	})
+
+	// Get HTML from Square
+
+	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
+		if (!error && response.statusCode === 200) {
+
+			// Send mail
+			const mailOptions = {
+				from: 'Ananda Spa <contact@anandaspamiami.com>',
+				to: 'arielvv85@gmail.com',
+				subject: 'Nodemailer test',
+				text: 'Payment Failed',
+				html: html
+			}
+
+			transporter.sendMail(mailOptions, function (err, res) {
+				if (err) {
+					console.log('Error: ' + JSON.stringify(err))
+				} else {
+					console.log('Email Sent')
+				}
+			})
+			
+			console.log(html)
+		}
+	})
+
+
 }
 
 app.use((error, req, res, next) => {

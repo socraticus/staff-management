@@ -22,7 +22,6 @@
     "nodemailer": "^5.1.1",
     "request": "^2.88.0",
     "square-connect": "^2.20181212.0",
-    "stripe": "^6.12.1",
-    "xoauth2": "^1.2.0"
+    "stripe": "^6.12.1"
   }
 }
