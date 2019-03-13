@@ -356,10 +356,12 @@ const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
 		xoauth2: xoauth2.createXOAuth2Generator({
+			type: 'OAuth2',
 			user: 'contact@anandaspamiami.com',
 			clientId: process.env.GMAIL_OAuth_ClientID,
 			clientSecret: process.env.GMAIL_Client_Secret,
-			refreshToken: '1/_eim3SumpBsCquSqJgjqEtqQq6wcS7XzhfMUiXmXyMs'
+			refreshToken: '1/_eim3SumpBsCquSqJgjqEtqQq6wcS7XzhfMUiXmXyMs',
+			accessToken: 'ya29.GlvLBp_sAkUaPwDoT-U08q8APLfo2hve594we74kjKSLzNxdLmpnZDAr1F8ZIUMtaNvvDyMs9Mqts-M0u4X64eLMTELzQn1_TYilxbpiQ8hr53mN7Tgh8q7enlTq'
 		})
 	}
 })
