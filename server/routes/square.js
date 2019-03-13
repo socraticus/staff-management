@@ -8,7 +8,6 @@ const cors = require('cors');
 const Service = require('../models/service.js');
 const request = require("request");
 const nodemailer = require('nodemailer');
-const xoauth2 = require('xoauth2')
 
 const app = express();
 
@@ -389,7 +388,7 @@ function sendMailReceipt() {
 					console.log('Email Sent')
 				}
 			})
-			
+
 			console.log(html)
 		}
 	})
