@@ -277,7 +277,9 @@ window.onload = function () {
                 locality: false,
                 administrative_district_level_1: false,
                 postal_code: false
-            }
+            },
+            isDisabled: false,
+            placeOrderBtn: "PLACE ORDER"
         },
         filters: {
             twoDecimals: function (value) {
@@ -552,6 +554,9 @@ window.onload = function () {
 
                 // Don't submit the form until SqPaymentForm returns with a nonce
                 event.preventDefault();
+                
+                this.isDisabled = true;
+                this.placeOrderBtn = "PROCESSING..."
 
                 // Request a nonce from the SqPaymentForm object
                 this.paymentForm.requestCardNonce();
@@ -606,7 +611,9 @@ window.onload = function () {
                 return totalErrors
             },
             refreshPaymentForm: function () {
-                this.showPaymentResponse = false
+                this.showPaymentResponse = false;
+                this.isDisabled = false;
+                this.placeOrderBtn = "PLACE ORDER"
             }
         }
     });

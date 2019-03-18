@@ -6,9 +6,9 @@ var cardErrors = document.getElementById('express-card-errors');
 var cardErrors1rstTab = document.getElementById('express-card-errors-1stTab');
 var cardErrorsDiscount = document.getElementById('express-card-errors-discount');
 var serverURL = 'https://ananda-spa-backend.herokuapp.com';
-var fname = document.getElementById('express-first-name');
-var lname = document.getElementById('express-last-name');
-var emailValue = document.getElementById('express-email');
+var fname = document.getElementById('express-first-name').value;
+var lname = document.getElementById('express-last-name').value;
+var emailValue = document.getElementById('express-email').value;
 var discountBtn = document.getElementById('express-discount-btn');
 var discountField = document.getElementById('express-discount-field');
 var drawer = document.getElementById('drawer-outside-slip');
@@ -370,8 +370,8 @@ function stripeTokenHandler(token) {
 
   console.log(voucher);
 
-  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue.value + "&" + "amount=" + amount +
-    "&" + "name=" + nameInput + "&fname=" + fname.value + "&lname=" + lname.value + "&street=" + addressInput + "&city=" + cityInput +
+  xhr.send(encodeURI('stripeToken=' + token.id + "&" + "email=" + emailValue + "&" + "amount=" + amount +
+    "&" + "name=" + nameInput + "&fname=" + fname + "&lname=" + lname + "&street=" + addressInput + "&city=" + cityInput +
     "&state=" + stateInput + "&zip_code=" + zipInput + "&createdAt=" + createdAt + "&voucher=" + voucher));
 
 }
@@ -384,7 +384,7 @@ $('#express-golden-button1').on('click', function (evt) {
 
   // Validade form fields
 
-  if (fname.value === '' || lname.value === '' || emailValue.value === '') {
+  if (fname === '' || lname === '' || emailValue === '') {
     cardErrors1rstTab.innerHTML = "* Please fill in all required fields";
   } else {
 
@@ -431,7 +431,7 @@ $('#express-golden-button1').on('click', function (evt) {
       console.log(mailchimpQueryresponse);
     };
 
-    xhr1.send(encodeURI('fname=' + fname.value + '&lname=' + lname.value + "&email=" + emailValue.value));
+    xhr1.send(encodeURI('fname=' + fname + '&lname=' + lname + "&email=" + emailValue));
 
 
   }
