@@ -6,15 +6,12 @@ var cardErrors = document.getElementById('express-card-errors');
 var cardErrors1rstTab = document.getElementById('express-card-errors-1stTab');
 var cardErrorsDiscount = document.getElementById('express-card-errors-discount');
 var serverURL = 'https://ananda-spa-backend.herokuapp.com';
-var fname = function () {
-  return document.getElementById('express-first-name').value
-};
-var lname = function() {
-  return document.getElementById('express-last-name').value
-};
-var emailValue = function() {
-  return document.getElementById('express-email').value
-};
+var fname = document.getElementById('express-first-name')
+
+var lname = document.getElementById('express-last-name')
+
+var emailValue = document.getElementById('express-email')
+
 var discountBtn = document.getElementById('express-discount-btn');
 var discountField = document.getElementById('express-discount-field');
 var drawer = document.getElementById('drawer-outside-slip');
@@ -394,7 +391,7 @@ $('#express-golden-button1').on('click', function (evt) {
 
   // Validade form fields
 
-  if (fname === '' || lname === '' || emailValue === '') {
+  if (fname.value === '' || lname.value === '' || emailValue.value === '') {
     cardErrors1rstTab.innerHTML = "* Please fill in all required fields";
   } else {
 
@@ -441,7 +438,7 @@ $('#express-golden-button1').on('click', function (evt) {
       console.log(mailchimpQueryresponse);
     };
 
-    xhr1.send(encodeURI('fname=' + fname + '&lname=' + lname + "&email=" + emailValue));
+    xhr1.send(encodeURI('fname=' + fname.value + '&lname=' + lname.value + "&email=" + emailValue.value));
 
 
   }

@@ -252,7 +252,7 @@ app.post('/charge', (req, res) => {
     console.log(req.body);
     console.log(amount);
     stripe.customers.create({
-        email: subscriber.email,
+        email: req.body.email,
         source: req.body.stripeToken
     })
         .then(customer => stripe.charges.create({
