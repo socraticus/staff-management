@@ -357,6 +357,9 @@ function stripeTokenHandler(token) {
   xhr.onload = function (event) {
     paymentBtn.value = "Get Another One!";
     paymentBtn.disabled = false;
+    paymentBtn.addEventListener('click', function() {
+      window.location.replace("https://www.anandaspamiami.com/offers/free-facial-express");
+    });
     updateVoucherCount(event);
   };
 
