@@ -6,14 +6,21 @@ var cardErrors = document.getElementById('express-card-errors');
 var cardErrors1rstTab = document.getElementById('express-card-errors-1stTab');
 var cardErrorsDiscount = document.getElementById('express-card-errors-discount');
 var serverURL = 'https://ananda-spa-backend.herokuapp.com';
-var fname = document.getElementById('express-first-name').value;
-var lname = document.getElementById('express-last-name').value;
-var emailValue = document.getElementById('express-email').value;
+var fname = function () {
+  return document.getElementById('express-first-name').value
+};
+var lname = function() {
+  return document.getElementById('express-last-name').value
+};
+var emailValue = function() {
+  return document.getElementById('express-email').value
+};
 var discountBtn = document.getElementById('express-discount-btn');
 var discountField = document.getElementById('express-discount-field');
 var drawer = document.getElementById('drawer-outside-slip');
 var drawerBtn = document.getElementById('drawer-discount-btn');
 var drawerWrapper = document.getElementById('drawer-wrapper');
+var paymentBtn = document.getElementById('express-golden-button-pay')
 var amount = 1000;
 
 //Shopping Cart
@@ -153,15 +160,15 @@ function discountFromDrawer() {
 }
 
 // DOM manipulation after finishing loading
-$(document).ready(function(){
+$(document).ready(function () {
 
-// Fix problem with G in Google Reviews
-$('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
-  
-// Link to Tab2 from Button in Tab1
-$('#express-Tab2').addClass('inactiveLink');
+  // Fix problem with G in Google Reviews
+  $('#review-container').find('.romw .romw-source-logo img').css("width", "25px")
 
-// Toggle Drawer open and closed
+  // Link to Tab2 from Button in Tab1
+  $('#express-Tab2').addClass('inactiveLink');
+
+  // Toggle Drawer open and closed
 
 
 
@@ -277,8 +284,8 @@ function triggerAnimation() {
 //************//
 
 //Initialize Stripe
-var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
-// var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
+// var stripe = Stripe('pk_live_hILIhM39DUQfAFiKOkqnGExj');
+var stripe = Stripe('pk_test_j5U5yJvpdZW8Jt0HBC7lTMQX');
 var elements = stripe.elements();
 
 // Custom styling can be passed to options when creating an Element.
@@ -322,7 +329,7 @@ card.addEventListener('change', function (event) {
 form.addEventListener('submit', function (event) {
   event.preventDefault();
 
-
+  paymentBtn.disabled = true;
 
   stripe.createToken(card, {
     name: document.getElementById('express-card-name-2').value,
@@ -335,6 +342,7 @@ form.addEventListener('submit', function (event) {
       // Inform the customer that there was an error.
       var errorElement = document.getElementById('express-card-errors');
       errorElement.textContent = result.error.message;
+      paymentBtn.disabled = false;
     } else {
       // Send the token to your server.
       stripeTokenHandler(result.token);
@@ -350,6 +358,8 @@ function stripeTokenHandler(token) {
   xhr.open('POST', serverURL + '/charge', true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function (event) {
+    paymentBtn.value = "Get Another One!";
+    paymentBtn.disabled = false;
     updateVoucherCount(event);
   };
 
@@ -403,7 +413,7 @@ $('#express-golden-button1').on('click', function (evt) {
         // Simulate click on drawer element
         setTimeout(function () {
           // Verify Drawer is closed
-          if(drawerWrapper.style.transform.match(/(0px, 0px, 0px)/) === null) {
+          if (drawerWrapper.style.transform.match(/(0px, 0px, 0px)/) === null) {
             console.log('drawer is closed')
             simulate(drawer, "click");
             console.log('clicked to open')
@@ -414,7 +424,7 @@ $('#express-golden-button1').on('click', function (evt) {
 
         setTimeout(function () {
           // Verify Drawer is closed
-          if(drawerWrapper.style.transform.match(/(0px, 0px, 0px)/) === null) {
+          if (drawerWrapper.style.transform.match(/(0px, 0px, 0px)/) === null) {
             console.log('drawer is closed')
             return;
           } else {
