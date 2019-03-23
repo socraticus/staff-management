@@ -400,7 +400,7 @@ function sendMailReceipt() {
 app.get('/square-receipt', function (req, res, next) {
 	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			response.send(html)
+			res.send(html)
 		}
 	})
 })
