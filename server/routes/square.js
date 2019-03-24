@@ -397,7 +397,7 @@ function sendMailReceipt() {
 };
 
 // Example of how request works
-app.get('/square-receipt', function (req, res, next) {
+router.get('/square-receipt', function (req, res, next) {
 	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 			res.send(html)
@@ -406,7 +406,7 @@ app.get('/square-receipt', function (req, res, next) {
 })
 
 
-app.use((error, req, res, next) => {
+router.use((error, req, res, next) => {
 	res.status(error.status || 500);
 	res.json({
 		errors: [
