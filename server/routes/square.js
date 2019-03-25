@@ -402,6 +402,9 @@ router.get('/square-receipt', function (req, res, next) {
 	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 			juice.juiceResources(html, function(err, inHTML) {
+				if (err) {
+					console.log(err)
+				}
 				res.send(inHTML)
 			})
 			// res.send(html)
