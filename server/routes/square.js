@@ -410,7 +410,11 @@ router.get('/square-receipt', function (req, res, next) {
 			// 	console.log(html)
 			// 	res.send(html)
 			// })
-			res.send(html)
+
+			var inlined = juice(html)
+			res.send(inlined)
+
+			// res.send(html)
 		}
 	})
 })
