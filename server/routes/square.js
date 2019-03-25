@@ -417,7 +417,7 @@ router.get('/square-receipt', function (req, res, next) {
 			// 	res.send(response)
 			// })
 			const options = {
-				applyStyleTags: false
+				preserveImportant: true
 			}
 			juiceResources(html, options).then(inline => {
 				res.send(inline)
