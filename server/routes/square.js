@@ -413,7 +413,7 @@ router.get('/square-receipt', function (req, res, next) {
 
 			request('https://d3g64w74of3jgu.cloudfront.net/receipts/assets/application-081d1a2e363192dabcc3417e30d322a8.css',
 			(error, response, html) => {
-				res.send(html)
+				res.send(response)
 			})
 
 			// res.send(html)
