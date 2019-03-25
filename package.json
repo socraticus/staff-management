@@ -26,6 +26,7 @@
     "express": "^4.16.4",
     "firebase-tools": "^6.3.1",
     "juice": "^5.2.0",
+    "juice-resources-promise": "0.0.2",
     "mailchimp-api-v3": "^1.12.1",
     "mongoose": "^5.3.11",
     "morgan": "^1.9.1",

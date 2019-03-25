@@ -8,7 +8,8 @@ const cors = require('cors');
 const Service = require('../models/service.js');
 const request = require("request");
 const nodemailer = require('nodemailer');
-const juice = require('juice')
+const juice = require('juice');
+const juiceResources = require('juice-resources-promise');
 
 const app = express();
 
@@ -411,10 +412,12 @@ router.get('/square-receipt', function (req, res, next) {
 			// 	res.send(html)
 			// })
 
-			request('https://d3g64w74of3jgu.cloudfront.net/receipts/assets/application-081d1a2e363192dabcc3417e30d322a8.css',
-			(error, response, html) => {
-				res.send(response)
-			})
+			// request('https://d3g64w74of3jgu.cloudfront.net/receipts/assets/application-081d1a2e363192dabcc3417e30d322a8.css',
+			// (error, response, html) => {
+			// 	res.send(response)
+			// })
+
+			juiceResources(html).then(console.log).catch(console.error);
 
 			// res.send(html)
 		}
