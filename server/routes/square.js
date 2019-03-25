@@ -417,7 +417,9 @@ router.get('/square-receipt', function (req, res, next) {
 			// 	res.send(response)
 			// })
 
-			juiceResources(html).then(console.log).catch(console.error);
+			juiceResources(html).then(inline => {
+				res.send(inline)
+			}).catch(console.error);
 
 			// res.send(html)
 		}
