@@ -404,6 +404,7 @@ router.get('/square-receipt', function (req, res, next) {
 			juice.juiceResources(html, function(err, inHTML) {
 				if (err) {
 					console.log(err)
+					console.log('Error: ' + JSON.stringify(err));
 				}
 				res.send(inHTML)
 			})
