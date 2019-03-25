@@ -401,16 +401,16 @@ function sendMailReceipt() {
 router.get('/square-receipt', function (req, res, next) {
 	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			juice.juiceResources(html, function (err, html) {
-				console.log("Juice method called");
-				if (err) {
-					console.log(err)
-					console.log('Error: ' + JSON.stringify(err));
-				}
-				console.log(html)
-				res.send(html)
-			})
-			// res.send(html)
+			// juice.juiceResources(html, function (err, html) {
+			// 	console.log("Juice method called");
+			// 	if (err) {
+			// 		console.log(err)
+			// 		console.log('Error: ' + JSON.stringify(err));
+			// 	}
+			// 	console.log(html)
+			// 	res.send(html)
+			// })
+			res.send(html)
 		}
 	})
 })
