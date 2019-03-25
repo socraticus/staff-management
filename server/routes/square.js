@@ -8,6 +8,7 @@ const cors = require('cors');
 const Service = require('../models/service.js');
 const request = require("request");
 const nodemailer = require('nodemailer');
+const juice = require('juice')
 
 const app = express();
 
@@ -400,7 +401,10 @@ function sendMailReceipt() {
 router.get('/square-receipt', function (req, res, next) {
 	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			res.send(html)
+			juice(html, function(err, inHTML) {
+				res.send(inHTML)
+			})
+			// res.send(html)
 		}
 	})
 })
