@@ -459,8 +459,10 @@ router.get('/square-receipt', function (req, res, next) {
 
 	var storage = firebase_admin.storage();
 	var storageRef = storage.ref('screenshots')
+	console.log('Square receipt route')
 
 		(async () => {
+			console.log('async route')
 			const browser = await puppeteer.launch();
 			const page = await browser.newPage();
 
