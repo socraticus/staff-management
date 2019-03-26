@@ -10,6 +10,9 @@ const request = require("request");
 const nodemailer = require('nodemailer');
 const juice = require('juice');
 const juiceResources = require('juice-resources-promise');
+const puppeteer = require('puppeteer');
+const firebase = require('firebase');
+const firebase_admin = require('firebase-admin');
 
 const app = express();
 
@@ -400,35 +403,84 @@ function sendMailReceipt() {
 
 // Example of how request works
 router.get('/square-receipt', function (req, res, next) {
-	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
-		if (!error && response.statusCode === 200) {
-			// juice.juiceResources(html, function (err, html) {
-			// 	console.log("Juice method called");
-			// 	if (err) {
-			// 		console.log(err)
-			// 		console.log('Error: ' + JSON.stringify(err));
-			// 	}
-			// 	console.log(html)
-			// 	res.send(html)
-			// })
+	// request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
+	// 	if (!error && response.statusCode === 200) {
+	// 		// juice.juiceResources(html, function (err, html) {
+	// 		// 	console.log("Juice method called");
+	// 		// 	if (err) {
+	// 		// 		console.log(err)
+	// 		// 		console.log('Error: ' + JSON.stringify(err));
+	// 		// 	}
+	// 		// 	console.log(html)
+	// 		// 	res.send(html)
+	// 		// })
 
-			// request('https://d3g64w74of3jgu.cloudfront.net/receipts/assets/application-081d1a2e363192dabcc3417e30d322a8.css',
-			// (error, response, html) => {
-			// 	res.send(response)
-			// })
-			const options = {
-				preserveImportant: true,
-				removeStyleTags: false,
-				applyAttributesTableElements: false,
-				applyWidthAttributes: false
-			}
-			juiceResources(html, options).then(inline => {
-				res.send(inline)
-			}).catch(console.error);
+	// 		// request('https://d3g64w74of3jgu.cloudfront.net/receipts/assets/application-081d1a2e363192dabcc3417e30d322a8.css',
+	// 		// (error, response, html) => {
+	// 		// 	res.send(response)
+	// 		// })
+	// 		const options = {
+	// 			preserveImportant: true,
+	// 			removeStyleTags: false,
+	// 			applyAttributesTableElements: false,
+	// 			applyWidthAttributes: false
+	// 		}
+	// 		juiceResources(html, options).then(inline => {
+	// 			res.send(inline)
+	// 		}).catch(console.error);
 
-			// res.send(html)
-		}
-	})
+	// 		// res.send(html)
+	// 	}
+	// })
+
+
+	// Using Puppeteer to send receipt
+
+	// Initialize Firebase
+	// var config = {
+	// 	apiKey: "AIzaSyDbVv1bVyoARmdFXccAkBM8-eAgG_LuVGU",
+	// 	authDomain: "ananda-spa-user-profile.firebaseapp.com",
+	// 	databaseURL: "https://ananda-spa-user-profile.firebaseio.com",
+	// 	projectId: "ananda-spa-user-profile",
+	// 	storageBucket: "ananda-spa-user-profile.appspot.com",
+	// 	messagingSenderId: "265611520363"
+	//   };
+	//   firebase.initializeApp(config);
+
+	firebase_admin.initializeApp({
+		credential: firebase_admin.credential.cert({
+			projectId: "ananda-spa-user-profile",
+			clientEmail: "firebaseanandaadmin@ananda-spa-user-profile.iam.gserviceaccount.com",
+			privateKey: process.env.FIREBASE_PRIVATE_KEY
+		}),
+		databaseURL: "https://ananda-spa-user-profile.firebaseio.com",
+		storageBucket: "ananda-spa-user-profile.appspot.com",
+	});
+
+	var storage = firebase_admin.storage();
+	var storageRef = storage.ref('screenshots')
+
+		(async () => {
+			const browser = await puppeteer.launch();
+			const page = await browser.newPage();
+
+
+			await page.goto('https://squareup.com/login');
+			await page.screenshot({ path: 'screenshot.png' }).then((screenshot) => {
+				console.log('Screenshot captured: ' + screenshot)
+
+				storageRef.put(screenshot).then(console.log('file uploaded')).catch(console.log(Error));
+			});
+			console.log(`Current directory: ${process.cwd()}`);
+
+			
+
+
+
+			await browser.close();
+		})();
+
+
 })
 
 
