@@ -404,7 +404,7 @@ function sendMailReceipt() {
 
 // Example of how request works
 router.get('/square-receipt', function (req, res, next) {
-	/* request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
+	 request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 			juice.juiceResources(html, function (err, html) {
 				console.log("Juice method called");
@@ -412,13 +412,13 @@ router.get('/square-receipt', function (req, res, next) {
 					console.log(err)
 					console.log('Error: ' + JSON.stringify(err));
 				}
-				console.log(html)
-				res.send(html)
+				console.log(html);
+				res.send(html);
 			})
 
 			request('https://d3g64w74of3jgu.cloudfront.net/receipts/assets/application-081d1a2e363192dabcc3417e30d322a8.css',
 			(error, response, html) => {
-				res.send(response)
+				res.send(response);
 			})
 			const options = {
 				preserveImportant: true,
@@ -430,21 +430,11 @@ router.get('/square-receipt', function (req, res, next) {
 				res.send(inline)
 			}).catch(console.error);
 
-			 res.send(html)
+			 res.send(html);
 		}
 	})
- */
-https.get('https://encrypted.google.com/', (res) => {
-  console.log('statusCode:', res.statusCode);
-  console.log('headers:', res.headers);
+ 
 
-  res.on('data', (d) => {
-    process.stdout.write(d);
-  });
-
-}).on('error', (e) => {
-  console.error(e);
-});
 
 	// Using Puppeteer to send receipt
 
