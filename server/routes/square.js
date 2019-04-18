@@ -412,7 +412,7 @@ router.get('/square-receipt', function (req, res, next) {
 					console.log(err)
 					console.log('Error: ' + JSON.stringify(err));
 				}
-				console.log('loaded');
+				console.log('html');
 				res.send(html);
 			})
 
