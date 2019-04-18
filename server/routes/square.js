@@ -510,7 +510,7 @@ router.get('/get-receipt', function (req, res, next) {
 	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', function (error, response, body) {
   if (!error && response.statusCode == 200) {
 	//console.log(body);
-	inlineCss(body, options)
+	inlineCss(body, {})
     .then(function(html) { res.send(body) });
   }
 });
