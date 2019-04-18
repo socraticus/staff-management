@@ -505,4 +505,12 @@ router.get('/services-list', function (req, res, next) {
 	})
 })
 
+router.get('/get-receipt', function (req, res, next) {
+	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', function (error, response, html) {
+  if (!error && response.statusCode == 200) {
+    console.log(body);
+  }
+});
+})
+
 module.exports = router;
