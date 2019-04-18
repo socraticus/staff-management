@@ -14,6 +14,7 @@ const puppeteer = require('puppeteer');
 const firebase = require('firebase');
 const firebase_admin = require('firebase-admin');
 const https = require('https');
+var inlineCss = require('inline-css');
 
 const app = express();
 
@@ -506,12 +507,8 @@ router.get('/services-list', function (req, res, next) {
 })
 
 router.get('/get-receipt', function (req, res, next) {
-	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-	//console.log(body);
-	res.send(body);
-  }
-});
+	inlineCss(html, { url: 'https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF'})
+    .then(function(html) { console.log('done'); res.send(html) });
 })
 
 module.exports = router;
