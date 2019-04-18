@@ -403,35 +403,35 @@ function sendMailReceipt() {
 
 // Example of how request works
 router.get('/square-receipt', function (req, res, next) {
-	// request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
-	// 	if (!error && response.statusCode === 200) {
-	// 		// juice.juiceResources(html, function (err, html) {
-	// 		// 	console.log("Juice method called");
-	// 		// 	if (err) {
-	// 		// 		console.log(err)
-	// 		// 		console.log('Error: ' + JSON.stringify(err));
-	// 		// 	}
-	// 		// 	console.log(html)
-	// 		// 	res.send(html)
-	// 		// })
+	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
+		if (!error && response.statusCode === 200) {
+			juice.juiceResources(html, function (err, html) {
+				console.log("Juice method called");
+				if (err) {
+					console.log(err)
+					console.log('Error: ' + JSON.stringify(err));
+				}
+				console.log(html)
+				res.send(html)
+			})
 
-	// 		// request('https://d3g64w74of3jgu.cloudfront.net/receipts/assets/application-081d1a2e363192dabcc3417e30d322a8.css',
-	// 		// (error, response, html) => {
-	// 		// 	res.send(response)
-	// 		// })
-	// 		const options = {
-	// 			preserveImportant: true,
-	// 			removeStyleTags: false,
-	// 			applyAttributesTableElements: false,
-	// 			applyWidthAttributes: false
-	// 		}
-	// 		juiceResources(html, options).then(inline => {
-	// 			res.send(inline)
-	// 		}).catch(console.error);
+			request('https://d3g64w74of3jgu.cloudfront.net/receipts/assets/application-081d1a2e363192dabcc3417e30d322a8.css',
+			(error, response, html) => {
+				res.send(response)
+			})
+			const options = {
+				preserveImportant: true,
+				removeStyleTags: false,
+				applyAttributesTableElements: false,
+				applyWidthAttributes: false
+			}
+			juiceResources(html, options).then(inline => {
+				res.send(inline)
+			}).catch(console.error);
 
-	// 		// res.send(html)
-	// 	}
-	// })
+			// res.send(html)
+		}
+	})
 
 
 	// Using Puppeteer to send receipt
