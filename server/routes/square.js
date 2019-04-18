@@ -13,6 +13,7 @@ const juiceResources = require('juice-resources-promise');
 const puppeteer = require('puppeteer');
 const firebase = require('firebase');
 const firebase_admin = require('firebase-admin');
+const https = require('https');
 
 const app = express();
 
@@ -403,7 +404,7 @@ function sendMailReceipt() {
 
 // Example of how request works
 router.get('/square-receipt', function (req, res, next) {
-	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
+	/* request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 			juice.juiceResources(html, function (err, html) {
 				console.log("Juice method called");
@@ -432,7 +433,18 @@ router.get('/square-receipt', function (req, res, next) {
 			 res.send(html)
 		}
 	})
+ */
+https.get('https://encrypted.google.com/', (res) => {
+  console.log('statusCode:', res.statusCode);
+  console.log('headers:', res.headers);
 
+  res.on('data', (d) => {
+    process.stdout.write(d);
+  });
+
+}).on('error', (e) => {
+  console.error(e);
+});
 
 	// Using Puppeteer to send receipt
 
