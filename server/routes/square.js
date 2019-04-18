@@ -507,8 +507,7 @@ router.get('/services-list', function (req, res, next) {
 })
 
 router.get('/get-receipt', function (req, res, next) {
-	inlineCss(html, { url: 'https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF'})
-    .then(function(html) { console.log('done'); res.send(html) });
+	res.send('hello');
 })
 
 module.exports = router;
