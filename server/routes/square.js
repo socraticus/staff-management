@@ -15,6 +15,7 @@ const firebase = require('firebase');
 const firebase_admin = require('firebase-admin');
 const https = require('https');
 var inlineCss = require('inline-css');
+const cheerio = require('cheerio');
 
 const app = express();
 
