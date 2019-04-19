@@ -529,7 +529,7 @@ router.get('/get-receipt', function (req, res, next) {
 			// Send mail
 			const mailOptions = {
 				from: 'Ananda Spa <contact@anandaspamiami.com>',
-				to: 'arielvv85@gmail.com',
+				to: 'armenterosroilan@gmail.com',
 				subject: 'Nodemailer test',
 				text: 'Payment Failed',
 				html: html
@@ -543,7 +543,7 @@ router.get('/get-receipt', function (req, res, next) {
 				}
 			})
 
-			console.log(html)
+			res.send(html);
 		}
 	})
 })
