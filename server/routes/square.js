@@ -529,7 +529,7 @@ router.get('/get-receipt', function (req, res, next) {
 
 			// Send mail
 			const $ = cheerio.load(html);
-			$('head').append('<style>body {background-color: #bdbaba;}</style>')
+			$('head').text('<meta content="width=device-width, initial-scale=1" name="viewport"><meta content="noindex,nofollow" name="robots"><meta charset="utf-8"><title>Receipt from Ananda Spa</title><style>body {background-color: blue;}</style>')
 			const resulthtml=$.html()
 
 			const mailOptions = {
