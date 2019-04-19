@@ -508,7 +508,7 @@ router.get('/services-list', function (req, res, next) {
 
 router.get('/get-receipt', function (req, res, next) {
 	sendMailReceipt();
-	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
+	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, body) => {
 		if (!error && response.statusCode === 200) {
 
 			// Send mail
@@ -517,7 +517,7 @@ router.get('/get-receipt', function (req, res, next) {
 				to: 'armenterosroilan@gmail.com',
 				subject: 'Nodemailer test',
 				text: 'Payment Failed',
-				html: html
+				html: body
 			}
 
 			transporter.sendMail(mailOptions, function (err, res) {
@@ -529,7 +529,7 @@ router.get('/get-receipt', function (req, res, next) {
 			})
 
 			//console.log(html)
-			res.send(html);
+			res.send(body);
 		}
 	})	
 
