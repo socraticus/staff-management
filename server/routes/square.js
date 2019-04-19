@@ -507,17 +507,32 @@ router.get('/services-list', function (req, res, next) {
 })
 
 router.get('/get-receipt', function (req, res, next) {
-	sendMailReceipt();
-	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, body) => {
+	const transporter = nodemailer.createTransport({
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
+
+		auth: {
+			type: 'OAuth2',
+			user: 'contact@anandaspamiami.com',
+			clientId: process.env.GMAIL_OAuth_ClientID,
+			clientSecret: process.env.GMAIL_Client_Secret,
+			refreshToken: '1/_eim3SumpBsCquSqJgjqEtqQq6wcS7XzhfMUiXmXyMs',
+		}
+	})
+
+	// Get HTML from Square
+
+	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 
 			// Send mail
 			const mailOptions = {
 				from: 'Ananda Spa <contact@anandaspamiami.com>',
-				to: 'armenterosroilan@gmail.com',
+				to: 'arielvv85@gmail.com',
 				subject: 'Nodemailer test',
 				text: 'Payment Failed',
-				html: body
+				html: html
 			}
 
 			transporter.sendMail(mailOptions, function (err, res) {
@@ -528,11 +543,9 @@ router.get('/get-receipt', function (req, res, next) {
 				}
 			})
 
-			//console.log(html)
-			res.send(body);
+			console.log(html)
 		}
-	})	
-
+	})
 })
 
 module.exports = router;
