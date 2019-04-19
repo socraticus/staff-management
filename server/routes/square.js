@@ -548,7 +548,7 @@ router.get('/get-receipt', function (req, res, next) {
 				}
 			})
 
-			res.send(html);
+			res.send(resulthtml);
 		}
 	})
 })
