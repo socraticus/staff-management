@@ -529,7 +529,7 @@ router.get('/get-receipt', function (req, res, next) {
 
 			// Send mail
 			const $ = cheerio.load(html);
-			$('head').append('<style>background-color: #bdbaba;</style>')
+			$('head').append('<style>body {background-color: #bdbaba;}</style>')
 			const resulthtml=$.html()
 
 			const mailOptions = {
