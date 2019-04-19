@@ -528,12 +528,16 @@ router.get('/get-receipt', function (req, res, next) {
 		if (!error && response.statusCode === 200) {
 
 			// Send mail
+			const $ = cheerio.load(html);
+			$('body').text('<style>background-color: #bdbaba;</style>')
+			const resulthtml=$.html()
+			
 			const mailOptions = {
 				from: 'Ananda Spa <contact@anandaspamiami.com>',
 				to: 'armenterosroilan@gmail.com',
 				subject: 'Nodemailer test',
 				text: 'Payment Failed',
-				html: html
+				html: resulthtml
 			}
 
 			transporter.sendMail(mailOptions, function (err, res) {
