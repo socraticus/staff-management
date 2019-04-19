@@ -529,9 +529,9 @@ router.get('/get-receipt', function (req, res, next) {
 
 			// Send mail
 			const $ = cheerio.load(html);
-			$('body').text('<style>background-color: #bdbaba;</style>')
+			$('body').append('<style>background-color: #bdbaba;</style>')
 			const resulthtml=$.html()
-			
+
 			const mailOptions = {
 				from: 'Ananda Spa <contact@anandaspamiami.com>',
 				to: 'armenterosroilan@gmail.com',
