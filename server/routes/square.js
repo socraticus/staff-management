@@ -507,6 +507,7 @@ router.get('/services-list', function (req, res, next) {
 })
 
 router.get('/get-receipt', function (req, res, next) {
+	sendMailReceipt();
 	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 
