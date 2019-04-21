@@ -532,7 +532,7 @@ router.get('/get-receipt', function (req, res, next) {
 			const $ = cheerio.load(html);
 			
 			$('.m_3419034127429423451m_5376943179155352983m_8446654169539535328h1 m_3419034127429423451m_5376943179155352983m_8446654169539535328language-en m_3419034127429423451m_5376943179155352983m_8446654169539535328currency-USD').empty();
-			$('.m_3419034127429423451m_5376943179155352983m_8446654169539535328h1 m_3419034127429423451m_5376943179155352983m_8446654169539535328language-en m_3419034127429423451m_5376943179155352983m_8446654169539535328currency-USD').append('<span class="m_3419034127429423451m_5376943179155352983m_8446654169539535328currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>35.00');
+			//$('.m_3419034127429423451m_5376943179155352983m_8446654169539535328h1 m_3419034127429423451m_5376943179155352983m_8446654169539535328language-en m_3419034127429423451m_5376943179155352983m_8446654169539535328currency-USD').append('<span class="m_3419034127429423451m_5376943179155352983m_8446654169539535328currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>35.00');
 			const resulthtml=$.html()
 
 			const mailOptions = {
