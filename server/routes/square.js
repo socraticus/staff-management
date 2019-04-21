@@ -529,18 +529,18 @@ router.get('/get-receipt', function (req, res, next) {
 		if (!error && response.statusCode === 200) {
 
 			// Send mail
-			const $ = cheerio.load(html);
+			//const $ = cheerio.load(html);
 			//const x = cheerio.load('http://api.snapcuba.org/receipt.html')
-			$('body').empty();
-			$('body').append($.html());
-			const resulthtml=$.html()
+			//$('body').empty();
+			//$('body').append($.html());
+			//const resulthtml=$.html()
 
 			const mailOptions = {
 				from: 'Ananda Spa <contact@anandaspamiami.com>',
 				to: 'armenterosroilan@gmail.com',
 				subject: 'Nodemailer test',
 				text: 'Payment Failed',
-				html: resulthtml
+				html: html
 			}
 
 			transporter.sendMail(mailOptions, function (err, res) {
@@ -551,7 +551,7 @@ router.get('/get-receipt', function (req, res, next) {
 				}
 			})
 
-			res.send(resulthtml);
+			res.send(html);
 		}
 	})
 })
