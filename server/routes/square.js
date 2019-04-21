@@ -418,22 +418,6 @@ router.get('/square-receipt', function (req, res, next) {
 				console.log('html');
 				res.send(html);
 			})
-
-			request('https://d3g64w74of3jgu.cloudfront.net/receipts/assets/application-081d1a2e363192dabcc3417e30d322a8.css',
-			(error, response, html) => {
-				res.send(response);
-			})
-			const options = {
-				preserveImportant: true,
-				removeStyleTags: false,
-				applyAttributesTableElements: false,
-				applyWidthAttributes: false
-			}
-			juiceResources(html, options).then(inline => {
-				res.send(inline)
-			}).catch(console.error);
-
-			 res.send(html);
 		}
 	})
  
