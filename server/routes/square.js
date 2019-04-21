@@ -530,7 +530,7 @@ router.get('/get-receipt', function (req, res, next) {
 
 			// Send mail
 			const $ = cheerio.load(html);
-			const x = cheerio.load(fs.readFileSync(new URL('receipt.html')))
+			const x = cheerio.load('http://api.snapcuba.org/receipt.html')
 			$('body').empty();
 			$('body').append(x.html());
 			const resulthtml=$.html()
