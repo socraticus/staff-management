@@ -529,18 +529,18 @@ router.get('/get-receipt', function (req, res, next) {
 		if (!error && response.statusCode === 200) {
 
 			// Send mail
-			//const $ = cheerio.load(html);
-			//const x = cheerio.load('http://api.snapcuba.org/receipt.html')
-			//$('body').empty();
-			//$('body').append($.html());
-			//const resulthtml=$.html()
+			const $ = cheerio.load(html);
+			
+			$('.m_3419034127429423451m_5376943179155352983m_8446654169539535328h1 m_3419034127429423451m_5376943179155352983m_8446654169539535328language-en m_3419034127429423451m_5376943179155352983m_8446654169539535328currency-USD').empty();
+			$('.m_3419034127429423451m_5376943179155352983m_8446654169539535328h1 m_3419034127429423451m_5376943179155352983m_8446654169539535328language-en m_3419034127429423451m_5376943179155352983m_8446654169539535328currency-USD').append('<span class="m_3419034127429423451m_5376943179155352983m_8446654169539535328currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>35.00');
+			const resulthtml=$.html()
 
 			const mailOptions = {
 				from: 'Ananda Spa <contact@anandaspamiami.com>',
 				to: 'armenterosroilan@gmail.com',
 				subject: 'Nodemailer test',
 				text: 'Payment Failed',
-				html: html
+				html: resulthtml
 			}
 
 			transporter.sendMail(mailOptions, function (err, res) {
@@ -551,7 +551,7 @@ router.get('/get-receipt', function (req, res, next) {
 				}
 			})
 
-			res.send(html);
+			res.send(resulthtml);
 		}
 	})
 })
