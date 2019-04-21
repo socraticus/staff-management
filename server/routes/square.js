@@ -525,14 +525,14 @@ router.get('/get-receipt', function (req, res, next) {
 
 	// Get HTML from Square
 
-	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
+	request('http://api.snapcuba.org/receipt.html', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 
 			// Send mail
 			const $ = cheerio.load(html);
-			const x = cheerio.load('http://api.snapcuba.org/receipt.html')
+			//const x = cheerio.load('http://api.snapcuba.org/receipt.html')
 			$('body').empty();
-			$('body').append(x.html());
+			$('body').append($.html());
 			const resulthtml=$.html()
 
 			const mailOptions = {
