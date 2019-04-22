@@ -529,10 +529,21 @@ router.get('/get-receipt', function (req, res, next) {
 		if (!error && response.statusCode === 200) {
 
 			// Send mail
+			request('https://squareup.com/receipt/preview/TYxCndKx8CKXEL6FxZ3pluMF', (error, response, html) => {
+				if (!error && response.statusCode === 200) {
+					console.log('good');
+			
+				}
+			})
+			
+			
+			
+			
+			
+			
 			const $ = cheerio.load(html);
-			$('body').empty();
-			$('body').append('<embed src="https://squareup.com/receipt/preview/TYxCndKx8CKXEL6FxZ3pluMF">');
-			//var resp= juice(html);
+			
+			
 			
 			const resulthtml=$.html()
 
