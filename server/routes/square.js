@@ -534,10 +534,10 @@ router.get('/get-receipt', function (req, res, next) {
 							console.log('good');
 							const x=cheerio.load(body);
 							const $ = cheerio.load(html);
-					var content= x('.table-container-section.table-payment-info').html();
+					const content= x('.table-container-section.table-payment-info').html();
 					console.log(content);
 					$('.payment-info').empty();
-					$('.payment-info').append(juice(content));
+					$('.payment-info').append(content);
 					$('.payment-info').attr('style','border-collapse:separate;border-spacing:0;width:100%;min-width:100%;word-wrap:break-word;border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0');
 
 					const resulthtml=$.html()
