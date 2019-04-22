@@ -535,6 +535,7 @@ router.get('/get-receipt', function (req, res, next) {
 							const x=cheerio.load(body);
 							const $ = cheerio.load(html);
 					var content= x('.table-container-section').html();
+					console.log(content);
 					$('.table-container-section').empty();
 					$('.table-container-section').append(content);
 					
