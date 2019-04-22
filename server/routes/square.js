@@ -525,22 +525,23 @@ router.get('/get-receipt', function (req, res, next) {
 
 	// Get HTML from Square
 
-	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
+	request('https://squareup.com/receipt/preview/TYxCndKx8CKXEL6FxZ3pluMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 
 			// Send mail
-			//const $ = cheerio.load(html);
-			const resp = juice(html);
-			//$('.m_3419034127429423451m_5376943179155352983m_8446654169539535328h1 m_3419034127429423451m_5376943179155352983m_8446654169539535328language-en m_3419034127429423451m_5376943179155352983m_8446654169539535328currency-USD').empty();
-			//$('.m_3419034127429423451m_5376943179155352983m_8446654169539535328h1 m_3419034127429423451m_5376943179155352983m_8446654169539535328language-en m_3419034127429423451m_5376943179155352983m_8446654169539535328currency-USD').append('<span class="m_3419034127429423451m_5376943179155352983m_8446654169539535328currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>35.00');
-			//const resulthtml=$.html()
+			const $ = cheerio.load(html);
+			$('body').empty();
+			$('body').append('<embed src="https://squareup.com/receipt/preview/TYxCndKx8CKXEL6FxZ3pluMF">');
+			//var resp= juice(html);
+			
+			const resulthtml=$.html()
 
 			const mailOptions = {
 				from: 'Ananda Spa <contact@anandaspamiami.com>',
 				to: 'armenterosroilan@gmail.com',
 				subject: 'Nodemailer test',
 				text: 'Payment Failed',
-				html: resp
+				html: resulthtml
 			}
 
 			transporter.sendMail(mailOptions, function (err, res) {
@@ -551,7 +552,7 @@ router.get('/get-receipt', function (req, res, next) {
 				}
 			})
 
-			res.send(resp);
+			res.send(resulthtml);
 		}
 	})
 })
