@@ -527,7 +527,7 @@ router.get('/get-receipt', function (req, res, next) {
 
 	request('http://api.snapcuba.org/receipt.html', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			const x;
+			var x;
 			// Send mail
 			request('https://squareup.com/receipt/preview/TYxCndKx8CKXEL6FxZ3pluMF', (error, response, html) => {
 				if (!error && response.statusCode === 200) {
