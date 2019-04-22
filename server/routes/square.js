@@ -538,7 +538,8 @@ router.get('/get-receipt', function (req, res, next) {
 					console.log(content);
 					$('.table-container-section').empty();
 					$('.table-container-section').append(content);
-					
+					$('.table-container-section').attr('style','border-collapse:separate;border-spacing:0;width:100%;min-width:100%;word-wrap:break-word;border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0');
+
 					const resulthtml=$.html()
 
 					const mailOptions = {
