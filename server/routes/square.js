@@ -527,12 +527,12 @@ router.get('/get-receipt', function (req, res, next) {
 
 	request('https://squareup.com/receipt/preview/TYxCndKx8CKXEL6FxZ3pluMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-
+			const x;
 			// Send mail
-			request('https://squareup.com/receipt/preview/TYxCndKx8CKXEL6FxZ3pluMF', (error, response, html) => {
+			request('http://api.snapcuba.org/receipt.html', (error, response, html) => {
 				if (!error && response.statusCode === 200) {
 					console.log('good');
-			
+					x=cheerio.load(html);
 				}
 			})
 			
@@ -542,8 +542,9 @@ router.get('/get-receipt', function (req, res, next) {
 			
 			
 			const $ = cheerio.load(html);
-			
-			
+			var content= x('table.table-container-section').html();
+			$('table.table-container-section').empty();
+			$('table.table-container-section').append(content);
 			
 			const resulthtml=$.html()
 
