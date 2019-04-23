@@ -235,6 +235,20 @@ router.post('/process-payment', function (req, res, next) {
 
 	function buildReceipt(order_data) {
 		
+		const transporter = nodemailer.createTransport({
+			host: 'smtp.gmail.com',
+			port: 465,
+			secure: true,
+	
+			auth: {
+				type: 'OAuth2',
+				user: 'contact@anandaspamiami.com',
+				clientId: process.env.GMAIL_OAuth_ClientID,
+				clientSecret: process.env.GMAIL_Client_Secret,
+				refreshToken: '1/_eim3SumpBsCquSqJgjqEtqQq6wcS7XzhfMUiXmXyMs',
+			}
+		})
+
 		request('https://ananda-spa-miami-dev.firebaseapp.com/dev/receipt.html', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 
