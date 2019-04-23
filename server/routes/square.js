@@ -525,42 +525,29 @@ router.get('/get-receipt', function (req, res, next) {
 
 	// Get HTML from Square
 
-	request('http://api.snapcuba.org/receipt.html', (error, response, html) => {
+	request('https://ananda-spa-miami-dev.firebaseapp.com/dev/receipt.html', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 			
 			// Send mail
-			request('https://squareup.com/receipt/preview/TYxCndKx8CKXEL6FxZ3pluMF', (error, response, body) => {
-				if (!error && response.statusCode === 200) {
-							console.log('good');
-							const x=cheerio.load(body);
-							const $ = cheerio.load(html);
-					const content= x('.table-container-section.table-payment-info').html();
-					console.log(content);
-					$('.payment-info').empty();
-					$('.payment-info').append(content);
-					$('.payment-info').attr('style','border-collapse:separate;border-spacing:0;width:100%;min-width:100%;word-wrap:break-word;border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0');
+			
+			
+	const mailOptions = {
+		from: 'Ananda Spa <contact@anandaspamiami.com>',
+		to: 'armenterosroilan@gmail.com',
+		subject: 'Nodemailer test',
+		text: 'Payment Failed',
+		html: html
+	}
 
-					const resulthtml=$.html()
+	transporter.sendMail(mailOptions, function (err, res) {
+		if (err) {
+			console.log('Error: ' + JSON.stringify(err))
+		} else {
+			console.log('Email Sent')
+		}
+	})
 
-					const mailOptions = {
-						from: 'Ananda Spa <contact@anandaspamiami.com>',
-						to: 'armenterosroilan@gmail.com',
-						subject: 'Nodemailer test',
-						text: 'Payment Failed',
-						html: resulthtml
-					}
-
-					transporter.sendMail(mailOptions, function (err, res) {
-						if (err) {
-							console.log('Error: ' + JSON.stringify(err))
-						} else {
-							console.log('Email Sent')
-						}
-					})
-
-					res.send(resulthtml);
-				}
-			})
+	res.send(html);
 			
 			
 			
