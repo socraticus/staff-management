@@ -253,9 +253,11 @@ router.post('/process-payment', function (req, res, next) {
 		if (!error && response.statusCode === 200) {
 
 			// Send mail
-			var ammount=order_data.order.total_money.ammount;
+			var amount=order_data.order.total_money.amount/100;
+			console.log("this is the total amount: "+amount);
 			const $= cheerio.load(html);
-			$('.currency-USD').html('<div class="h1 language-en currency-USD" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;color:#3d454d;font-size:64px;line-height:64px;white-space:nowrap" align="center"><span class="currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>'+ammount+'</div>');
+			$('.currency-USD').empty();
+			$('.currency-USD').append('<div class="h1 language-en currency-USD" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;color:#3d454d;font-size:64px;line-height:64px;white-space:nowrap" align="center"><span class="currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>'+amount+'</div>');
 			var result=$.html();
 
 
