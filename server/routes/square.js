@@ -233,6 +233,40 @@ router.post('/process-payment', function (req, res, next) {
 		});
 	}
 
+	function buildReceipt(order_data) {
+		
+		request('https://ananda-spa-miami-dev.firebaseapp.com/dev/receipt.html', (error, response, html) => {
+		if (!error && response.statusCode === 200) {
+
+			// Send mail
+			var ammount=order_data.order.total_money.ammount;
+			const $= cheerio.load(html);
+			$('.currency-USD').html('<div class="h1 language-en currency-USD" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;color:#3d454d;font-size:64px;line-height:64px;white-space:nowrap" align="center"><span class="currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>'+ammount+'</div>');
+			var result=$.html();
+
+
+			const mailOptions = {
+				from: 'Ananda Spa <contact@anandaspamiami.com>',
+				to: 'armenterosroilan@gmail.com',
+				subject: 'Nodemailer test',
+				text: 'Payment Failed',
+				html: result
+			}
+
+			transporter.sendMail(mailOptions, function (err, res) {
+				if (err) {
+					console.log('Error: ' + JSON.stringify(err))
+				} else {
+					console.log('Email Sent')
+				}
+			})
+
+			res.send(result);
+		}
+	})
+
+	}
+
 	// Charge the customer's card
 	var chargeCustomer = function (customer_id) {
 		console.log("chargeCustomer called " + customer_id);
@@ -292,7 +326,7 @@ router.post('/process-payment', function (req, res, next) {
 
 		orders_api.createOrder(locationId, order_body).then(function (order_data) {
 			console.log('CreateOrder API called successfully. Returned data: ' + JSON.stringify(order_data));
-
+			buildReceipt(order_data);
 			// Charge Transaction
 			// /*
 			var transactions_api = new SquareConnect.TransactionsApi();
@@ -407,7 +441,7 @@ function sendMailReceipt() {
 
 // Example of how request works
 router.get('/square-receipt', function (req, res, next) {
-	 request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
+	request('https://squareup.com/receipt/preview/cMXC8356kEGLRZfqgdFdeyMF', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 			juice.juiceResources(html, function (err, html) {
 				console.log("Juice method called");
@@ -420,9 +454,9 @@ router.get('/square-receipt', function (req, res, next) {
 			})
 
 			request('https://d3g64w74of3jgu.cloudfront.net/receipts/assets/application-081d1a2e363192dabcc3417e30d322a8.css',
-			(error, response, html) => {
-				res.send(response);
-			})
+				(error, response, html) => {
+					res.send(response);
+				})
 			const options = {
 				preserveImportant: true,
 				removeStyleTags: false,
@@ -433,10 +467,10 @@ router.get('/square-receipt', function (req, res, next) {
 				res.send(inline)
 			}).catch(console.error);
 
-			 res.send(html);
+			res.send(html);
 		}
 	})
- 
+
 
 
 	// Using Puppeteer to send receipt
@@ -480,7 +514,7 @@ router.get('/square-receipt', function (req, res, next) {
 			});
 			console.log(`Current directory: ${process.cwd()}`);
 
-			
+
 
 
 
@@ -527,34 +561,34 @@ router.get('/get-receipt', function (req, res, next) {
 
 	request('https://ananda-spa-miami-dev.firebaseapp.com/dev/receipt.html', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			
+
 			// Send mail
-			
-			
-	const mailOptions = {
-		from: 'Ananda Spa <contact@anandaspamiami.com>',
-		to: 'armenterosroilan@gmail.com',
-		subject: 'Nodemailer test',
-		text: 'Payment Failed',
-		html: html
-	}
 
-	transporter.sendMail(mailOptions, function (err, res) {
-		if (err) {
-			console.log('Error: ' + JSON.stringify(err))
-		} else {
-			console.log('Email Sent')
-		}
-	})
 
-	res.send(html);
-			
-			
-			
-			
-			
-			
-			
+			const mailOptions = {
+				from: 'Ananda Spa <contact@anandaspamiami.com>',
+				to: 'armenterosroilan@gmail.com',
+				subject: 'Nodemailer test',
+				text: 'Payment Failed',
+				html: html
+			}
+
+			transporter.sendMail(mailOptions, function (err, res) {
+				if (err) {
+					console.log('Error: ' + JSON.stringify(err))
+				} else {
+					console.log('Email Sent')
+				}
+			})
+
+			res.send(html);
+
+
+
+
+
+
+
 		}
 	})
 })
