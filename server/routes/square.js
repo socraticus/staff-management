@@ -262,8 +262,8 @@ router.post('/process-payment', function (req, res, next) {
 			$('.currency-USD').empty();
 			$('.currency-USD').append('<div class="h1 language-en currency-USD" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;color:#3d454d;font-size:64px;line-height:64px;white-space:nowrap" align="center"><span class="currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>'+total_amount+'</div>');
 
-			for(i=0; i < list; i++){
-				if(list[i].quantity==1){
+			for(i=0; i < list.length; i++){
+				if(list[i].quantity=='1'){
 					products= products+'<td align="left" class="half-col-left" valign="top" style="line-height:0px;font-size:0px;border-collapse:collapse;width:70%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="70%"><div class="p item-name" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">'+list[i].name+'</div></td><td align="right" class="half-col-right" valign="top" style="line-height:0px;font-size:0px;border-collapse:collapse;width:30%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="30%"><div class="p" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">$'+(list[i].gross_sales_money.amount)/100+'</div></td></tr>';
 				}
 				else{
