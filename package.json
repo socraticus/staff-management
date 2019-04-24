@@ -38,6 +38,7 @@
     "puppeteer": "^1.13.0",
     "request": "^2.88.0",
     "square-connect": "^2.20181212.0",
-    "stripe": "^6.15.0"
+    "stripe": "^6.15.0",
+    "twilio": "^3.30.2"
   }
 }
