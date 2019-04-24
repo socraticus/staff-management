@@ -605,7 +605,7 @@ client.messages
    })
   .then(message => console.log(message.sid));
 
- res.send('done');
+ //res.send('done');
 })
 
 module.exports = router;
