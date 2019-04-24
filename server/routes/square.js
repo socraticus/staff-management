@@ -591,8 +591,7 @@ router.get('/services-list', function (req, res, next) {
 	})
 })
 
-router.get('/send-sms', function (req, res, next) {
-	
+router.get('/get-receipt', function (req, res, next) {
 	var accountSid = 'AC7af61c55b6315ae8230659dd3de8d2cc'; // Your Account SID from www.twilio.com/console
 				var authToken = '283aab923237d13d69a4e90d2c2f5076';   // Your Auth Token from www.twilio.com/console
 
@@ -602,8 +601,7 @@ router.get('/send-sms', function (req, res, next) {
 					body: 'Su primer sms desde Ananda SPA gracias por su visita',
 					to: '+13052242628',  // Text this number
 					from: '+19546285380' // From a valid Twilio number
-				}).then((message) => console.log('smslogs: '+message.sid));
-	
+				}).then((message) => console.log(message.sid));
 })
 
 module.exports = router;
