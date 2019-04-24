@@ -26,11 +26,11 @@ var amount = 1000;
 var addUpgrade = function () {
   $('#express-row-upgrade').css('display', 'flex');
   $('#express-row-gratuity').hide();
-  $('#express-row-total').text('$35.00');
-  $('input[name=expressCart][value="3500"]').prop('checked', true);
+  $('#express-row-total').text('$39.00');
+  $('input[name=expressCart][value="3900"]').prop('checked', true);
   $('#express-checkbox-first').prop('checked', true);
   $('#express-checkbox-second').prop('checked', true);
-  amount = 3500;
+  amount = 3900;
 };
 
 var removeUpgrade = function () {
@@ -46,7 +46,7 @@ var removeUpgrade = function () {
 
 $('input[name=expressCart][value="1000"]').on('click', removeUpgrade);
 
-$('input[name=expressCart][value="3500"]').on('click', addUpgrade);
+$('input[name=expressCart][value="3900"]').on('click', addUpgrade);
 
 $('input[name=checkbox], input[name=checkbox-2]').change(function () {
   if ($(this).is(':checked')) {
