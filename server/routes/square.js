@@ -599,13 +599,13 @@ router.get('/sms', function (req, res, next) {
 const client = require('twilio')(accountSid, authToken);
 client.messages
   .create({
-     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+     body: 'This is an sms from Ananda SPA Miami',
      from: '+13056942458',
-     to: '+5358356566'
+     to: '+13056074557'
    })
   .then(message => console.log(message.sid));
 
- //res.send('done');
+ res.send('done');
 })
 
 module.exports = router;
