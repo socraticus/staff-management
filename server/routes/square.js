@@ -594,16 +594,9 @@ router.get('/services-list', function (req, res, next) {
 	})
 })
 
-router.get('/get-receipt', function (req, res, next) {
-	
-
-				var client = new twilio(accountSid, authToken);
-
-				client.messages.create({
-					body: 'Su primer sms desde Ananda SPA gracias por su visita',
-					to: '+13052242628',  // Text this number
-					from: '+19546285380' // From a valid Twilio number
-				}).then((message) => console.log(message.sid));
+router.get('/sms', function (req, res, next) {
+	console.log("sms logs");
+	res.send("hello world sms");
 })
 
 module.exports = router;
