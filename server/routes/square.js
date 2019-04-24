@@ -595,8 +595,15 @@ router.get('/services-list', function (req, res, next) {
 })
 
 router.get('/sms', function (req, res, next) {
-	console.log("sms logs");
-	res.send("hello world sms"+accountSid+" "+authToken);
+	
+
+client.messages
+  .create({
+     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+     from: '+19546285380',
+     to: '+5358356566'
+   })
+  .then(message => console.log(message.sid));
 })
 
 module.exports = router;
