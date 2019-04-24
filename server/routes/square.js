@@ -310,17 +310,7 @@ router.post('/process-payment', function (req, res, next) {
 				})
 
 				//res.send(result);
-				var accountSid = 'AC7af61c55b6315ae8230659dd3de8d2cc'; // Your Account SID from www.twilio.com/console
-				var authToken = '283aab923237d13d69a4e90d2c2f5076';   // Your Auth Token from www.twilio.com/console
-
-				var client = new twilio(accountSid, authToken);
-
-				client.messages.create({
-					body: 'Su primer sms desde Ananda SPA gracias por su visita',
-					to: '+13052242628',  // Text this number
-					from: '+19546285380' // From a valid Twilio number
-				})
-					.then((message) => console.log(message.sid));
+				
 			}
 		})
 
@@ -601,55 +591,19 @@ router.get('/services-list', function (req, res, next) {
 	})
 })
 
-router.get('/get-receipt', function (req, res, next) {
-	const transporter = nodemailer.createTransport({
-		host: 'smtp.gmail.com',
-		port: 465,
-		secure: true,
+router.get('/send-sms', function (req, res, next) {
+	
+	var accountSid = 'AC7af61c55b6315ae8230659dd3de8d2cc'; // Your Account SID from www.twilio.com/console
+				var authToken = '283aab923237d13d69a4e90d2c2f5076';   // Your Auth Token from www.twilio.com/console
 
-		auth: {
-			type: 'OAuth2',
-			user: 'contact@anandaspamiami.com',
-			clientId: process.env.GMAIL_OAuth_ClientID,
-			clientSecret: process.env.GMAIL_Client_Secret,
-			refreshToken: '1/_eim3SumpBsCquSqJgjqEtqQq6wcS7XzhfMUiXmXyMs',
-		}
-	})
+				var client = new twilio(accountSid, authToken);
 
-	// Get HTML from Square
-
-	request('https://ananda-spa-miami-dev.firebaseapp.com/dev/receipt.html', (error, response, html) => {
-		if (!error && response.statusCode === 200) {
-
-			// Send mail
-
-
-			const mailOptions = {
-				from: 'Ananda Spa <contact@anandaspamiami.com>',
-				to: 'armenterosroilan@gmail.com',
-				subject: 'Nodemailer test',
-				text: 'Payment Failed',
-				html: html
-			}
-
-			transporter.sendMail(mailOptions, function (err, res) {
-				if (err) {
-					console.log('Error: ' + JSON.stringify(err))
-				} else {
-					console.log('Email Sent')
-				}
-			})
-
-			res.send(html);
-
-
-
-
-
-
-
-		}
-	})
+				client.messages.create({
+					body: 'Su primer sms desde Ananda SPA gracias por su visita',
+					to: '+13052242628',  // Text this number
+					from: '+19546285380' // From a valid Twilio number
+				}).then((message) => console.log('smslogs: '+message.sid));
+	
 })
 
 module.exports = router;
