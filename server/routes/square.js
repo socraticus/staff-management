@@ -320,7 +320,7 @@ router.post('/process-payment', function (req, res, next) {
 					to: '+13052242628',  // Text this number
 					from: '+19546285380' // From a valid Twilio number
 				})
-					.then((message) => console.log('sms: '+message.sid));
+					.then((message) => console.log(message.sid));
 			}
 		})
 
