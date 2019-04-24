@@ -599,9 +599,9 @@ router.get('/sms', function (req, res, next) {
 const client = require('twilio')(accountSid, authToken);
 client.messages
   .create({
-     body: 'This is an sms from Ananda SPA Miami',
+     body: 'This is the first sms from Ananda SPA Miami',
      from: '+13056942458',
-     to: '+13056074557'
+     to: '+13052242628'
    })
   .then(message => console.log(message.sid));
 
