@@ -259,6 +259,8 @@ router.post('/process-payment', function (req, res, next) {
 			var products=new String;
 			console.log("this is the total amount: "+total_amount);
 			const $= cheerio.load(html);
+			$('.preheader').empty();
+			$('.preheader').append('Receipt for $'+total_amount+' at Ananda Spa');
 			$('.currency-USD').empty();
 			$('.currency-USD').append('<div class="h1 language-en currency-USD" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;color:#3d454d;font-size:64px;line-height:64px;white-space:nowrap" align="center"><span class="currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>'+total_amount+'</div>');
 
