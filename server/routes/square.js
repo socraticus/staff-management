@@ -45,6 +45,9 @@ router.use(cors());
 
 // Select betwen production and sandbox credentials
 
+var accountSid = process.env.TWILIO_ACCOUNTSID; // Your Account SID from www.twilio.com/console
+var authToken = process.env.TWILIO_AUTHTOKEN;   // Your Auth Token from www.twilio.com/console
+
 // Set the sandbox application ID
 // var applicationId = process.env.square_application_id_sandbox;
 // Set the production application ID
@@ -592,8 +595,7 @@ router.get('/services-list', function (req, res, next) {
 })
 
 router.get('/get-receipt', function (req, res, next) {
-	var accountSid = 'AC7af61c55b6315ae8230659dd3de8d2cc'; // Your Account SID from www.twilio.com/console
-				var authToken = '283aab923237d13d69a4e90d2c2f5076';   // Your Auth Token from www.twilio.com/console
+	
 
 				var client = new twilio(accountSid, authToken);
 
