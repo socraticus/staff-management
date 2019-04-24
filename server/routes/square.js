@@ -600,10 +600,12 @@ const client = require('twilio')(accountSid, authToken);
 client.messages
   .create({
      body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-     from: '+19546285380',
+     from: '+13056942458',
      to: '+5358356566'
    })
   .then(message => console.log(message.sid));
+
+  res.send(message.sid);
 })
 
 module.exports = router;
