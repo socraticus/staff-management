@@ -596,7 +596,7 @@ router.get('/services-list', function (req, res, next) {
 
 router.get('/sms', function (req, res, next) {
 	console.log("sms logs");
-	res.send("hello world sms");
+	res.send("hello world sms"+accountSid+" "+authToken);
 })
 
 module.exports = router;
