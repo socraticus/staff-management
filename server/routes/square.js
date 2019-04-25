@@ -70,7 +70,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/process-payment', function (req, res, next) {
 	var request_params = req.body;
-	var transaction = {};
+	var transaction = "";
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
 	console.log("This is request_params: " + JSON.stringify(request_params));
