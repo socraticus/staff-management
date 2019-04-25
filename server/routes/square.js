@@ -378,7 +378,7 @@ router.post('/process-payment', function (req, res, next) {
 
 		orders_api.createOrder(locationId, order_body).then(function (order_data) {
 			console.log('CreateOrder API called successfully. Returned data: ' + JSON.stringify(order_data));
-			buildReceipt(order_data);
+
 			// Charge Transaction
 			// /*
 			var transactions_api = new SquareConnect.TransactionsApi();
@@ -423,7 +423,7 @@ router.post('/process-payment', function (req, res, next) {
 				postMailchimpTags(tags)
 
 				//sendMailReceipt()
-
+				buildReceipt(order_data);
 				console.log('Transactions API error. Returned data: ' + JSON.stringify(error));
 				// res.json({
 				// 	'title': 'Payment Failure',
