@@ -70,7 +70,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/process-payment', function (req, res, next) {
 	var request_params = req.body;
-
+	var transaction = new String;
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
 	console.log("This is request_params: " + JSON.stringify(request_params));
@@ -237,7 +237,11 @@ router.post('/process-payment', function (req, res, next) {
 		});
 	}
 
-	function buildReceipt(order_data) {
+	function buildReceipt(order_data, transaction) {
+
+		if (transaction) {
+			console.log('that is temp transaction: ' + transaction);
+		}
 
 		const transporter = nodemailer.createTransport({
 			host: 'smtp.gmail.com',
@@ -434,7 +438,22 @@ router.post('/process-payment', function (req, res, next) {
 				postMailchimpTags(tags)
 
 				//sendMailReceipt()
-				buildReceipt(order_data);
+				var request = require("request")
+
+				var url = "http://api.snapcuba.org/transaction.json"
+
+				request({
+					url: url,
+					json: true
+				}, function (error, response, body) {
+
+					if (!error && response.statusCode === 200) {
+						console.log(body) // Print the json response
+						transaction = body;
+					}
+				})
+
+				buildReceipt(order_data, transaction);
 				console.log('Transactions API error. Returned data: ' + JSON.stringify(error));
 				// res.json({
 				// 	'title': 'Payment Failure',
