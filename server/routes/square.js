@@ -239,7 +239,7 @@ router.post('/process-payment', function (req, res, next) {
 
 	function buildReceipt(order_data, transaction) {
 
-
+		console.log(transaction);
 
 		const transporter = nodemailer.createTransport({
 			host: 'smtp.gmail.com',
@@ -456,7 +456,7 @@ router.post('/process-payment', function (req, res, next) {
 
 					if (!error && response.statusCode === 200) {
 						console.log(body) // Print the json response
-						transaction = body;
+						transaction = JSON.stringify(body);
 					}
 				})
 
