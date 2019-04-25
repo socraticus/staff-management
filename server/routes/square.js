@@ -83,6 +83,7 @@ router.post('/process-payment', function (req, res, next) {
 	customer_body.family_name = request_params.body.customer.billing_address.last_name
 	customer_body.email_address = request_params.body.customer.buyer_email_address
 	customer_body.address = request_params.body.customer.billing_address;
+	customer_body.phone_number = request_params.body.customer.phone_number;
 
 	// Verify if customer already exists
 	customers_api.listCustomers().then(function (data) {
@@ -340,7 +341,7 @@ router.post('/process-payment', function (req, res, next) {
 							.create({
 								body: 'Dear ' + request_params.body.customer.billing_address.first_name + ', you have a new receipt from Ananda SPA Miami, please read your email or follow this link->https://squareup.com/receipt/preview/' + transaction.transaction.tenders[0].id + ' for more information about it. Thanks for choosing us',
 								from: '+13056942458',
-								to: '+13052242628'
+								to: '+1' + request_params.body.customer.phone_number
 							})
 							.then(message => console.log(message.sid));
 
