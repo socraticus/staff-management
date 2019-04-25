@@ -456,7 +456,7 @@ router.post('/process-payment', function (req, res, next) {
 
 					if (!error && response.statusCode === 200) {
 						console.log(body) // Print the json response
-						transaction = JSON.stringify(body);
+						transaction = body;
 					}
 				})
 
