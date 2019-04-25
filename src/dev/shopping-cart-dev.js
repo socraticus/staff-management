@@ -549,7 +549,7 @@ window.onload = function () {
                 var validatedEmailandPhone = this.validEmail(this.customer.buyer_email_address, this.customer.phone_number);
                 var validatedBilling = this.validBilling()
 
-                if (validatedEmailandPhone.phoneResult === false || validatedEmailandPhone.emailResult === false || validatedBilling != 0) {
+                if (validatedEmailandPhone.phoneResult === true || validatedEmailandPhone.emailResult === true || validatedBilling != 0) {
                     validationFailed = true
                 }
 
