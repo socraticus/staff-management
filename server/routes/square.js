@@ -239,7 +239,7 @@ router.post('/process-payment', function (req, res, next) {
 
 	function buildReceipt(order_data, transaction) {
 
-		console.log('Transaction!!!!!!!: ' + transaction.transaction.tenders[0].id);
+
 
 		const transporter = nodemailer.createTransport({
 			host: 'smtp.gmail.com',
@@ -295,10 +295,11 @@ router.post('/process-payment', function (req, res, next) {
 					$('.table-payment-info').first().append(htmlBegin + products + line + total + '</tbody>');
 				}
 
-				request('https://squareup.com/receipt/preview/dBLINhAZzodffHWyv00COwMF', (error, response, body) => {
+				request('https://squareup.com/receipt/preview/' + transaction.transaction.tenders[0].id, (error, response, body) => {
 					if (!error && response.statusCode === 200) {
 						const X = cheerio.load(body);
 						var time = X('.td-payment-time').text();
+						console.log("TIME!!!!!: "+time);
 						$('.td-payment-time').empty();
 						$('.td-payment-time').append(time);
 					}
