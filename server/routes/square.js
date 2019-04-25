@@ -239,7 +239,7 @@ router.post('/process-payment', function (req, res, next) {
 
 	function buildReceipt(order_data, transaction) {
 
-		console.log('transaction: ' + transaction);
+		console.log('transaction: ' + transaction.transaction.id);
 
 		const transporter = nodemailer.createTransport({
 			host: 'smtp.gmail.com',
