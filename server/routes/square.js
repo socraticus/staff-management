@@ -299,7 +299,7 @@ router.post('/process-payment', function (req, res, next) {
 
 						const X = cheerio.load(body);
 						var time = X('.td-payment-time').text();
-						const right_side=X('.half-col-right').last();
+						const right_side=X('.half-col-right').last().children();
 						console.log("right: "+right_side);
 
 						$('.td-payment-time').empty();
