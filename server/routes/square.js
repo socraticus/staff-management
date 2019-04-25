@@ -299,8 +299,17 @@ router.post('/process-payment', function (req, res, next) {
 
 						const X = cheerio.load(body);
 						var time = X('.td-payment-time').text();
-						const right_side=X('.half-col-right').last().children().first().next().text();
-						console.log("right: "+right_side);
+						const receipt_id=X('.half-col-right').last().children().first().next().text();
+						$('.half-col-right').last().children().first().next().text(receipt_id);
+
+						const auth_code=X('.half-col-right').last().children().first().next().next().text();
+						$('.half-col-right').last().children().first().next().next().text(auth_code);
+
+						const card_type=X('.half-col-left').last().before().children().first().text();
+						X('.half-col-left').last().before().children().first().text(card_type);
+
+						const icon=X('.card-icon').html().attr('src');
+						console.log("right: "+icon);
 
 						$('.td-payment-time').empty();
 						$('.td-payment-time').append(time);
