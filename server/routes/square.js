@@ -239,9 +239,7 @@ router.post('/process-payment', function (req, res, next) {
 
 	function buildReceipt(order_data, transaction) {
 
-		if (transaction) {
-			console.log('that is temp transaction: ' + transaction);
-		}
+
 
 		const transporter = nodemailer.createTransport({
 			host: 'smtp.gmail.com',
@@ -296,6 +294,15 @@ router.post('/process-payment', function (req, res, next) {
 				else {
 					$('.table-payment-info').first().append(htmlBegin + products + line + total + '</tbody>');
 				}
+
+				request('https://squareup.com/receipt/preview/' + transaction.tenders[0].id, (error, response, body) => {
+					if (!error && response.statusCode === 200) {
+						const X = cheerio.load(body);
+						var time = X('.td-payment-time').text();
+						$('.td-payment-time').empty();
+						$('.td-payment-time').append(time);
+					}
+				})
 
 				var result = $.html();
 
