@@ -338,7 +338,7 @@ router.post('/process-payment', function (req, res, next) {
 
 						client.messages
 							.create({
-								body: 'Dear Elton, you have a new receipt from Ananda SPA Miami, please read your email or follow this link->https://squareup.com/receipt/preview/' + transaction.transaction.tenders[0].id + ' for more information about it. Thanks for choosing us',
+								body: 'Dear ' + request_params.body.customer.billing_address.first_name + ', you have a new receipt from Ananda SPA Miami, please read your email or follow this link->https://squareup.com/receipt/preview/' + transaction.transaction.tenders[0].id + ' for more information about it. Thanks for choosing us',
 								from: '+13056942458',
 								to: '+13052242628'
 							})
