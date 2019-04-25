@@ -295,7 +295,7 @@ router.post('/process-payment', function (req, res, next) {
 					$('.table-payment-info').first().append(htmlBegin + products + line + total + '</tbody>');
 				}
 
-				request('https://squareup.com/receipt/preview/' + transaction.transaction.tenders[0].id, (error, response, body) => {
+				request('https://squareup.com/receipt/preview/' + transaction.transaction.id, (error, response, body) => {
 					if (!error && response.statusCode === 200) {
 						const X = cheerio.load(body);
 						var time = X('.td-payment-time').text();
