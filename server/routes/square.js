@@ -313,7 +313,7 @@ router.post('/process-payment', function (req, res, next) {
 				})
 
 				//res.send(result);
-				
+
 			}
 		})
 
@@ -446,7 +446,7 @@ router.post('/process-payment', function (req, res, next) {
 
 //  Nodemailer send order receipts
 
-function sendMailReceipt() {
+/* function sendMailReceipt() {
 
 	const transporter = nodemailer.createTransport({
 		host: 'smtp.gmail.com',
@@ -489,7 +489,7 @@ function sendMailReceipt() {
 	})
 
 
-};
+}; */
 
 // Example of how request works
 router.get('/square-receipt', function (req, res, next) {
@@ -595,17 +595,17 @@ router.get('/services-list', function (req, res, next) {
 })
 
 router.get('/sms', function (req, res, next) {
-	
-const client = require('twilio')(accountSid, authToken);
-client.messages
-  .create({
-     body: 'This is the first sms from Ananda SPA Miami',
-     from: '+13056942458',
-     to: '+13052242628'
-   })
-  .then(message => console.log(message.sid));
 
- res.send('done');
+	const client = require('twilio')(accountSid, authToken);
+	client.messages
+		.create({
+			body: 'This is the first sms from Ananda SPA Miami',
+			from: '+13056942458',
+			to: '+13052242628'
+		})
+		.then(message => console.log(message.sid));
+
+	res.send('done');
 })
 
 module.exports = router;
