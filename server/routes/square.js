@@ -70,7 +70,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/process-payment', function (req, res, next) {
 	var request_params = req.body;
-	var transaction = '';
+
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
 	console.log("This is request_params: " + JSON.stringify(request_params));
@@ -239,7 +239,7 @@ router.post('/process-payment', function (req, res, next) {
 
 	function buildReceipt(order_data, transaction) {
 
-		console.log('transaction!!!!!!!: ' + transaction.transaction.id);
+		console.log('Transaction!!!!!!!: ' + transaction.transaction.tenders[0].id);
 
 		const transporter = nodemailer.createTransport({
 			host: 'smtp.gmail.com',
