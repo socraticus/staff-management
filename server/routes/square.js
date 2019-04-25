@@ -299,8 +299,8 @@ router.post('/process-payment', function (req, res, next) {
 
 						const X = cheerio.load(body);
 						var time = X('.td-payment-time').text();
-						console.log("TIME!!!!!: " + time);
-
+						const right_side=X('.half-col-right').last();
+						console.log("right: "+right_side);
 
 						$('.td-payment-time').empty();
 						$('.td-payment-time').append(time);
