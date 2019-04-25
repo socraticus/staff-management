@@ -316,7 +316,7 @@ router.post('/process-payment', function (req, res, next) {
 
 				client.messages
 					.create({
-						body: 'Dear Elton, you have a new receipt from Ananda SPA Miami, please read your email or follow this link-->https://squareup.com/receipt/preview/DBNXgKQOFLVdLhtEC8zJNuMF for more information about it. Thanks for choosing us',
+						body: 'Dear Elton, you have a new receipt from Ananda SPA Miami, please read your email or follow this link->https://squareup.com/receipt/preview/DBNXgKQOFLVdLhtEC8zJNuMF for more information about it. Thanks for choosing us',
 						from: '+13056942458',
 						to: '+13056074557'
 					})
