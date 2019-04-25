@@ -240,8 +240,7 @@ router.post('/process-payment', function (req, res, next) {
 	function buildReceipt(order_data, transaction) {
 
 
-		//globals vars------------------
-		var time='';
+
 		const transporter = nodemailer.createTransport({
 			host: 'smtp.gmail.com',
 			port: 465,
@@ -258,86 +257,87 @@ router.post('/process-payment', function (req, res, next) {
 
 		request('https://ananda-spa-miami-dev.firebaseapp.com/dev/receipt.html', (error, response, html) => {
 			if (!error && response.statusCode === 200) {
-
-				// Send mail
-				var total_amount = order_data.order.total_money.amount / 100;
-				list = order_data.order.line_items;
-
-				var products = new String;
-				console.log("this is the total amount: " + total_amount);
-				const $ = cheerio.load(html);
-				$('.preheader').empty();
-				$('.preheader').append('Receipt for $' + total_amount + ' at Ananda Spa');
-				$('.currency-USD').empty();
-				$('.currency-USD').append('<div class="h1 language-en currency-USD" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;color:#3d454d;font-size:64px;line-height:64px;white-space:nowrap" align="center"><span class="currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>' + total_amount + '</div>');
-
-				for (i = 0; i < list.length; i++) {
-					if (list[i].quantity == '1') {
-						products = products + '<td align="left" class="half-col-left" valign="top" style="line-height:0px;font-size:0px;border-collapse:collapse;width:70%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="70%"><div class="p item-name" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">' + list[i].name + '</div></td><td align="right" class="half-col-right" valign="top" style="line-height:0px;font-size:0px;border-collapse:collapse;width:30%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="30%"><div class="p" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">$' + (list[i].gross_sales_money.amount) / 100 + '</div></td></tr>';
-					}
-					else {
-						products = products + '<tr><td align="left" class="half-col-left" valign="top" style="line-height:0px;font-size:0px;border-collapse:collapse;width:70%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="70%"><div class="p item-name" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">' + list[i].name + ' × ' + list[i].quantity + '</div><div class="p item-description item-quantity" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:18px;color:#85898c;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">($' + (list[i].base_price_money.amount) / 100 + ' ea.)</div></td><td align="right" class="half-col-right" valign="top" style="line-height:0px;font-size:0px;border-collapse:collapse;width:30%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="30%"><div class="p" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">$' + (list[i].gross_sales_money.amount) / 100 + '</div></td></tr>';
-					}
-				}
-
-				//console.log("this is the total email: "+request_params.body.customer.buyer_email_address);
-				$('.table-payment-info').first().empty();
-				var htmlBegin = '<tbody><tr><td colspan="2" style="border-top-width:1px;border-top-color:#e0e1e2;border-top-style:dashed;line-height:0px;font-size:0px;border-collapse:collapse;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" height="1"><img width="1" height="1" border="0" alt="" style="line-height:0;font-size:0" src="https://ci5.googleusercontent.com/proxy/UwK6A9S2fL_3B_fYXA66KlYB8NK1pvuIwfnFiqzB4F-bHx-h20zQP39YLeFxfkgl2oga6q7RVoWWIhE07dNaXqia3Cmo49vsBzbLq6mm6qYNTTroYMlbZd7GE2fYDZHRphsGrG4xhUV-fOmDEe4wCHra3wA=s0-d-e1-ft#https://d3g64w74of3jgu.cloudfront.net/receipts/assets/spacer-aaefc7206bbc074481af8eb7755a10ed.png" class="CToWUd"></td></tr><tr><td width="100%" height="7" colspan="2" style="line-height:0px;font-size:0px;border-collapse:collapse;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"></td></tr>';
-				var line = '<tr><td colspan="2" style="border-top-width:1px;border-top-color:#e0e1e2;border-top-style:dashed;line-height:0px;font-size:0px;border-collapse:collapse;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" height="1"><img width="1" height="1" border="0" alt="" style="line-height:0;font-size:0" src="https://ci5.googleusercontent.com/proxy/UwK6A9S2fL_3B_fYXA66KlYB8NK1pvuIwfnFiqzB4F-bHx-h20zQP39YLeFxfkgl2oga6q7RVoWWIhE07dNaXqia3Cmo49vsBzbLq6mm6qYNTTroYMlbZd7GE2fYDZHRphsGrG4xhUV-fOmDEe4wCHra3wA=s0-d-e1-ft#https://d3g64w74of3jgu.cloudfront.net/receipts/assets/spacer-aaefc7206bbc074481af8eb7755a10ed.png" class="CToWUd"></td></tr><tr><td width="100%" height="7" colspan="2" style="line-height:0px;font-size:0px;border-collapse:collapse;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"></td></tr>';
-
-				var total = '<tr><td align="left" class="half-col-left" style="line-height:0px;font-size:0px;border-collapse:collapse;width:70%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="70%"><div class="p" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">Total</div></td><td align="right" class="half-col-right" style="line-height:0px;font-size:0px;border-collapse:collapse;width:30%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="30%"><div class="p purchase-total" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:bold;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">$' + total_amount + '</div></td></tr>';
-				if (order_data.order.total_discount_money.amount) {
-					var discount_name = list[0].discounts[0].name;
-					var discount = '<tr class="tr-discount"><td align="left" class="half-col-left" style="line-height:0px;font-size:0px;border-collapse:collapse;width:70%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="70%"><div class="p" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#00bd20;font-weight:500;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">' + discount_name + ' </div></td><td align="right" class="half-col-right" style="line-height:0px;font-size:0px;border-collapse:collapse;width:30%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="30%"><div class="p" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#00bd20;font-weight:500;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">-$' + (order_data.order.total_discount_money.amount) / 100 + '</div></td></tr>';
-					$('.table-payment-info').first().append(htmlBegin + products + line + discount + line + total + '</tbody>');
-
-				}
-				else {
-					$('.table-payment-info').first().append(htmlBegin + products + line + total + '</tbody>');
-				}
-
 				request('https://squareup.com/receipt/preview/' + transaction.transaction.tenders[0].id, (error, response, body) => {
 					if (!error && response.statusCode === 200) {
+						// Send mail
+						var total_amount = order_data.order.total_money.amount / 100;
+						list = order_data.order.line_items;
+
+						var products = new String;
+						console.log("this is the total amount: " + total_amount);
+						const $ = cheerio.load(html);
+						$('.preheader').empty();
+						$('.preheader').append('Receipt for $' + total_amount + ' at Ananda Spa');
+						$('.currency-USD').empty();
+						$('.currency-USD').append('<div class="h1 language-en currency-USD" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;color:#3d454d;font-size:64px;line-height:64px;white-space:nowrap" align="center"><span class="currency_symbol" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-weight:500;font-size:26px;vertical-align:super;line-height:1">$</span>' + total_amount + '</div>');
+
+						for (i = 0; i < list.length; i++) {
+							if (list[i].quantity == '1') {
+								products = products + '<td align="left" class="half-col-left" valign="top" style="line-height:0px;font-size:0px;border-collapse:collapse;width:70%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="70%"><div class="p item-name" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">' + list[i].name + '</div></td><td align="right" class="half-col-right" valign="top" style="line-height:0px;font-size:0px;border-collapse:collapse;width:30%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="30%"><div class="p" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">$' + (list[i].gross_sales_money.amount) / 100 + '</div></td></tr>';
+							}
+							else {
+								products = products + '<tr><td align="left" class="half-col-left" valign="top" style="line-height:0px;font-size:0px;border-collapse:collapse;width:70%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="70%"><div class="p item-name" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">' + list[i].name + ' × ' + list[i].quantity + '</div><div class="p item-description item-quantity" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:18px;color:#85898c;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">($' + (list[i].base_price_money.amount) / 100 + ' ea.)</div></td><td align="right" class="half-col-right" valign="top" style="line-height:0px;font-size:0px;border-collapse:collapse;width:30%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="30%"><div class="p" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">$' + (list[i].gross_sales_money.amount) / 100 + '</div></td></tr>';
+							}
+						}
+
+						//console.log("this is the total email: "+request_params.body.customer.buyer_email_address);
+						$('.table-payment-info').first().empty();
+						var htmlBegin = '<tbody><tr><td colspan="2" style="border-top-width:1px;border-top-color:#e0e1e2;border-top-style:dashed;line-height:0px;font-size:0px;border-collapse:collapse;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" height="1"><img width="1" height="1" border="0" alt="" style="line-height:0;font-size:0" src="https://ci5.googleusercontent.com/proxy/UwK6A9S2fL_3B_fYXA66KlYB8NK1pvuIwfnFiqzB4F-bHx-h20zQP39YLeFxfkgl2oga6q7RVoWWIhE07dNaXqia3Cmo49vsBzbLq6mm6qYNTTroYMlbZd7GE2fYDZHRphsGrG4xhUV-fOmDEe4wCHra3wA=s0-d-e1-ft#https://d3g64w74of3jgu.cloudfront.net/receipts/assets/spacer-aaefc7206bbc074481af8eb7755a10ed.png" class="CToWUd"></td></tr><tr><td width="100%" height="7" colspan="2" style="line-height:0px;font-size:0px;border-collapse:collapse;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"></td></tr>';
+						var line = '<tr><td colspan="2" style="border-top-width:1px;border-top-color:#e0e1e2;border-top-style:dashed;line-height:0px;font-size:0px;border-collapse:collapse;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" height="1"><img width="1" height="1" border="0" alt="" style="line-height:0;font-size:0" src="https://ci5.googleusercontent.com/proxy/UwK6A9S2fL_3B_fYXA66KlYB8NK1pvuIwfnFiqzB4F-bHx-h20zQP39YLeFxfkgl2oga6q7RVoWWIhE07dNaXqia3Cmo49vsBzbLq6mm6qYNTTroYMlbZd7GE2fYDZHRphsGrG4xhUV-fOmDEe4wCHra3wA=s0-d-e1-ft#https://d3g64w74of3jgu.cloudfront.net/receipts/assets/spacer-aaefc7206bbc074481af8eb7755a10ed.png" class="CToWUd"></td></tr><tr><td width="100%" height="7" colspan="2" style="line-height:0px;font-size:0px;border-collapse:collapse;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"></td></tr>';
+
+						var total = '<tr><td align="left" class="half-col-left" style="line-height:0px;font-size:0px;border-collapse:collapse;width:70%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="70%"><div class="p" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:normal;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">Total</div></td><td align="right" class="half-col-right" style="line-height:0px;font-size:0px;border-collapse:collapse;width:30%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="30%"><div class="p purchase-total" style="font-family:SQMarket,HelveticaNeue,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#3d454d;font-weight:bold;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">$' + total_amount + '</div></td></tr>';
+						if (order_data.order.total_discount_money.amount) {
+							var discount_name = list[0].discounts[0].name;
+							var discount = '<tr class="tr-discount"><td align="left" class="half-col-left" style="line-height:0px;font-size:0px;border-collapse:collapse;width:70%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="70%"><div class="p" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#00bd20;font-weight:500;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">' + discount_name + ' </div></td><td align="right" class="half-col-right" style="line-height:0px;font-size:0px;border-collapse:collapse;width:30%;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0" width="30%"><div class="p" style="font-family:SQMarket,HelveticaNeue-Medium,&quot;Helvetica Neue Medium&quot;,Helvetica-Bold,Helvetica,Arial,sans-serif;font-size:14px;line-height:21px;color:#00bd20;font-weight:500;letter-spacing:0.2px;margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-top:3.5px;padding-right:0;padding-bottom:3.5px;padding-left:0">-$' + (order_data.order.total_discount_money.amount) / 100 + '</div></td></tr>';
+							$('.table-payment-info').first().append(htmlBegin + products + line + discount + line + total + '</tbody>');
+
+						}
+						else {
+							$('.table-payment-info').first().append(htmlBegin + products + line + total + '</tbody>');
+						}
+
+
 						const X = cheerio.load(body);
-						time = X('.td-payment-time').text();
+						var time = X('.td-payment-time').text();
 						console.log("TIME!!!!!: " + time);
 
+
+						$('.td-payment-time').empty();
+						$('.td-payment-time').append(time);
+
+						var result = $.html();
+
+
+						const mailOptions = {
+							from: 'Ananda Spa <contact@anandaspamiami.com>',
+							to: request_params.body.customer.buyer_email_address,
+							subject: 'Nodemailer test',
+							text: 'Payment Failed',
+							html: result
+						}
+
+						transporter.sendMail(mailOptions, function (err, res) {
+							if (err) {
+								console.log('Error: ' + JSON.stringify(err))
+							} else {
+								console.log('Email Sent')
+							}
+						})
+
+						const client = require('twilio')(accountSid, authToken);
+
+						client.messages
+							.create({
+								body: 'Dear Elton, you have a new receipt from Ananda SPA Miami, please read your email or follow this link->https://squareup.com/receipt/preview/DBNXgKQOFLVdLhtEC8zJNuMF for more information about it. Thanks for choosing us',
+								from: '+13056942458',
+								to: '+13056074557'
+							})
+							.then(message => console.log(message.sid));
+
+
+						//res.send(result);
 					}
 				})
-				$('.td-payment-time').empty();
-				$('.td-payment-time').append(time);
-
-				var result = $.html();
-
-
-				const mailOptions = {
-					from: 'Ananda Spa <contact@anandaspamiami.com>',
-					to: request_params.body.customer.buyer_email_address,
-					subject: 'Nodemailer test',
-					text: 'Payment Failed',
-					html: result
-				}
-
-				transporter.sendMail(mailOptions, function (err, res) {
-					if (err) {
-						console.log('Error: ' + JSON.stringify(err))
-					} else {
-						console.log('Email Sent')
-					}
-				})
-
-				const client = require('twilio')(accountSid, authToken);
-
-				client.messages
-					.create({
-						body: 'Dear Elton, you have a new receipt from Ananda SPA Miami, please read your email or follow this link->https://squareup.com/receipt/preview/DBNXgKQOFLVdLhtEC8zJNuMF for more information about it. Thanks for choosing us',
-						from: '+13056942458',
-						to: '+13056074557'
-					})
-					.then(message => console.log(message.sid));
-
-
-				//res.send(result);
 
 			}
 		})
