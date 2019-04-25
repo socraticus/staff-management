@@ -308,7 +308,7 @@ router.post('/process-payment', function (req, res, next) {
 						const card_type=X('.half-col-left').last().before().children().first().text();
 						X('.half-col-left').last().before().children().first().text(card_type);
 
-						const icon=X('.card-icon').html().attr('src');
+						const icon=X('.card-icon').find('img').attr('src');
 						console.log("right: "+icon);
 
 						$('.td-payment-time').empty();
