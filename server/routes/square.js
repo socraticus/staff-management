@@ -338,9 +338,9 @@ router.post('/process-payment', function (req, res, next) {
 
 						client.messages
 							.create({
-								body: 'Dear Elton, you have a new receipt from Ananda SPA Miami, please read your email or follow this link->https://squareup.com/receipt/preview/DBNXgKQOFLVdLhtEC8zJNuMF for more information about it. Thanks for choosing us',
+								body: 'Dear Elton, you have a new receipt from Ananda SPA Miami, please read your email or follow this link->https://squareup.com/receipt/preview/' + transaction.transaction.tenders[0].id + ' for more information about it. Thanks for choosing us',
 								from: '+13056942458',
-								to: '+13056074557'
+								to: '+13052242628'
 							})
 							.then(message => console.log(message.sid));
 
@@ -429,7 +429,7 @@ router.post('/process-payment', function (req, res, next) {
 			};
 			transactions_api.charge(locationId, request_body).then(function (data) {
 				console.log('Transactions API called successfully. Returned data: ' + JSON.stringify(data));
-
+				buildReceipt(order_data, data);
 				// Add Tags To Mailchimp Subscriber
 				var tags = order_body.line_items.map(tag => {
 					return {
@@ -458,7 +458,7 @@ router.post('/process-payment', function (req, res, next) {
 				postMailchimpTags(tags)
 
 				//sendMailReceipt()
-				var request = require("request")
+				/* var request = require("request")
 
 				var url = "http://api.snapcuba.org/transaction.json"
 
@@ -472,7 +472,7 @@ router.post('/process-payment', function (req, res, next) {
 
 						buildReceipt(order_data, body);
 					}
-				})
+				}) */
 
 
 				console.log('Transactions API error. Returned data: ' + JSON.stringify(error));
