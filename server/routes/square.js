@@ -70,7 +70,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/process-payment', function (req, res, next) {
 	var request_params = req.body;
-	var transaction = "up";
+	let transaction_temp = "up";
 	var idempotency_key = crypto.randomBytes(64).toString('hex');
 
 	console.log("This is request_params: " + JSON.stringify(request_params));
@@ -238,8 +238,8 @@ router.post('/process-payment', function (req, res, next) {
 	}
 
 	function buildReceipt(order_data, transaction) {
-
-		console.log('transaction: ' + transaction.id);
+		var transaction_temp = JSON.parse(transaction);
+		console.log('transaction: ' + transaction_temp.transaction.id);
 
 		const transporter = nodemailer.createTransport({
 			host: 'smtp.gmail.com',
@@ -456,11 +456,11 @@ router.post('/process-payment', function (req, res, next) {
 
 					if (!error && response.statusCode === 200) {
 						console.log(body) // Print the json response
-						transaction = body;
+						transaction_temp = JSON.stringify(body);
 					}
 				})
 
-				buildReceipt(order_data, transaction);
+				buildReceipt(order_data, transaction_temp);
 				console.log('Transactions API error. Returned data: ' + JSON.stringify(error));
 				// res.json({
 				// 	'title': 'Payment Failure',
