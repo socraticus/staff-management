@@ -287,6 +287,19 @@ window.onload = function () {
             isDisabled: false,
             placeOrderBtn: "PLACE ORDER"
         },
+        watch: {
+            'customer.phone_number': function (newValue, oldValue) {
+                if (this.customer.phone_number.length === 3 && oldValue.length != 4) {
+                    this.customer.phone_number = '(' + newValue + ') ';
+                }
+                if (this.customer.phone_number.length === 9 && oldValue.length != 10) {
+                    this.customer.phone_number = newValue + '-'
+                }
+                
+
+
+            }
+        },
         filters: {
             twoDecimals: function (value) {
                 if (value % 1 === 0) {
@@ -595,12 +608,12 @@ window.onload = function () {
                 // }
 
                 var rePhone = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
-               /*  if (this.customer.phone_number === '') {
-                    this.emailAndPhoneError.phoneError = true
-                } else {
-                    this.emailAndPhoneError.phoneError = false;
-                }
- */
+                /*  if (this.customer.phone_number === '') {
+                     this.emailAndPhoneError.phoneError = true
+                 } else {
+                     this.emailAndPhoneError.phoneError = false;
+                 }
+  */
                 if (rePhone.test(phone) === false) {
                     this.emailAndPhoneError.phoneError = true
                 } else {
@@ -610,8 +623,8 @@ window.onload = function () {
 
                 var emailResult = re.test(email);
                 var phoneResult = rePhone.test(phone);
-                console.log('emailResult '+emailResult);
-                console.log('phoneResult '+phoneResult);
+                console.log('emailResult ' + emailResult);
+                console.log('phoneResult ' + phoneResult);
                 if (this.emailAndPhoneError.phoneError === false && this.emailAndPhoneError.emailError === false) {
                     this.showEmail = !this.showEmail
                 }
