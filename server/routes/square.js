@@ -430,7 +430,7 @@ router.post('/process-payment', function (req, res, next) {
 			};
 			transactions_api.charge(locationId, request_body).then(function (data) {
 				console.log('Transactions API called successfully. Returned data: ' + JSON.stringify(data));
-				buildReceipt(order_data, data);
+				//buildReceipt(order_data, data);
 				// Add Tags To Mailchimp Subscriber
 				var tags = order_body.line_items.map(tag => {
 					return {
@@ -459,7 +459,7 @@ router.post('/process-payment', function (req, res, next) {
 				postMailchimpTags(tags)
 
 				//sendMailReceipt()
-				/* var request = require("request")
+				var request = require("request")
 
 				var url = "http://api.snapcuba.org/transaction.json"
 
@@ -473,7 +473,7 @@ router.post('/process-payment', function (req, res, next) {
 
 						buildReceipt(order_data, body);
 					}
-				}) */
+				})
 
 
 				console.log('Transactions API error. Returned data: ' + JSON.stringify(error));
