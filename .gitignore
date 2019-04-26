@@ -2,3 +2,4 @@ node_modules/
 server/node_modules/
 firebase/hosting.c3Jj.cache
 certificates/
+src/dev/index.html
