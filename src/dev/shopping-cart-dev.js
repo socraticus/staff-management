@@ -549,9 +549,9 @@ window.onload = function () {
                 var validatedEmailandPhone = this.validEmail(this.customer.buyer_email_address, this.customer.phone_number);
                 var validatedBilling = this.validBilling()
 
-                if (validatedEmailandPhone.phoneResult === true || validatedEmailandPhone.emailResult === false || validatedBilling != 0) {
+                if (validatedEmailandPhone.phoneResult === false || validatedEmailandPhone.emailResult === false || validatedBilling != 0) {
                     validationFailed = true
-                    console.log('validationfailed: '+validationFailed);
+                    console.log('validationfailed: ' + validationFailed);
                 }
 
                 if (validationFailed) {
@@ -583,7 +583,7 @@ window.onload = function () {
                     this.emailAndPhoneError.emailError = true
                 } else {
                     this.emailAndPhoneError.emailError = false
-                    
+
                 }
 
                 // var rePhone = '';
@@ -594,23 +594,31 @@ window.onload = function () {
                 //     this.showEmail = !this.showEmail
                 // }
 
-                var rePhone = '';
-                if (this.customer.phone_number === '') {
+                var rePhone = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+               /*  if (this.customer.phone_number === '') {
                     this.emailAndPhoneError.phoneError = true
                 } else {
                     this.emailAndPhoneError.phoneError = false;
                 }
+ */
+                if (rePhone.test(phone) === false) {
+                    this.emailAndPhoneError.phoneError = true
+                } else {
+                    this.emailAndPhoneError.phoneError = false
+
+                }
 
                 var emailResult = re.test(email);
-                // var phoneResult = rePhone.test(phon
-
+                var phoneResult = rePhone.test(phone);
+                console.log('emailResult '+emailResult);
+                console.log('phoneResult '+phoneResult);
                 if (this.emailAndPhoneError.phoneError === false && this.emailAndPhoneError.emailError === false) {
                     this.showEmail = !this.showEmail
                 }
 
                 return {
                     emailResult: emailResult,
-                    phoneResult: this.emailAndPhoneError.phoneError
+                    phoneResult: phoneResult
                 };
             },
             validBilling: function () {
