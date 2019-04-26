@@ -549,8 +549,9 @@ window.onload = function () {
                 var validatedEmailandPhone = this.validEmail(this.customer.buyer_email_address, this.customer.phone_number);
                 var validatedBilling = this.validBilling()
 
-                if (validatedEmailandPhone.phoneResult === true || validatedEmailandPhone.emailResult === true || validatedBilling != 0) {
+                if (validatedEmailandPhone.phoneResult === true || validatedEmailandPhone.emailResult === false || validatedBilling != 0) {
                     validationFailed = true
+                    console.log('validationfailed: '+validationFailed);
                 }
 
                 if (validationFailed) {
@@ -560,7 +561,7 @@ window.onload = function () {
 
                 // Don't submit the form until SqPaymentForm returns with a nonce
                 event.preventDefault();
-
+                //console.log('is Disabled: '+isDisabled);
                 this.isDisabled = true;
                 this.placeOrderBtn = "PROCESSING..."
 
