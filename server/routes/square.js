@@ -661,9 +661,9 @@ router.get('/parse', function (req, res, next) {
 
 	request(options, (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			/* const $ = cheerio.load(html);
-			var div = $('.form-group').first(); */
-			res.send(html);
+			const $ = cheerio.load(html);
+			var div = $('.form-group').first(); 
+			res.send(div);
 		}
 	})
 
