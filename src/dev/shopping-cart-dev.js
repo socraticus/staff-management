@@ -26,6 +26,8 @@ function testingVue() {
 
 window.onload = function () {
 
+
+
     // Proxying Vue instance
     var shoppingCartBtn = document.getElementById('shopping-cart-btn');
     shoppingCartBtn.addEventListener('click', function () {
@@ -289,14 +291,14 @@ window.onload = function () {
         },
         watch: {
             'customer.phone_number': function (newValue, oldValue) {
+
                 if (this.customer.phone_number.length === 3 && oldValue.length != 4) {
                     this.customer.phone_number = '(' + newValue + ') ';
                 }
                 if (this.customer.phone_number.length === 9 && oldValue.length != 10) {
                     this.customer.phone_number = newValue + '-'
+                    console.log(newValue[newValue.length - 1]);
                 }
-                
-
 
             }
         },
@@ -727,5 +729,26 @@ window.onload = function () {
         bubbles: true,
         cancelable: true
     }
+
+    //Help functions 
+
+    $(function () {
+        var regExp = /[0-9]/;
+        $('#ShoppingCartPhone').on('keydown keyup', function (e) {
+            var value = String.fromCharCode(e.which) || e.key;
+            console.log(e);
+            // Only numbers, dots and commas
+            if (!regExp.test(value)
+                && e.which != 188 // ,
+                && e.which != 190 // .
+                && e.which != 8   // backspace
+                && e.which != 46  // delete
+                && (e.which < 37  // arrow keys
+                    || e.which > 40)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
 
 };
