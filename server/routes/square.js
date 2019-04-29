@@ -646,18 +646,13 @@ router.get('/services-list', function (req, res, next) {
 	})
 })
 
-router.get('/sms', function (req, res, next) {
+router.get('/parse', function (req, res, next) {
+	request('https://admin.okto.us/dashboard.html#/applicationfacial/11757', (error, response, html) => {
+		if (!error && response.statusCode === 200) {
+			res.send(html);
+		}
+	})
 
-	const client = require('twilio')(accountSid, authToken);
-	client.messages
-		.create({
-			body: 'This is the first sms from Ananda SPA Miami',
-			from: '+13056942458',
-			to: '+13052242628'
-		})
-		.then(message => console.log(message.sid));
-
-	res.send('done');
 })
 
 module.exports = router;
