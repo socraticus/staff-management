@@ -647,11 +647,23 @@ router.get('/services-list', function (req, res, next) {
 })
 
 router.get('/parse', function (req, res, next) {
-	request('https://admin.okto.us/dashboard.html#/applicationfacial/11757', (error, response, html) => {
+
+
+	var username = 'ariel'
+	var password = 'ariel2017'
+	var options = {
+		url: 'https://admin.okto.us/dashboard.html#/applicationfacial/11757',
+		auth: {
+			user: username,
+			password: password
+		}
+	}
+
+	request(options, (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			const $ = cheerio.load(html);
-			var div=$('.form-group').first();
-			res.send(div);
+			/* const $ = cheerio.load(html);
+			var div = $('.form-group').first(); */
+			res.send(html);
 		}
 	})
 
