@@ -652,7 +652,7 @@ router.get('/parse', function (req, res, next) {
 	var username = 'ariel'
 	var password = 'ariel2017'
 	var options = {
-		url: 'https://admin.okto.us/dashboard.html#/applicationfacial/11757',
+		url: 'https://admin.okto.us/dashboard.html#/applicationfacial',
 		auth: {
 			user: username,
 			password: password
@@ -661,9 +661,8 @@ router.get('/parse', function (req, res, next) {
 
 	request(options, (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			const $ = cheerio.load(html);
-			var div = $('.form-group').first(); 
-			res.send(div);
+			
+			res.send(html);
 		}
 	})
 
