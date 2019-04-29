@@ -649,7 +649,9 @@ router.get('/services-list', function (req, res, next) {
 router.get('/parse', function (req, res, next) {
 	request('https://admin.okto.us/dashboard.html#/applicationfacial/11757', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			res.send(html);
+			const $ = cheerio.load(html);
+			var div=$('.form-group').first();
+			res.send(div);
 		}
 	})
 
