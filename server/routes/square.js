@@ -648,7 +648,7 @@ router.get('/services-list', function (req, res, next) {
 
 router.get('/parse', function (req, res, next) {
 	
-	var jscustomers = new Object();
+	var jscustomers = {};
 
 
 	request('http://api.snapcuba.org/customers.json', (error, response, html) => {
@@ -665,8 +665,7 @@ router.get('/parse', function (req, res, next) {
 				request(options, (error, response, html) => {
 					if (!error && response.statusCode === 200) {
 						var data = JSON.parse(html);
-						jscustomers.concat(data);
-
+						jscustomers.push(data);
 
 					}
 				})
@@ -674,12 +673,11 @@ router.get('/parse', function (req, res, next) {
 
 			}
 
-
-
+			console.log(jscustomers)
 		}
 	})
 
-	res.send(jscustomers);
+	
 
 
 })
