@@ -649,14 +649,10 @@ router.get('/services-list', function (req, res, next) {
 router.get('/parse', function (req, res, next) {
 
 
-	var username = 'ariel'
-	var password = 'ariel2017'
+	
 	var options = {
-		url: 'https://admin.okto.us/dashboard.html#/applicationfacial',
-		auth: {
-			user: username,
-			password: password
-		}
+		url: 'https://admin.okto.us/api/core/ApplicationSPAFacial_GO?clientid=32d5c181-5835-41f0-bc4b-6d53cf07dfb0&id=11735',
+		
 	}
 
 	request(options, (error, response, html) => {
