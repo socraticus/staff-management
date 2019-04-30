@@ -647,29 +647,30 @@ router.get('/services-list', function (req, res, next) {
 })
 
 router.get('/parse', function (req, res, next) {
-	
-	
+
+
 
 	request('http://api.snapcuba.org/customers.json', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			var x=JSON.parse(html);
-			res.send(x.data[0].id);
+			var x = JSON.parse(html);
+
+			var options = {
+				url: 'https://admin.okto.us/api/core/ApplicationSPAFacial_GO?clientid=32d5c181-5835-41f0-bc4b-6d53cf07dfb0&id='+x.data[0].id,
+
+			}
+
+			request(options, (error, response, html) => {
+				if (!error && response.statusCode === 200) {
+					var data = JSON.parse(html);
+					res.send(data);
+				}
+			})
+
 		}
 	})
 
 
-	
-	/* var options = {
-		url: 'https://admin.okto.us/api/core/ApplicationSPAFacial_GO?clientid=32d5c181-5835-41f0-bc4b-6d53cf07dfb0&id=11735',
-		
-	}
 
-	request(options, (error, response, html) => {
-		if (!error && response.statusCode === 200) {
-			var data=JSON.parse(html);
-			res.send(data);
-		}
-	}) */
 
 })
 
