@@ -654,7 +654,7 @@ router.get('/parse', function (req, res, next) {
 		if (!error && response.statusCode === 200) {
 			customers=html;
 			list=customers.data;
-			res.send(list);
+			res.send(customers.data);
 		}
 	})
 
