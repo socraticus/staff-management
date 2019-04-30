@@ -657,8 +657,8 @@ router.get('/parse', function (req, res, next) {
 
 	request(options, (error, response, html) => {
 		if (!error && response.statusCode === 200) {
-			
-			res.send(html);
+			var data=JSON.parse(html);
+			res.send(data);
 		}
 	})
 
