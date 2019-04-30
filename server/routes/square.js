@@ -662,10 +662,10 @@ router.get('/parse', function (req, res, next) {
 
 				}
 
-				request(options, (error, response, html) => {
+				request(options, (error, response, body) => {
 					if (!error && response.statusCode === 200) {
 						//var data = JSON.parse(html);
-						jscustomers=+html+'------------------>';
+						jscustomers=+body+'------------------>';
 
 					}
 				})
