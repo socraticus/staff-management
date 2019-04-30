@@ -653,7 +653,7 @@ router.get('/parse', function (req, res, next) {
 	request('http://api.snapcuba.org/customers.json', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 			var x=JSON.parse(html);
-			res.send(x.data);
+			res.send(x.data[0].id);
 		}
 	})
 
