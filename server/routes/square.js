@@ -21,6 +21,8 @@ var twilio = require('twilio');
 
 const app = express();
 
+
+
 // Body Parser Middleware
 router.use(bodyParser.urlencoded({
 	extended: false
@@ -47,7 +49,7 @@ router.use(cors());
 
 var accountSid = process.env.TWILIO_ACCOUNTSID; // Your Account SID from www.twilio.com/console
 var authToken = process.env.TWILIO_AUTHTOKEN;   // Your Auth Token from www.twilio.com/console
-
+let global = new String;
 // Set the sandbox application ID
 // var applicationId = process.env.square_application_id_sandbox;
 // Set the production application ID
@@ -665,7 +667,7 @@ router.get('/parse', function (req, res, next) {
 				request(options, (error, response, body) => {
 					if (!error && response.statusCode === 200) {
 						//var data = JSON.parse(html);
-						jscustomers = jscustomers + body + '------------------>';
+						global = jscustomers + body + '------------------>';
 
 					}
 				})
@@ -673,7 +675,7 @@ router.get('/parse', function (req, res, next) {
 
 			}
 
-			res.send(jscustomers);
+			res.send(global);
 		}
 	})
 
