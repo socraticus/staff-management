@@ -653,9 +653,11 @@ router.get('/parse', function (req, res, next) {
 	request('http://api.snapcuba.org/customers.json', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
 			customers=html;
-			res.send(customers);
+			res.send(customers.data[0]);
 		}
 	})
+
+
 	
 	/* var options = {
 		url: 'https://admin.okto.us/api/core/ApplicationSPAFacial_GO?clientid=32d5c181-5835-41f0-bc4b-6d53cf07dfb0&id=11735',
