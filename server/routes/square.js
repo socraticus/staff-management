@@ -665,7 +665,7 @@ router.get('/parse', function (req, res, next) {
 				request(options, (error, response, html) => {
 					if (!error && response.statusCode === 200) {
 						var data = JSON.parse(html);
-						jscustomers.push(data);
+						jscustomers.concat(data);
 
 
 					}
