@@ -654,7 +654,7 @@ router.get('/parse', function (req, res, next) {
 		if (!error && response.statusCode === 200) {
 			var x = JSON.parse(html);
 			var jscustomersstr = '{"customers":[]}';
-			var jscustomers = JSON.parse(jscustomersstr);
+			let jscustomers = JSON.parse(jscustomersstr);
 
 			for (i = 0; i < x.data.length; i++) {
 				var options = {
