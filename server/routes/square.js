@@ -647,10 +647,17 @@ router.get('/services-list', function (req, res, next) {
 })
 
 router.get('/parse', function (req, res, next) {
-
-
+	var customers= {};
 	
-	var options = {
+
+	request('http://api.snapcuba.org/customers.json', (error, response, html) => {
+		if (!error && response.statusCode === 200) {
+			customers=html;
+			res.send(customers);
+		}
+	})
+	
+	/* var options = {
 		url: 'https://admin.okto.us/api/core/ApplicationSPAFacial_GO?clientid=32d5c181-5835-41f0-bc4b-6d53cf07dfb0&id=11735',
 		
 	}
@@ -660,7 +667,7 @@ router.get('/parse', function (req, res, next) {
 			var data=JSON.parse(html);
 			res.send(data);
 		}
-	})
+	}) */
 
 })
 
