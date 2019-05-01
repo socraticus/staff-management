@@ -706,7 +706,7 @@ function facialcustomermigration() {
 	})
 }
 
-router.get('/migrate', function (req, res, next) {
+/* router.get('/migrate', function (req, res, next) {
 
 
 	facialcustomermigration();
@@ -716,6 +716,6 @@ router.get('/migrate', function (req, res, next) {
 
 
 
-})
+}) */
 
 module.exports = router;
