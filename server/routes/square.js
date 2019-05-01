@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Service = require('../models/service.js');
 const Facialform = require('../models/facialform.js');
+const Facialcustomer = require('../models/facialcustomer.js');
 const request = require("request");
 const nodemailer = require('nodemailer');
 const juice = require('juice');
@@ -654,9 +655,9 @@ function facialformmigration() {
 		if (!error && response.statusCode === 200) {
 			var x = JSON.parse(html);
 
-			
 
-			 for (i = 0; i < x.data.length; i++) {
+
+			for (i = 0; i < x.data.length; i++) {
 				var options = {
 					url: 'https://admin.okto.us/api/core/ApplicationSPAFacial_GO?clientid=32d5c181-5835-41f0-bc4b-6d53cf07dfb0&id=' + x.data[i].id,
 
@@ -665,7 +666,7 @@ function facialformmigration() {
 				request(options, (error, response, body) => {
 					if (!error && response.statusCode === 200) {
 						var data = JSON.parse(body);
-						var y=JSON.parse(data);
+						var y = JSON.parse(data);
 						var item = y.app[0];
 						var facialfitem = new Facialform(item);
 
@@ -677,7 +678,7 @@ function facialformmigration() {
 				})
 
 
-			} 
+			}
 
 
 		}
@@ -688,10 +689,27 @@ function facialformmigration() {
 
 }
 
+function facialcustomermigration() {
+	request('http://api.snapcuba.org/customers.json', (error, response, html) => {
+		if (!error && response.statusCode === 200) {
+			var x = JSON.parse(html);
+			for (i = 0; i < x.data.length; i++) {
+
+				var facialCitem = new Facialcustomer(x.data[i]);
+
+				facialCitem.save(function (err, facialcustomer) {
+					if (err) return console.error(err);
+					console.log(" saved to facialCitem collection.");
+				});
+			}
+		}
+	})
+}
+
 router.get('/migrate', function (req, res, next) {
 
 
-	facialformmigration();
+	facialcustomermigration();
 
 
 

@@ -72,10 +72,6 @@ const FacialformSchema = new Schema({
     signature: String
 });
 
-/* const FacialformSchema = new Schema({
-    error: String,
-    app: [Object]
-}); */
 
 const Facialform = mongoose.model('facialforms', FacialformSchema);
 
