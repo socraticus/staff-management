@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Create Schema and Model
 
-const FacialformSchema = new Schema([{
+const FacialformSchema = new Schema({
     id: Number,
     clientid: Number,
     createdate: Date,
@@ -70,7 +70,7 @@ const FacialformSchema = new Schema([{
     skinsensitive: Boolean,
     pictures: Boolean,
     signature: String
-}]);
+});
 
 const Facialform = mongoose.model('facialforms', FacialformSchema);
 

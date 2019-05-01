@@ -654,8 +654,25 @@ function facialformmigration() {
 		if (!error && response.statusCode === 200) {
 			var x = JSON.parse(html);
 
+			var options = {
+				url: 'https://admin.okto.us/api/core/ApplicationSPAFacial_GO?clientid=32d5c181-5835-41f0-bc4b-6d53cf07dfb0&id=' + x.data[5].id,
 
-			for (i = 0; i < x.data.length; i++) {
+			}
+
+			request(options, (error, response, body) => {
+				if (!error && response.statusCode === 200) {
+					var b = JSON.parse(body);
+					console.log(b);
+					var facialfitem = new Facialform(b.app[0]);
+
+					facialfitem.save(function (err, facialform) {
+						if (err) return console.error(err);
+						console.log(" saved to faceitems collection.");
+					});
+				}
+			})
+
+			/* for (i = 0; i < x.data.length; i++) {
 				var options = {
 					url: 'https://admin.okto.us/api/core/ApplicationSPAFacial_GO?clientid=32d5c181-5835-41f0-bc4b-6d53cf07dfb0&id=' + x.data[i].id,
 
@@ -675,7 +692,7 @@ function facialformmigration() {
 				})
 
 
-			}
+			} */
 
 
 		}
