@@ -8,7 +8,7 @@ const FacialformSchema = new Schema({
     clientid: Number,
     createdate: Date,
     fullname: String,
-    phone: Number,
+    phone: String,
     address: String,
     citystate: String,
     email: String,
