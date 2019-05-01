@@ -6,6 +6,7 @@ const SquareConnect = require('square-connect');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Service = require('../models/service.js');
+const Facialform = require('../models/facialform.js');
 const request = require("request");
 const nodemailer = require('nodemailer');
 const juice = require('juice');
@@ -49,7 +50,6 @@ router.use(cors());
 
 var accountSid = process.env.TWILIO_ACCOUNTSID; // Your Account SID from www.twilio.com/console
 var authToken = process.env.TWILIO_AUTHTOKEN;   // Your Auth Token from www.twilio.com/console
-let global = new String;
 // Set the sandbox application ID
 // var applicationId = process.env.square_application_id_sandbox;
 // Set the production application ID
@@ -648,10 +648,7 @@ router.get('/services-list', function (req, res, next) {
 	})
 })
 
-router.get('/parse', function (req, res, next) {
-
-	var jscustomers = new String;
-
+function facialformmigration() {
 
 	request('http://api.snapcuba.org/customers.json', (error, response, html) => {
 		if (!error && response.statusCode === 200) {
@@ -666,18 +663,34 @@ router.get('/parse', function (req, res, next) {
 
 				request(options, (error, response, body) => {
 					if (!error && response.statusCode === 200) {
-						//var data = JSON.parse(html);
-						global = jscustomers + body + '------------------>';
+						var data = JSON.parse(body);
+						var facialfitem = new Facialform(data.app[0]);
 
+						facialfitem.save(function (err, facialform) {
+							if (err) return console.error(err);
+							console.log(" saved to bookstore collection.");
+						});
 					}
 				})
 
 
 			}
 
-			res.send(global);
+
 		}
 	})
+
+
+
+
+}
+
+router.get('/migrate', function (req, res, next) {
+
+
+	facialformmigration();
+
+
 
 
 
