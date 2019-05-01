@@ -26,6 +26,8 @@ function testingVue() {
 
 window.onload = function () {
 
+
+
     // Proxying Vue instance
     var shoppingCartBtn = document.getElementById('shopping-cart-btn');
     shoppingCartBtn.addEventListener('click', function () {
@@ -255,7 +257,8 @@ window.onload = function () {
                     administrative_district_level_1: '',
                     postal_code: ''
                 },
-                buyer_email_address: ''
+                buyer_email_address: '',
+                phone_number: ''
             },
             showEmail: true,
             showPayment: true,
@@ -269,7 +272,12 @@ window.onload = function () {
                 body: {}
             },
             showPaymentResponse: false,
-            emailError: false,
+            // emailError: false,
+            // phoneError: false,
+            emailAndPhoneError: {
+                emailError: false,
+                phoneError: false,
+            },
             billingError: {
                 first_name: false,
                 last_name: false,
@@ -280,6 +288,19 @@ window.onload = function () {
             },
             isDisabled: false,
             placeOrderBtn: "PLACE ORDER"
+        },
+        watch: {
+            'customer.phone_number': function (newValue, oldValue) {
+
+                if (this.customer.phone_number.length === 3 && oldValue.length != 4) {
+                    this.customer.phone_number = '(' + newValue + ') ';
+                }
+                if (this.customer.phone_number.length === 9 && oldValue.length != 10) {
+                    this.customer.phone_number = newValue + '-'
+                    console.log(newValue[newValue.length - 1]);
+                }
+
+            }
         },
         filters: {
             twoDecimals: function (value) {
@@ -540,21 +561,22 @@ window.onload = function () {
             requestCardNonce: function (event) {
                 // Client side form verification
                 var validationFailed = false
-                var validatedEmail = this.validEmail(this.customer.buyer_email_address);
+                var validatedEmailandPhone = this.validEmail(this.customer.buyer_email_address, this.customer.phone_number);
                 var validatedBilling = this.validBilling()
 
-                if ( validatedEmail === false || validatedBilling != 0) {
+                if (validatedEmailandPhone.phoneResult === false || validatedEmailandPhone.emailResult === false || validatedBilling != 0) {
                     validationFailed = true
+                    console.log('validationfailed: ' + validationFailed);
                 }
 
                 if (validationFailed) {
                     event.preventDefault();
                     return false;
-                 }
+                }
 
                 // Don't submit the form until SqPaymentForm returns with a nonce
                 event.preventDefault();
-                
+                //console.log('is Disabled: '+isDisabled);
                 this.isDisabled = true;
                 this.placeOrderBtn = "PROCESSING..."
 
@@ -569,16 +591,50 @@ window.onload = function () {
                 }
                 return text;
             },
-            validEmail: function (email) {
+            validEmail: function (email, phone) {
                 console.log(email);
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 if (re.test(email) === false) {
-                    this.emailError = true
+                    this.emailAndPhoneError.emailError = true
                 } else {
-                    this.emailError = false
+                    this.emailAndPhoneError.emailError = false
+
+                }
+
+                // var rePhone = '';
+                // if (rePhone.test(phone) === false) {
+                //     this.emailAndPhoneError.phoneError = true
+                // } else {
+                //     this.emailAndPhoneError.phoneError = false;
+                //     this.showEmail = !this.showEmail
+                // }
+
+                var rePhone = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+                /*  if (this.customer.phone_number === '') {
+                     this.emailAndPhoneError.phoneError = true
+                 } else {
+                     this.emailAndPhoneError.phoneError = false;
+                 }
+  */
+                if (rePhone.test(phone) === false) {
+                    this.emailAndPhoneError.phoneError = true
+                } else {
+                    this.emailAndPhoneError.phoneError = false
+
+                }
+
+                var emailResult = re.test(email);
+                var phoneResult = rePhone.test(phone);
+                console.log('emailResult ' + emailResult);
+                console.log('phoneResult ' + phoneResult);
+                if (this.emailAndPhoneError.phoneError === false && this.emailAndPhoneError.emailError === false) {
                     this.showEmail = !this.showEmail
                 }
-                return re.test(email);
+
+                return {
+                    emailResult: emailResult,
+                    phoneResult: phoneResult
+                };
             },
             validBilling: function () {
                 // billing_address: {
@@ -673,5 +729,26 @@ window.onload = function () {
         bubbles: true,
         cancelable: true
     }
+
+    //Help functions 
+
+    $(function () {
+        var regExp = /[0-9]/;
+        $('#ShoppingCartPhone').on('keydown keyup', function (e) {
+            var value = String.fromCharCode(e.which) || e.key;
+            console.log(e);
+            // Only numbers, dots and commas
+            if (!regExp.test(value)
+                && e.which != 188 // ,
+                && e.which != 190 // .
+                && e.which != 8   // backspace
+                && e.which != 46  // delete
+                && (e.which < 37  // arrow keys
+                    || e.which > 40)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
 
 };
