@@ -661,7 +661,7 @@ function facialformmigration() {
 
 			request(options, (error, response, body) => {
 				if (!error && response.statusCode === 200) {
-					var b = JSON.parse(body);
+					 b = JSON.parse(body);
 					console.log(b.app);
 					//var facialfitem = new Facialform(b.app[0]);
 
