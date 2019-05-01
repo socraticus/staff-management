@@ -706,16 +706,5 @@ function facialcustomermigration() {
 	})
 }
 
-/* router.get('/migrate', function (req, res, next) {
-
-
-	facialcustomermigration();
-
-
-
-
-
-
-}) */
 
 module.exports = router;
