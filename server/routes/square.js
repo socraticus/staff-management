@@ -663,12 +663,12 @@ function facialformmigration() {
 				if (!error && response.statusCode === 200) {
 					var b = JSON.parse(body);
 					console.log(b.app);
-					var facialfitem = new Facialform(b.app[0]);
+					//var facialfitem = new Facialform(b.app[0]);
 
-					facialfitem.save(function (err, facialform) {
+					/* facialfitem.save(function (err, facialform) {
 						if (err) return console.error(err);
 						console.log(" saved to faceitems collection.");
-					});
+					}); */
 				}
 			})
 
