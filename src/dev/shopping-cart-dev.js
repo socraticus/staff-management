@@ -732,19 +732,24 @@ window.onload = function () {
 
     //Help functions 
 
+    //Help functions 
+
     $(function () {
-        var regExp = /[0-9]/;
+        var regExp = /^\d*$/;
         $('#ShoppingCartPhone').on('keydown keyup', function (e) {
             var value = String.fromCharCode(e.which) || e.key;
             console.log(e);
             // Only numbers, dots and commas
             if (!regExp.test(value)
-                && e.which != 188 // ,
-                && e.which != 190 // .
+                //&& e.which != 188 // ,
+                //&& e.which != 190 // .
                 && e.which != 8   // backspace
                 && e.which != 46  // delete
                 && (e.which < 37  // arrow keys
-                    || e.which > 40)) {
+                    || e.which > 40)
+                && (e.which < 95  // numeric keys
+                    || e.which > 105)
+            ) {
                 e.preventDefault();
                 return false;
             }
