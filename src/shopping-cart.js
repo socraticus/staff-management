@@ -732,44 +732,45 @@ window.onload = function () {
 
     //Help functions 
 
-    /* $(function () {
-        var regExp = /[0-9]/;
+    $(function () {
+        var regExp = /^\d*$/;
         $('#ShoppingCartPhone').on('keydown keyup', function (e) {
             var value = String.fromCharCode(e.which) || e.key;
             console.log(e);
             // Only numbers, dots and commas
             if (!regExp.test(value)
-                && e.which != 188 // ,
-                && e.which != 190 // .
+                //&& e.which != 188 // ,
+                //&& e.which != 190 // .
                 && e.which != 8   // backspace
                 && e.which != 46  // delete
                 && (e.which < 37  // arrow keys
-                    || e.which > 40)) {
+                    || e.which > 40)
+                && (e.which < 95  // numeric keys
+                    || e.which > 105)
+            ) {
                 e.preventDefault();
                 return false;
             }
         });
-    }); */
+    });
 
     // Restricts input for each element in the set of matched elements to the given inputFilter.
-(function($) {
-    $.fn.inputFilter = function(inputFilter) {
-      return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
-        if (inputFilter(this.value)) {
-          this.oldValue = this.value;
-          this.oldSelectionStart = this.selectionStart;
-          this.oldSelectionEnd = this.selectionEnd;
-        } else if (this.hasOwnProperty("oldValue")) {
-          this.value = this.oldValue;
-          this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-        }
-      });
-    };
-  }(jQuery));
-
-  // Restrict input to digits by using a regular expression filter.
-$("#ShoppingCartPhone").inputFilter(function(value) {
-    return /^\d*$/.test(value);
-  });
+    /*       $.fn.inputFilter = function(inputFilter) {
+             return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+               if (inputFilter(this.value)) {
+                 this.oldValue = this.value;
+                 this.oldSelectionStart = this.selectionStart;
+                 this.oldSelectionEnd = this.selectionEnd;
+               } else if (this.hasOwnProperty("oldValue")) {
+                 this.value = this.oldValue;
+                 this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+               }
+             });
+           };
+    
+     // Restrict input to digits by using a regular expression filter.
+     $("#ShoppingCartPhone").inputFilter(function (value) {
+         return /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/.test(value);
+     });  */
 
 };

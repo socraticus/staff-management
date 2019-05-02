@@ -325,8 +325,8 @@ router.post('/process-payment', function (req, res, next) {
 						const mailOptions = {
 							from: 'Ananda Spa <contact@anandaspamiami.com>',
 							to: request_params.body.customer.buyer_email_address,
-							subject: 'Nodemailer test',
-							text: 'Payment Failed',
+							subject: 'Receipt from Ananda Spa',
+							text: 'Payment Success',
 							html: result
 						}
 
