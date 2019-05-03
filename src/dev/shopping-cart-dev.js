@@ -291,6 +291,10 @@ window.onload = function () {
         },
         watch: {
             'customer.phone_number': function (newValue, oldValue) {
+                var re = /[a-zA-Z]/;
+                if (re.test(newValue)) {
+                    this.customer.phone_number = oldValue;
+                }
 
                 if (this.customer.phone_number.length === 3 && oldValue.length != 4) {
                     this.customer.phone_number = '(' + newValue + ') ';
@@ -670,6 +674,18 @@ window.onload = function () {
                 this.showPaymentResponse = false;
                 this.isDisabled = false;
                 this.placeOrderBtn = "PLACE ORDER"
+            },
+            isNumber: function (evt) {
+                evt = evt ? evt : window.event;
+                var charCode = evt.which ? evt.which : evt.keyCode;
+
+                if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
+
+                    evt.preventDefault();
+                    ;
+                } else {
+                    return true;
+                }
             }
         }
     });
@@ -734,26 +750,26 @@ window.onload = function () {
 
     //Help functions 
 
-    $(function () {
-        var regExp = /^\d*$/;
-        $('#ShoppingCartPhone').on('keydown keyup', function (e) {
-            var value = String.fromCharCode(e.which) || e.key;
-            console.log(e);
-            // Only numbers, dots and commas
-            if (!regExp.test(value)
-                //&& e.which != 188 // ,
-                //&& e.which != 190 // .
-                && e.which != 8   // backspace
-                && e.which != 46  // delete
-                && (e.which < 37  // arrow keys
-                    || e.which > 40)
-                && (e.which < 95  // numeric keys
-                    || e.which > 105)
-            ) {
-                e.preventDefault();
-                return false;
-            }
-        });
-    });
+    // $(function () {
+    //     var regExp = /^\d*$/;
+    //     $('#ShoppingCartPhone').on('keydown keyup', function (e) {
+    //         var value = String.fromCharCode(e.which) || e.key;
+    //         console.log(e);
+    //         // Only numbers, dots and commas
+    //         if (!regExp.test(value)
+    //             //&& e.which != 188 // ,
+    //             //&& e.which != 190 // .
+    //             && e.which != 8   // backspace
+    //             && e.which != 46  // delete
+    //             && (e.which < 37  // arrow keys
+    //                 || e.which > 40)
+    //             && (e.which < 95  // numeric keys
+    //                 || e.which > 105)
+    //         ) {
+    //             e.preventDefault();
+    //             return false;
+    //         }
+    //     });
+    // });
 
 };
