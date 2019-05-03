@@ -342,7 +342,7 @@ router.post('/process-payment', function (req, res, next) {
 							if (err) {
 								console.log('Error: ' + JSON.stringify(err))
 							} else {
-								console.log('Email Sent')
+								console.log('Email Sent Success')
 							}
 						})
 
