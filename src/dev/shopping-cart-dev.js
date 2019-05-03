@@ -296,8 +296,25 @@ window.onload = function () {
                     this.customer.phone_number = oldValue;
                 }
 
+                if (newValue.length === 5 && newValue[0] === "(" && oldValue.length != 6) {
+                    this.customer.phone_number = oldValue + ") ";
+
+                }
+
+                if (newValue.length === 6 && newValue[0] === "(" && oldValue.length === 5 && newValue[5] != " ") {
+                    this.customer.phone_number = oldValue + " " + newValue[newValue.length - 1];
+
+                }
+
+                if (newValue.length === 10 && oldValue.length === 9 && newValue[newValue.length - 1] != "-") {
+                    this.customer.phone_number = oldValue + "-" + newValue[newValue.length - 1];
+                }
+
                 if (this.customer.phone_number.length === 3 && oldValue.length != 4) {
-                    this.customer.phone_number = '(' + newValue + ') ';
+                    if (this.customer.phone_number[0] != "(") {
+                        this.customer.phone_number = '(' + newValue + ') ';
+                    }
+
                 }
                 if (this.customer.phone_number.length === 9 && oldValue.length != 10) {
                     this.customer.phone_number = newValue + '-'
