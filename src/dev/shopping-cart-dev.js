@@ -291,32 +291,44 @@ window.onload = function () {
         },
         watch: {
             'customer.phone_number': function (newValue, oldValue) {
-                var re = /[a-zA-Z]/;
-                if (re.test(newValue)) {
+                /*  var re = /[a-zA-Z]/;
+                 var reCH=/[~|`!@#$%&€£¥\\/\*\+\[\]"':;.,<>\?\{\}\=\_\^]/; */
+                var process = true;
+                var allre = /[0-9\(\)-]+/;
+                if (!allre.test(newValue) && newValue != "") {
                     this.customer.phone_number = oldValue;
+                    process = false;
                 }
 
-                if (newValue.length === 5 && newValue[0] === "(" && oldValue.length != 6) {
+                if (newValue.length > 1) {
+                    if (!allre.test(newValue[newValue.length - 1]) && newValue[newValue.length - 1] != " ") {
+                        this.customer.phone_number = oldValue;
+                        process = false;
+                    }
+                }
+
+
+                if (newValue.length === 5 && newValue[0] === "(" && oldValue.length != 6 && process == true) {
                     this.customer.phone_number = oldValue + ") ";
 
                 }
 
-                if (newValue.length === 6 && newValue[0] === "(" && oldValue.length === 5 && newValue[5] != " ") {
+                if (newValue.length === 6 && newValue[0] === "(" && oldValue.length === 5 && newValue[5] != " " && process == true) {
                     this.customer.phone_number = oldValue + " " + newValue[newValue.length - 1];
 
                 }
 
-                if (newValue.length === 10 && oldValue.length === 9 && newValue[newValue.length - 1] != "-") {
+                if (newValue.length === 10 && oldValue.length === 9 && newValue[newValue.length - 1] != "-" && process == true) {
                     this.customer.phone_number = oldValue + "-" + newValue[newValue.length - 1];
                 }
 
-                if (this.customer.phone_number.length === 3 && oldValue.length != 4) {
+                if (this.customer.phone_number.length === 3 && oldValue.length != 4 && process == true) {
                     if (this.customer.phone_number[0] != "(") {
                         this.customer.phone_number = '(' + newValue + ') ';
                     }
 
                 }
-                if (this.customer.phone_number.length === 9 && oldValue.length != 10) {
+                if (this.customer.phone_number.length === 9 && oldValue.length != 10 && process == true) {
                     this.customer.phone_number = newValue + '-'
                     console.log(newValue[newValue.length - 1]);
                 }
@@ -693,7 +705,7 @@ window.onload = function () {
                 this.placeOrderBtn = "PLACE ORDER"
             },
             isNumber: function (evt) {
-                evt = evt ? evt : window.event;
+               /*  evt = evt ? evt : window.event;
                 var charCode = evt.which ? evt.which : evt.keyCode;
 
                 if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
@@ -702,7 +714,7 @@ window.onload = function () {
                     ;
                 } else {
                     return true;
-                }
+                } */
             }
         }
     });
