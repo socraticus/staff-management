@@ -731,7 +731,7 @@ function buildexcelfile() {
 	];
 
 	var customers = Facialform.find();
-	console.log(customers);
+	console.log(customers.collation);
 }
 
 router.get('/exceljs', function (req, res, next) {
