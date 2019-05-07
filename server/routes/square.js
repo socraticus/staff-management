@@ -738,9 +738,12 @@ function buildexcelfile() {
 			sheet.addRow({ name: customers[i].fullname, email: customers[i].email, phone: customers[i].phone, adress: customers[i].adress });
 			console.log(customers[i].fullname + " agregado");
 		}
-		res.send("Sucess");
 
-		workbook.xlsx.writeFile('customers.xlsx');
+
+		workbook.xlsx.writeFile('customers.xlsx')
+			.then(function () {
+				console.log("excel created");
+			});
 	})
 
 
