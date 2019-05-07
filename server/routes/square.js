@@ -741,12 +741,12 @@ function buildexcelfile() {
 
 
 
-		workbook.xlsx.writeFile('/tmp/customers.xlsx')
+		workbook.xlsx.writeFile('./customers.xlsx')
 			.then(function () {
 				console.log("excel created");
 			});
 
-		var tempfile = require('../tmp');
+		var tempfile = require('tempfile');
 		var tempFilePath = tempfile('.xlsx');
 		console.log("tempFilePath : ", tempFilePath);
 		workbook.xlsx.writeFile(tempFilePath).then(function () {
