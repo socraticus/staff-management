@@ -739,12 +739,22 @@ function buildexcelfile() {
 			console.log(customers[i].fullname + " agregado");
 		}
 
-		
 
-		workbook.xlsx.writeFile('customers.xlsx')
+
+		workbook.xlsx.writeFile('./customers.xlsx')
 			.then(function () {
 				console.log("excel created");
 			});
+
+		var tempfile = require('customers');
+		var tempFilePath = tempfile('.xlsx');
+		console.log("tempFilePath : ", tempFilePath);
+		workbook.xlsx.writeFile(tempFilePath).then(function () {
+			res.sendFile(tempFilePath, function (err) {
+				console.log('---------- error downloading file: ', err);
+			});
+			console.log('file is written');
+		});
 	})
 
 
