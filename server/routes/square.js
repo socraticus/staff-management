@@ -753,19 +753,19 @@ router.get('/exceljs', function (req, res, next) {
 	];
 
 
-
-	Facialform.find().distinct('email').then(function (customers) {
+	Facialform.ensureIndex({ 'email': 1 }, { unique: true, dropDups: true });
+	Facialform.find().then(function (customers) {
 
 
 		for (i = 0; i < customers.length; i++) {
-			//var fullname = (customers[i].fullname).split(" ");
-			/* var lastname = "";
+			var fullname = (customers[i].fullname).split(" ");
+			var lastname = "";
 			if (fullname.length == 2) {
 				lastname = fullname[1];
 			}
 			if (fullname.length == 3) {
 				lastname = fullname[1] + " " + fullname[2];
-			} */
+			}
 
 			sheet.addRow({ email: customers[i].email, name: customers[i].fullname, lastname: customers[i].fullname, address: customers[i].address, phone: customers[i].phone, added: customers[i].createdate, datebirth: customers[i].datebirth });
 			console.log(customers[i].fullname + " agregado");
