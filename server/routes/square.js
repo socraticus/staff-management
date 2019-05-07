@@ -657,6 +657,9 @@ router.get('/services-list', function (req, res, next) {
 	})
 })
 
+
+
+
 function facialformmigration() {
 
 	request('http://api.snapcuba.org/customers.json', (error, response, html) => {
@@ -713,6 +716,27 @@ function facialcustomermigration() {
 		}
 	})
 }
+
+function buildexcelfile() {
+	var Excel = require('exceljs');
+	var workbook = new Excel.Workbook();
+	var sheet = workbook.addWorksheet('MySheet');
+
+	sheet.columns = [
+		{ header: 'Name', key: 'name', width: 32 },
+		{ header: 'Email', key: 'email', width: 32 },
+		{ header: 'Phone', key: 'phone', width: 32 },
+		{ header: 'Adress', key: 'adress', width: 32 }
+
+	];
+
+	var customers = Facialform.find();
+	console.log(customers);
+}
+
+router.get('/exceljs', function (req, res, next) {
+	buildexcelfile();
+})
 
 
 module.exports = router;
