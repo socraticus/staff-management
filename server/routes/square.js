@@ -741,7 +741,10 @@ function buildexcelfile() {
 
 		
 
-		await workbook.xlsx.writeFile('users.xlsx');
+		workbook.xlsx.writeFile('customers.xlsx')
+			.then(function () {
+				console.log("excel created");
+			});
 	})
 
 
