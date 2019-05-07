@@ -726,7 +726,7 @@ function buildexcelfile() {
 		{ header: 'Name', key: 'name', width: 32 },
 		{ header: 'Email', key: 'email', width: 32 },
 		{ header: 'Phone', key: 'phone', width: 32 },
-		{ header: 'Adress', key: 'adress', width: 32 }
+		{ header: 'Address', key: 'address', width: 32 }
 
 	];
 
@@ -735,7 +735,7 @@ function buildexcelfile() {
 	Facialform.find().then(function (customers) {
 
 		for (i = 0; i < customers.length; i++) {
-			sheet.addRow({ name: customers[i].fullname, email: customers[i].email, phone: customers[i].phone, adress: customers[i].adress });
+			sheet.addRow({ name: customers[i].fullname, email: customers[i].email, phone: customers[i].phone, address: customers[i].address });
 			console.log(customers[i].fullname + " agregado");
 		}
 
