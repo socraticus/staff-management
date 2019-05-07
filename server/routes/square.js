@@ -717,7 +717,9 @@ function facialcustomermigration() {
 	})
 }
 
-
+Array.prototype.unique=function(a){
+	return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
+  });
 
 router.get('/exceljs', function (req, res, next) {
 	var Excel = require('exceljs');
@@ -736,8 +738,8 @@ router.get('/exceljs', function (req, res, next) {
 
 
 
-	Facialform.find().then(function (customers) {
-
+	Facialform.find().then(function (capture) {
+		var customers=capture.unique();
 		for (i = 0; i < customers.length; i++) {
 			var fullname = (customers[i].fullname).split(" ");
 			var lastname = "";
