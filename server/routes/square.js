@@ -739,8 +739,9 @@ function buildexcelfile() {
 			console.log(customers[i].fullname + " agregado");
 		}
 
+		
 
-		workbook.xlsx.writeFile('customers.xlsx')
+		workbook.xlsx.writeFile('../../public/customer.xls')
 			.then(function () {
 				console.log("excel created");
 			});
