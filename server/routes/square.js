@@ -741,23 +741,23 @@ function buildexcelfile() {
 
 
 
-		workbook.xlsx.writeFile('./customers.xlsx')
-			.then(function () {
-				console.log("excel created");
-			});
 
-		var tempfile = require('tempfile');
-		var tempFilePath = tempfile('.xlsx');
-		console.log("tempFilePath : ", tempFilePath);
-		workbook.xlsx.writeFile(tempFilePath).then(function () {
-			res.sendFile(tempFilePath, function (err) {
-				console.log('---------- error downloading file: ', err);
-			});
-			console.log('file is written');
-		});
 	})
 
+	workbook.xlsx.writeFile('./customers.xlsx')
+		.then(function () {
+			console.log("excel created");
+		});
 
+	var tempfile = require('tempfile');
+	var tempFilePath = tempfile('.xlsx');
+	console.log("tempFilePath : ", tempFilePath);
+	workbook.xlsx.writeFile(tempFilePath).then(function () {
+		res.sendFile(tempFilePath, function (err) {
+			console.log('---------- error downloading file: ', err);
+		});
+		console.log('file is written');
+	});
 
 
 
