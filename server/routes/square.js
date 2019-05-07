@@ -774,7 +774,9 @@ router.get('/exceljs', function (req, res, next) {
 		{ header: 'First Name', key: 'name', width: 32 },
 		{ header: 'Last Name', key: 'lastname', width: 32 },
 		{ header: 'Address', key: 'address', width: 32 },
-		{ header: 'Phone Number', key: 'phone', width: 32 }
+		{ header: 'Phone Number', key: 'phone', width: 32 },
+		{ header: 'Date Added', key: 'added', width: 32 },
+		{ header: 'Birthdate', key: 'datebirth', width: 32 }
 	];
 
 
@@ -791,7 +793,7 @@ router.get('/exceljs', function (req, res, next) {
 				lastname = fullname[1] + " " + fullname[2];
 			}
 
-			sheet.addRow({ email: customers[i].email, name: fullname[0], lastname: lastname, address: customers[i].address, phone: customers[i].phone });
+			sheet.addRow({ email: customers[i].email, name: fullname[0], lastname: lastname, address: customers[i].address, phone: customers[i].phone, added: customers[i].createdate, datebirth: customers[i].datebirth });
 			console.log(customers[i].fullname + " agregado");
 		}
 
