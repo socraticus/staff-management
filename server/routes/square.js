@@ -783,7 +783,15 @@ router.get('/exceljs', function (req, res, next) {
 
 		for (i = 0; i < customers.length; i++) {
 			var fullname =(customers[i].fullname).split(" ");
-				sheet.addRow({ name: fullname[0], lastname: fullname[1], email: customers[i].email, phone: customers[i].phone, address: customers[i].address });
+			var lastname="";
+			if(fullname.length==2){
+				lastname=fullname[1];
+			}
+			if(fullname.length==3){
+				lastname=fullname[1]+" "+fullname[2];
+			}
+
+				sheet.addRow({ name: fullname[0], lastname: lastname, email: customers[i].email, phone: customers[i].phone, address: customers[i].address });
 			console.log(customers[i].fullname + " agregado");
 		}
 
