@@ -756,8 +756,9 @@ router.get('/exceljs', function (req, res, next) {
 
 	Facialform.find().then(function (capture) {
 
-		var temp = removeDuplicates(capture, 'email');
-		var customers=JSON.parse(temp);
+		var customers = removeDuplicates(capture, 'email');
+		console.log(customers);
+	
 		for (i = 0; i < customers.length; i++) {
 			var fullname = (customers[i].fullname).split(" ");
 			var lastname = "";
