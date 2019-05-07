@@ -730,8 +730,12 @@ function buildexcelfile() {
 
 	];
 
-	var customers = Facialform.find();
-	console.log(customers.collation);
+	var customers = Facialform.find().Array();
+
+	for (i = 0; i < customers.length; i++) { 
+		sheet.addRow({name: customers[i].fullname, email: customers[i].email, phone: customers[i].phone, adress: customers[i].adress});
+	  }
+	
 }
 
 router.get('/exceljs', function (req, res, next) {
