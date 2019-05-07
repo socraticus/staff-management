@@ -753,7 +753,7 @@ router.get('/exceljs', function (req, res, next) {
 	];
 
 
-	Facialform.ensureIndex({ 'email': 1 }, { unique: true, dropDups: true });
+	Facialform.ensureIndexes({ 'email': 1 }, { unique: true, dropDups: true });
 	Facialform.find().then(function (customers) {
 
 
