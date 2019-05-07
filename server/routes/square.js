@@ -741,7 +741,7 @@ function buildexcelfile() {
 
 		
 
-		workbook.xlsx.writeFile('/home/armenteros/Projects/customer.xls')
+		workbook.xlsx.writeFile('/home/armenteros/Projects/customer.xlsx')
 			.then(function () {
 				console.log("excel created");
 			});
