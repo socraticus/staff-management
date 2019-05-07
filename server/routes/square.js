@@ -729,7 +729,6 @@ function buildexcelfile() {
 		{ header: 'Address', key: 'address', width: 32 },
 		{ header: 'Date Added', key: 'added', width: 32 },
 		{ header: 'Birthdate', key: 'datebirth', width: 32 }
-
 	];
 
 
