@@ -734,6 +734,7 @@ function buildexcelfile() {
 
 	for (i = 0; i < customers.length; i++) { 
 		sheet.addRow({name: customers[i].fullname, email: customers[i].email, phone: customers[i].phone, adress: customers[i].adress});
+		console.log(customers[i].fullname+" agregado");
 	  }
 	
 }
