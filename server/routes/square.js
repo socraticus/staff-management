@@ -754,7 +754,7 @@ router.get('/exceljs', function (req, res, next) {
 
 
 	
-	Facialform.find().distinct('email', 'fullname', 'address', 'phone').then(function (customers) {
+	Facialform.find().then(function (customers) {
 
 
 		for (i = 0; i < customers.length; i++) {
