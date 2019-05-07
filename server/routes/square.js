@@ -740,6 +740,8 @@ function buildexcelfile() {
 		  }
 	})
 
+	workbook.xlsx.writeFile('customers.xlsx');
+
 	
 	
 }
