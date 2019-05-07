@@ -717,52 +717,7 @@ function facialcustomermigration() {
 	})
 }
 
-function buildexcelfile() {
-	var Excel = require('exceljs');
-	var workbook = new Excel.Workbook();
-	var sheet = workbook.addWorksheet('MySheet');
 
-	sheet.columns = [
-		{ header: 'Name', key: 'name', width: 32 },
-		{ header: 'Email', key: 'email', width: 32 },
-		{ header: 'Phone', key: 'phone', width: 32 },
-		{ header: 'Address', key: 'address', width: 32 },
-		{ header: 'Date Added', key: 'added', width: 32 },
-		{ header: 'Birthdate', key: 'datebirth', width: 32 }
-	];
-
-
-
-	Facialform.find().then(function (customers) {
-
-		for (i = 0; i < customers.length; i++) {
-			sheet.addRow({ name: customers[i].fullname, email: customers[i].email, phone: customers[i].phone, address: customers[i].address, added: customers[i].createdate, datebirth: customers[i].datebirth });
-			console.log(customers[i].fullname + " agregado");
-		}
-
-
-
-		workbook.xlsx.writeFile('./customers.xlsx')
-			.then(function () {
-				console.log("excel created");
-			});
-
-		var tempfile = require('tempfile');
-		var tempFilePath = tempfile('.xlsx');
-		console.log("tempFilePath : ", tempFilePath);
-		workbook.xlsx.writeFile(tempFilePath).then(function () {
-			res.sendFile(tempFilePath, function (err) {
-				console.log('---------- error downloading file: ', err);
-			});
-			console.log('file is written');
-		});
-	})
-
-
-
-
-
-}
 
 router.get('/exceljs', function (req, res, next) {
 	var Excel = require('exceljs');
