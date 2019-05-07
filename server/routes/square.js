@@ -769,12 +769,11 @@ router.get('/exceljs', function (req, res, next) {
 	var sheet = workbook.addWorksheet('MySheet');
 
 	sheet.columns = [
+		{ header: 'Email', key: 'email', width: 32 },
 		{ header: 'First Name', key: 'name', width: 32 },
 		{ header: 'Last Name', key: 'lastname', width: 32 },
-		{ header: 'Email', key: 'email', width: 32 },
-		{ header: 'Phone', key: 'phone', width: 32 },
-		{ header: 'Address', key: 'address', width: 32 }
-
+		{ header: 'Address', key: 'address', width: 32 },
+		{ header: 'Phone Number', key: 'phone', width: 32 }
 	];
 
 
@@ -782,16 +781,16 @@ router.get('/exceljs', function (req, res, next) {
 	Facialform.find().then(function (customers) {
 
 		for (i = 0; i < customers.length; i++) {
-			var fullname =(customers[i].fullname).split(" ");
-			var lastname="";
-			if(fullname.length==2){
-				lastname=fullname[1];
+			var fullname = (customers[i].fullname).split(" ");
+			var lastname = "";
+			if (fullname.length == 2) {
+				lastname = fullname[1];
 			}
-			if(fullname.length==3){
-				lastname=fullname[1]+" "+fullname[2];
+			if (fullname.length == 3) {
+				lastname = fullname[1] + " " + fullname[2];
 			}
 
-				sheet.addRow({ name: fullname[0], lastname: lastname, email: customers[i].email, phone: customers[i].phone, address: customers[i].address });
+			sheet.addRow({ email: customers[i].email, name: fullname[0], lastname: lastname, address: customers[i].address, phone: customers[i].phone });
 			console.log(customers[i].fullname + " agregado");
 		}
 
