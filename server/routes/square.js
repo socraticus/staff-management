@@ -733,17 +733,19 @@ function buildexcelfile() {
 
 
 	Facialform.find().then(function (customers) {
-		
-		for (i = 0; i < customers.length; i++) { 
-			sheet.addRow({name: customers[i].fullname, email: customers[i].email, phone: customers[i].phone, adress: customers[i].adress});
-			console.log(customers[i].fullname+" agregado");
-		  }
+
+		for (i = 0; i < customers.length; i++) {
+			sheet.addRow({ name: customers[i].fullname, email: customers[i].email, phone: customers[i].phone, adress: customers[i].adress });
+			console.log(customers[i].fullname + " agregado");
+		}
+
+		workbook.xlsx.writeFile('customers.xlsx');
 	})
 
-	workbook.xlsx.writeFile('customers.xlsx');
 
-	
-	
+
+
+
 }
 
 router.get('/exceljs', function (req, res, next) {
