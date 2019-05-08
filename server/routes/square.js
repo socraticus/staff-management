@@ -752,8 +752,7 @@ router.get('/exceljs', function (req, res, next) {
 		{ header: 'Birthdate', key: 'datebirth', width: 32 }
 	];
 
-	var distinctos = Facialform.distinct('email');
-	console.log("esta es la cantidad: " + JSON.stringify(distinctos));
+
 
 	Facialform.find().then(function (customers) {
 
@@ -767,8 +766,10 @@ router.get('/exceljs', function (req, res, next) {
 			if (fullname.length == 3) {
 				lastname = fullname[1] + " " + fullname[2];
 			}
+			if (customers[i].email != "") {
+				sheet.addRow({ email: customers[i].email, name: fullname[0], lastname: lastname, address: customers[i].address, phone: customers[i].phone, added: customers[i].createdate, datebirth: customers[i].datebirth });
+			}
 
-			sheet.addRow({ email: customers[i].email, name: fullname[0], lastname: lastname, address: customers[i].address, phone: customers[i].phone, added: customers[i].createdate, datebirth: customers[i].datebirth });
 			//console.log(customers[i].fullname + " agregado");
 		}
 
