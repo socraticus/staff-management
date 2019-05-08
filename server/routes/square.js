@@ -766,7 +766,7 @@ router.get('/exceljs', function (req, res, next) {
 			if (fullname.length == 3) {
 				lastname = fullname[1] + " " + fullname[2];
 			}
-			if (customers[i].email != empty) {
+			if (customers[i].email !="") {
 				sheet.addRow({ email: customers[i].email, name: fullname[0], lastname: lastname, address: customers[i].address, phone: customers[i].phone, added: customers[i].createdate, datebirth: customers[i].datebirth });
 			}
 
