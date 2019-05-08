@@ -752,7 +752,7 @@ router.get('/exceljs', function (req, res, next) {
 		{ header: 'Birthdate', key: 'datebirth', width: 32 }
 	];
 
-
+	Facialform.ensureIndexes();
 	
 	Facialform.find().then(function (customers) {
 
