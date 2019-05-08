@@ -769,7 +769,7 @@ router.get('/exceljs', function (req, res, next) {
 			}
 
 			sheet.addRow({ email: customers[i].email, name: fullname[0], lastname: lastname, address: customers[i].address, phone: customers[i].phone, added: customers[i].createdate, datebirth: customers[i].datebirth });
-			console.log(customers[i].fullname + " agregado");
+			//console.log(customers[i].fullname + " agregado");
 		}
 
 
