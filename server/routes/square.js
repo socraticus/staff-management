@@ -753,8 +753,7 @@ router.get('/exceljs', function (req, res, next) {
 	];
 
 	var distinctos = Facialform.distinct('email');
-	var list = JSON.parse(distinctos);
-	console.log("esta es la cantidad: " + list.count());
+	console.log("esta es la cantidad: " + JSON.stringify(distinctos));
 
 	Facialform.find().then(function (customers) {
 
