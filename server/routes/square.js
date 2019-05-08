@@ -752,8 +752,9 @@ router.get('/exceljs', function (req, res, next) {
 		{ header: 'Birthdate', key: 'datebirth', width: 32 }
 	];
 
-	Facialform.ensureIndexes();
-	
+	var distinctos = Facialform.distinct('email');
+	console.log("esta es la cantidad: "+(distinctos.count()).toString());
+
 	Facialform.find().then(function (customers) {
 
 

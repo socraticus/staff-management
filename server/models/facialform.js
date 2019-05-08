@@ -11,7 +11,7 @@ const FacialformSchema = new Schema({
     phone: String,
     address: String,
     citystate: String,
-    email: { type: String, unique: true },
+    email: String,
     datebirth: Date,
     wearcontact: Boolean,
     surgery: Boolean,
