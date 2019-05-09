@@ -742,6 +742,7 @@ router.get('/exceljs', function (req, res, next) {
 	var workbook = new Excel.Workbook();
 	var sheet = workbook.addWorksheet('MySheet');
 	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	var retext=/[a-zA-Z]/;
 	sheet.columns = [
 		{ header: 'Email', key: 'email', width: 32 },
 		{ header: 'First Name', key: 'name', width: 32 },
@@ -765,6 +766,9 @@ router.get('/exceljs', function (req, res, next) {
 			}
 			if (fullname.length == 3) {
 				lastname = fullname[1] + " " + fullname[2];
+			}
+			if(retext.test(customers[i].phone)){
+				customers[i].phone = " ";
 			}
 			if (customers[i].email != "" && re.test(customers[i].email)) {
 				sheet.addRow({ email: customers[i].email, name: fullname[0], lastname: lastname, address: customers[i].address, sms: customers[i].phone, added: customers[i].createdate, datebirth: customers[i].datebirth });
