@@ -747,7 +747,7 @@ router.get('/exceljs', function (req, res, next) {
 		{ header: 'First Name', key: 'name', width: 32 },
 		{ header: 'Last Name', key: 'lastname', width: 32 },
 		{ header: 'Address', key: 'address', width: 32 },
-		{ header: 'Phone Number', key: 'phone', width: 32 },
+		{ header: 'sms', key: 'sms', width: 32 },
 		{ header: 'Date Added', key: 'added', width: 32 },
 		{ header: 'Birthdate', key: 'datebirth', width: 32 }
 	];
@@ -767,7 +767,7 @@ router.get('/exceljs', function (req, res, next) {
 				lastname = fullname[1] + " " + fullname[2];
 			}
 			if (customers[i].email != "" && re.test(customers[i].email)) {
-				sheet.addRow({ email: customers[i].email, name: fullname[0], lastname: lastname, address: customers[i].address, phone: customers[i].phone, added: customers[i].createdate, datebirth: customers[i].datebirth });
+				sheet.addRow({ email: customers[i].email, name: fullname[0], lastname: lastname, address: customers[i].address, sms: customers[i].phone, added: customers[i].createdate, datebirth: customers[i].datebirth });
 			}
 
 			//console.log(customers[i].fullname + " agregado");
@@ -775,7 +775,7 @@ router.get('/exceljs', function (req, res, next) {
 
 
 
-		workbook.xlsx.writeFile('./customers.xlsx')
+		workbook.csv.writeFile('./customers.xlsx')
 			.then(function () {
 				console.log("excel created");
 			});
