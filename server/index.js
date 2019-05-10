@@ -390,6 +390,9 @@ api.listLocations().then(function (data) {
 const routeSquare = require('./routes/square');
 app.use('/square', routeSquare);
 
+const routeFacial = require('./routes/facial');
+app.use('/facial',routeFacial);
+
 // // Square POST charge route
 // app.post('/square/process-payment', (req, res) => {
 //     console.log(req.body.nonce);
