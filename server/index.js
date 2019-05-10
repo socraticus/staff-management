@@ -390,6 +390,7 @@ api.listLocations().then(function (data) {
 const routeSquare = require('./routes/square');
 app.use('/square', routeSquare);
 
+//Facial General Routes
 const routeFacial = require('./routes/facial');
 app.use('/facial',routeFacial);
 
