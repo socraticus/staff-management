@@ -69,7 +69,26 @@ window.onload = function () {
                 pimples: false,
                 skin: false,
                 other: false,
-            }
+                otherextradescription: ""
+            },
+            homecare: {
+                routine: "",
+                cleanser: false,
+                toner: false,
+                moisturizer: false,
+                spf: false,
+                vitamin: false,
+                scrubs: false,
+                speciality: false,
+                mask: false,
+                supplements: false,
+                exercise: false,
+                scar: false,
+                skinsensitive: false,
+            },
+            pictures: false,
+            signature: ""
+
         },
         watch: {
 
