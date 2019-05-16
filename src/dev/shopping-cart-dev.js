@@ -511,6 +511,12 @@ window.onload = function () {
                                 errors.forEach(function (error) {
                                     that.errors.push(error.message);
                                 });
+                                axios.post(serverURL + '/square/process-errors', {
+                                    body: {
+                                        error: error.message,
+                                        customer: that.customer
+                                    }
+                                });
                                 return;
                             }
                             // POST the nonce form to the payment processing page

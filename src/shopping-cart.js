@@ -511,6 +511,12 @@ window.onload = function () {
                                 errors.forEach(function (error) {
                                     that.errors.push(error.message);
                                 });
+                                axios.post(serverURL + '/square/process-errors', {
+                                    body: {
+                                        error: error.message,
+                                        customer: that.customer
+                                    }
+                                });
                                 return;
                             }
                             // POST the nonce form to the payment processing page
@@ -705,16 +711,16 @@ window.onload = function () {
                 this.placeOrderBtn = "PLACE ORDER"
             },
             isNumber: function (evt) {
-               /*  evt = evt ? evt : window.event;
-                var charCode = evt.which ? evt.which : evt.keyCode;
-
-                if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
-
-                    evt.preventDefault();
-                    ;
-                } else {
-                    return true;
-                } */
+                /*  evt = evt ? evt : window.event;
+                 var charCode = evt.which ? evt.which : evt.keyCode;
+ 
+                 if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) {
+ 
+                     evt.preventDefault();
+                     ;
+                 } else {
+                     return true;
+                 } */
             }
         }
     });

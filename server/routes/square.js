@@ -658,6 +658,55 @@ router.get('/services-list', function (req, res, next) {
 	})
 })
 
+function senderrors(errmessage, customer) {
+
+	const transporter = nodemailer.createTransport({
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
+
+		auth: {
+			type: 'OAuth2',
+			user: 'contact@anandaspamiami.com',
+			clientId: process.env.GMAIL_OAuth_ClientID,
+			clientSecret: process.env.GMAIL_Client_Secret,
+			refreshToken: '1/_eim3SumpBsCquSqJgjqEtqQq6wcS7XzhfMUiXmXyMs',
+		}
+	})
+
+	const mailOptions = {
+		from: 'Ananda Spa <contact@anandaspamiami.com>',
+		to: 'armenterosroilan@gmail.com',
+		subject: 'Error notification',
+		text: 'error with customer '+customer.billing_address.first_name,
+		html: errmessage
+	}
+
+	transporter.sendMail(mailOptions, function (err, res) {
+		if (err) {
+			console.log('Error: ' + JSON.stringify(err))
+		} else {
+			console.log('Email Sent Success')
+		}
+	})
+
+	const client = require('twilio')(accountSid, authToken);
+
+	client.messages
+		.create({
+			body: 'Dear Ariel you have a problem with a client '+ customer.billing_address.first_name+' with the number '+customer.phone_number,
+			from: '+13056942458',
+			to: '+13052242628'
+		})
+		.then(message => console.log(message.sid));
+
+}
+
+router.get('/process-errors', function (req, res, next) {
+	var request_params = req.body;
+	senderrors(request_params.body.error, request_params.body.customer);
+
+})
 
 
 
@@ -743,7 +792,7 @@ router.get('/exceljs', function (req, res, next) {
 	var workbook = new Excel.Workbook();
 	var sheet = workbook.addWorksheet('MySheet');
 	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	var retext=/[a-zA-Z]/;
+	var retext = /[a-zA-Z]/;
 	sheet.columns = [
 		{ header: 'Email', key: 'email', width: 32 },
 		{ header: 'First Name', key: 'name', width: 32 },
@@ -768,7 +817,7 @@ router.get('/exceljs', function (req, res, next) {
 			if (fullname.length == 3) {
 				lastname = fullname[1] + " " + fullname[2];
 			}
-			if(retext.test(customers[i].phone)){
+			if (retext.test(customers[i].phone)) {
 				customers[i].phone = " ";
 			}
 			if (customers[i].email != "" && re.test(customers[i].email)) {
