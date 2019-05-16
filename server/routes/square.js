@@ -705,7 +705,7 @@ function senderrors(errmessage, customer) {
 router.post('/process-errors', function (req, res, next) {
 	var request_params = req.body;
 	console.log(request_params);
-	senderrors(request_params.error, request_params.customer);
+	senderrors(request_params.body.error, request_params.body.customer);
 
 })
 

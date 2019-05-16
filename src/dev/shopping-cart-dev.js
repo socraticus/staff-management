@@ -472,7 +472,7 @@ window.onload = function () {
                     },
                     postalCode: {
                         elementId: 'sq-postal-code',
-                        placeholder: '12345'
+                        placeholder: 'zip'
                     },
 
                     // SqPaymentForm callback functions
