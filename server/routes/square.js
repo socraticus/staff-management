@@ -702,7 +702,7 @@ function senderrors(errmessage, customer) {
 
 }
 
-router.get('/process-errors', function (req, res, next) {
+router.post('/process-errors', function (req, res, next) {
 	var request_params = req.body;
 	senderrors(request_params.body.error, request_params.body.customer);
 
