@@ -318,6 +318,7 @@ router.post('/process-payment', function (req, res, next) {
 						$('.half-col-right').last().children().first().next().next().text(auth_code);
 
 						const card_type = X('.half-col-left').last().before().children().first().text();
+						console.log('card type is: ' + card_type);
 						$('.half-col-left').last().before().children().first().text(card_type);
 
 						const icon = X('.card-icon').find('img').attr('src');
