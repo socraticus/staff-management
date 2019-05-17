@@ -319,7 +319,7 @@ router.post('/process-payment', function (req, res, next) {
 
 						const card_type = X('.card-icon').prev().text();
 						console.log('card type is: ' + card_type);
-						$('.half-col-left').first().next().next().next().next().children().first().text(card_type);
+						$('.card-icon').prev().text(card_type);
 
 						const icon = X('.card-icon').find('img').attr('src');
 						$('.card-icon').find('img').attr('src', icon);
