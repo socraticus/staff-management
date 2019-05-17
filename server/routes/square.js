@@ -442,7 +442,7 @@ router.post('/process-payment', function (req, res, next) {
 			};
 			transactions_api.charge(locationId, request_body).then(function (data) {
 				console.log('Transactions API called successfully. Returned data: ' + JSON.stringify(data));
-				//buildReceipt(order_data, data); //sending receipt to the customers via sms and email
+				buildReceipt(order_data, data); //sending receipt to the customers via sms and email
 				// Add Tags To Mailchimp Subscriber
 				var tags = order_body.line_items.map(tag => {
 					return {
@@ -483,7 +483,7 @@ router.post('/process-payment', function (req, res, next) {
 					if (!error && response.statusCode === 200) {
 						console.log(body) // Print the json response
 
-						buildReceipt(order_data, body);
+						//buildReceipt(order_data, body);
 					}
 				})
 
