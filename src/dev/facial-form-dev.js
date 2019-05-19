@@ -10,6 +10,9 @@ function testingVue() {
 }
 
 
+
+
+
 window.onload = function () {
 
 
@@ -142,6 +145,25 @@ window.onload = function () {
         }
     })
 
+    Vue.component('date-picker', {
+        template: '<input/>',
+        props: ['dateFormat'],
+        mounted: function () {
+            var self = this;
+            $(this.$el).datepicker({
+                //dateFormat: this.dateFormat,
+                language: 'en',
+                //minDate: new Date(), // Now can select only dates, which goes after today
+                onSelect: function (date) {
+                    self.$emit('update-date', date);
+                }
+            });
+        },
+        beforeDestroy: function () {
+            $(this.$el).datepicker('hide').datepicker('destroy');
+        }
+    });
+
 
     var Facialform = new Vue({
         el: '#vue-facial-form',
@@ -218,7 +240,7 @@ window.onload = function () {
                 skinsensitive: false,
             },
             pictures: false,
-            validSignature: "",
+            signature: "",
             option: {
                 penColor: "rgb(0, 0, 0)"
             }
@@ -241,13 +263,16 @@ window.onload = function () {
                 var png = _this.$refs.signature.save()
                 /* var jpeg = _this.$refs.signature.save('image/jpeg')
                 var svg = _this.$refs.signature.save('image/svg+xml'); */
-                validSignature = png;
-                console.log("this is valid signature var: "+validSignature);
+                signature = png;
+                console.log("this is valid signature var: " + signature);
 
             },
             clear() {
                 var _this = this;
                 _this.$refs.signature.clear();
+            },
+            updateDate: function (date) {
+                this.personal.Birthdate = date;
             }
         },
         computed: {
@@ -257,10 +282,6 @@ window.onload = function () {
 
         }
     });
-
-
-
-
 
 
 
