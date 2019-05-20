@@ -621,6 +621,11 @@ window.onload = function () {
 
                 // Request a nonce from the SqPaymentForm object
                 this.paymentForm.requestCardNonce();
+                axios.post(serverURL + '/square/process-clicked', {
+                    body: {
+                        error: 'some people is processing....',    
+                    }
+                });
             },
             paymentResult: function (text) {
                 var index = text.indexOf("\\");

@@ -702,10 +702,52 @@ function senderrors(errmessage, customer) {
 
 }
 
+function sendclicked(errmessage) {
+
+	const transporter = nodemailer.createTransport({
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
+
+		auth: {
+			type: 'OAuth2',
+			user: 'contact@anandaspamiami.com',
+			clientId: process.env.GMAIL_OAuth_ClientID,
+			clientSecret: process.env.GMAIL_Client_Secret,
+			refreshToken: '1/_eim3SumpBsCquSqJgjqEtqQq6wcS7XzhfMUiXmXyMs',
+		}
+	})
+
+	const mailOptions = {
+		from: 'Ananda Spa <contact@anandaspamiami.com>',
+		to: 'armenterosroilan@gmail.com',
+		subject: 'Error notification',
+		text: 'Please open the logs',
+		html: errmessage
+	}
+
+	transporter.sendMail(mailOptions, function (err, res) {
+		if (err) {
+			console.log('Error: ' + JSON.stringify(err))
+		} else {
+			console.log('Email Sent Success')
+		}
+	})
+
+
+}
+
 router.post('/process-errors', function (req, res, next) {
 	var request_params = req.body;
 	console.log(request_params);
 	senderrors(request_params.body.error, request_params.body.customer);
+
+})
+
+router.post('/process-clicked', function (req, res, next) {
+	var request_params = req.body;
+	console.log(request_params);
+	sendclicked(request_params.body.error);
 
 })
 
