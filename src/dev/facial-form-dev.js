@@ -170,11 +170,11 @@ window.onload = function () {
         mounted: function () {
             var self = this;
             $(this.$el).mask(
-              '(000) 000-0000',{
-                onChange: function (phone) {
-                    self.$emit('update-phone', phone);
+                '(000) 000-0000', {
+                    onChange: function (phone) {
+                        self.$emit('update-phone', phone);
+                    }
                 }
-              }  
             );
         },
     });
@@ -254,6 +254,10 @@ window.onload = function () {
                 scar: false,
                 skinsensitive: false,
             },
+            Errors: {
+                fullName: false,
+                phone: false
+            },
             pictures: false,
             signature: "",
             option: {
@@ -271,7 +275,10 @@ window.onload = function () {
                 this.step--;
             },
             next() {
-                this.step++;
+                if (this.validation() === 0) {
+                    this.step++;
+                }
+
             },
             save() {
                 var _this = this;
@@ -291,6 +298,25 @@ window.onload = function () {
             },
             updatePhone: function (phone) {
                 this.personal.phone = phone;
+            },
+            validation() {
+                var errors = 0;
+                var rePhone = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+                if (this.personal.fullname == "") {
+                    this.Errors.fullName = true;
+                    errors++;
+                } else {
+                    this.Errors.fullName = false;
+
+                }
+                if (rePhone.test(this.personal.phone) == false) {
+                    this.Errors.phone = true;
+                    errors++;
+                } else {
+                    this.Errors.phone = false;
+
+                }
+                return errors;
             }
         },
         computed: {
