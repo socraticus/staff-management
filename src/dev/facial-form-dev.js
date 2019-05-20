@@ -164,6 +164,21 @@ window.onload = function () {
         }
     });
 
+    Vue.component('phone-us', {
+        template: '<input/>',
+        props: ['v-model'],
+        mounted: function () {
+            var self = this;
+            $(this.$el).mask(
+              '(000) 000-0000',{
+                onChange: function (phone) {
+                    self.$emit('update-phone', phone);
+                }
+              }  
+            );
+        },
+    });
+
 
     var Facialform = new Vue({
         el: '#vue-facial-form',
@@ -273,6 +288,9 @@ window.onload = function () {
             },
             updateDate: function (date) {
                 this.personal.Birthdate = date;
+            },
+            updatePhone: function (phone) {
+                this.personal.phone = phone;
             }
         },
         computed: {
