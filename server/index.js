@@ -88,9 +88,10 @@ app.get('/discounts', (req, res) => {
         percentage: true
     };
     var today = Date.now();
-
+    var temp = req.query.discountCode;
+    var discount = temp.toUpperCase();
     var findDiscount = function () {
-        return Discount.findOne({ discountCode: req.query.discountCode }).orFail(new Error('No docs found!'))
+        return Discount.findOne({ discountCode: discount }).orFail(new Error('No docs found!'))
     };
 
     findDiscount()
@@ -392,7 +393,7 @@ app.use('/square', routeSquare);
 
 //Facial General Routes
 const routeFacial = require('./routes/facial');
-app.use('/facial',routeFacial);
+app.use('/facial', routeFacial);
 
 // // Square POST charge route
 // app.post('/square/process-payment', (req, res) => {
