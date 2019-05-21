@@ -45,7 +45,7 @@ router.post('/insert', function (req, res, next) {
         if (result.length) {
             console.log('this record alredy exist');
             res.json({
-                'status': 200,
+                'status': 409,
                 'title': 'Intakeitem exist',
                 'result': "this record alredy exist"
             });

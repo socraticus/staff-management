@@ -432,16 +432,13 @@ window.onload = function () {
                     console.log(response)
                     console.log(JSON.stringify(response))
 
-                    if (response.status === 200) {
+                    if (response.status === 200 || response.status === 409) {
                     console.log(response.result); 
                         
                     } else {
                         var text = JSON.stringify(response.err)
                         console.log(text);
                         console.log(typeof text);
-
-                        
-                       
 
                     }
                 });
