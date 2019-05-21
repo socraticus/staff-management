@@ -40,7 +40,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/insert', function (req, res, next) {
 	var request_params = req.body;
-	res.send(request_params);	
+	console.log(request_params);	
 })
 
 
