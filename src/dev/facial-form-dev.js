@@ -428,6 +428,22 @@ window.onload = function () {
                         signature: this.save()
 
                     }
+                }).then(function (response) {
+                    console.log(response)
+                    console.log(JSON.stringify(response))
+
+                    if (response.status === 200) {
+                    console.log(response.result); 
+                        
+                    } else {
+                        var text = JSON.stringify(response.err)
+                        console.log(text);
+                        console.log(typeof text);
+
+                        
+                       
+
+                    }
                 });
             }
         },

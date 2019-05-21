@@ -44,13 +44,30 @@ router.post('/insert', function (req, res, next) {
     Intakeform.find({ email: request_params.body.email }).then(function (result) {
         if (result.length) {
             console.log('this record alredy exist');
+            res.json({
+                'status': 200,
+                'title': 'Intakeitem exist',
+                'result': "this record alredy exist"
+            });
         }
         else {
             var Intakeitem = new Intakeform(request_params.body);
 
             Intakeitem.save(function (err, intakeform) {
-                if (err) return console.error(err);
+                if (err) {
+                    res.json({
+                        'status': 500,
+                        'title': 'Intakeitem fail',
+                        'err': err
+                    });
+                    return console.error(err);
+                }
                 console.log(" saved to Intakeitem collection.");
+                res.json({
+                    'status': 200,
+                    'title': 'Intakeitem Successful',
+                    'result': "Intakeitem Successful"
+                });
             });
         }
     })
