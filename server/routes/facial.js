@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const Intakeform = require('../models/intakeform.js');
 const request = require("request");
 
 const app = express();
@@ -39,8 +40,15 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/insert', function (req, res, next) {
-	var request_params = req.body;
-	console.log(request_params);	
+    var request_params = req.body;
+
+    var Intakeitem = new Intakeform(request_params.body);
+
+    Intakeitem.save(function (err, intakeform) {
+        if (err) return console.error(err);
+        console.log(" saved to Intakeitem collection.");
+    });
+    //console.log(request_params);
 })
 
 

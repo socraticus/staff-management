@@ -294,7 +294,7 @@ window.onload = function () {
                 var svg = _this.$refs.signature.save('image/svg+xml'); */
                 signature = png;
                 console.log("this is valid signature var: " + signature);
-
+                return png;
             },
             clear() {
                 var _this = this;
@@ -356,7 +356,7 @@ window.onload = function () {
                 return errors;
             },
             submitform() {
-                this.save();
+                //this.save();
                 this.createdate = new Date();
                 axios.post(serverURL + '/facial/insert', {
                     body: {
@@ -425,7 +425,7 @@ window.onload = function () {
                         scar: this.homecare.scar,
                         skinsensitive: this.homecare.skinsensitive,
                         pictures: this.pictures,
-                        signature: this.signature
+                        signature: this.save()
 
                     }
                 });
