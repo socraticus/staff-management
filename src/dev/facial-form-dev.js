@@ -185,13 +185,16 @@ window.onload = function () {
         data: {
             title: 'This is a Form Demo',
             step: 1,
+            id: 12000,
+            clientid: 30425,
+            createdate: Date,
             personal: {
                 fullname: "",
                 email: "",
                 phone: "",
                 address: "",
                 city_zip_state: "",
-                Birthdate: ""
+                Birthdate: Date
             },
             health: {
                 wearcontact: false,
@@ -351,6 +354,81 @@ window.onload = function () {
 
                 }
                 return errors;
+            },
+            submitform() {
+                this.save();
+                this.createdate = new Date();
+                axios.post(serverURL + '/facial/insert', {
+                    body: {
+                        id: this.id,
+                        clientid: this.clientid,
+                        createdate: this.createdate,
+                        fullname: this.personal.fullname,
+                        phone: this.personal.phone,
+                        address: this.personal.address,
+                        citystate: this.personal.city_zip_state,
+                        email: this.personal.email,
+                        datebirth: this.personal.Birthdate,
+                        wearcontact: this.health.wearcontact,
+                        surgery: this.health.surgery,
+                        surgerydescribe: this.health.surgerydescribe,
+                        skincancer: this.health.skincancer,
+                        dermatitis: this.health.dermatitis,
+                        keloidscarring: this.health.keloidscarring,
+                        acne: this.health.acne,
+                        rosacea: this.health.rosacea,
+                        broken: this.health.broken,
+                        treatment: this.health.treatment,
+                        hypo: this.health.hypo,
+                        hyperpig: this.health.hyperpig,
+                        burns: this.health.burns,
+                        anycondition: this.health.anycondition,
+                        anyconditiondescription: this.health.anyconditiondescription,
+                        allergies: this.health.allergies,
+                        latexallergies: this.health.latexallergies,
+                        otherallergies: this.health.otherallergies,
+                        otherallergiesdescription: this.health.otherallergiesdescription,
+                        prescription: this.health.prescription,
+                        prescriptiondescription: this.health.prescriptiondescription,
+                        pregnant: this.health.pregnant,
+                        technician: this.health.technician,
+                        techniciandescription: this.health.techniciandescription,
+                        appointment: this.skincare.appointment,
+                        oftenfacials: this.skincare.oftenfacials,
+                        oftenbody: this.skincare.oftenbody,
+                        cosmetic: this.skincare.cosmetic,
+                        finelines: this.skincare.finelines,
+                        wrinkles: this.skincare.wrinkles,
+                        dull: this.skincare.dull,
+                        loss: this.skincare.loss,
+                        dry: this.skincare.dry,
+                        oily: this.skincare.oily,
+                        pores: this.skincare.pores,
+                        redness: this.skincare.redness,
+                        sensit: this.skincare.sensit,
+                        dark: this.skincare.dark,
+                        pimples: this.skincare.pimples,
+                        skin: this.skincare.skin,
+                        other: this.skincare.other,
+                        otherextradescription: this.skincare.otherextradescription,
+                        routine: this.homecare.routine,
+                        cleanser: this.homecare.cleanser,
+                        toner: this.homecare.toner,
+                        moisturizer: this.homecare.moisturizer,
+                        spf: this.homecare.spf,
+                        vitamin: this.homecare.vitamin,
+                        scrubs: this.homecare.scrubs,
+                        speciality: this.homecare.speciality,
+                        mask: this.homecare.mask,
+                        supplements: this.homecare.supplements,
+                        exercise: this.homecare.exercise,
+                        scar: this.homecare.scar,
+                        skinsensitive: this.homecare.skinsensitive,
+                        pictures: this.pictures,
+                        signature: this.signature
+
+                    }
+                });
             }
         },
         computed: {
