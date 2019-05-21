@@ -269,7 +269,8 @@ window.onload = function () {
             signature: "",
             option: {
                 penColor: "rgb(0, 0, 0)"
-            }
+            },
+            submitbtn: "SUBMIT"
 
         },
         watch: {
@@ -305,6 +306,9 @@ window.onload = function () {
             },
             updatePhone: function (phone) {
                 this.personal.phone = phone;
+            },
+            updateSubmitbtn(submitbtn) {
+                this.submitbtn = submitbtn;
             },
             validation() {
                 var errors = 0;
@@ -356,7 +360,8 @@ window.onload = function () {
                 return errors;
             },
             submitform() {
-                //this.save();
+                var that = this;
+                this.submitbtn = "PROCESSING..."
                 this.createdate = new Date();
                 axios.post(serverURL + '/facial/insert', {
                     body: {
@@ -433,13 +438,20 @@ window.onload = function () {
                     console.log(JSON.stringify(response))
 
                     if (response.status === 200 || response.status === 409) {
-                    console.log(response.result); 
-                        
+                        console.log(response.result);
+                        if (response.status === 200) {
+                            var submitbt1 = "READY";
+                            that.updateSubmitbtn(submitbt1);
+                        }
+                        if (response.status === 409) {
+                            var submitbt2 = "TRY AGAIN";
+                            that.updateSubmitbtn(submitbt2);
+                        }
+
                     } else {
                         var text = JSON.stringify(response.err)
                         console.log(text);
                         console.log(typeof text);
-
                     }
                 });
             }
