@@ -256,7 +256,11 @@ window.onload = function () {
             },
             Errors: {
                 fullName: false,
-                phone: false
+                phone: false,
+                email: false,
+                address: false,
+                city_zip_state: false,
+                Birthdate: false
             },
             pictures: false,
             signature: "",
@@ -302,6 +306,8 @@ window.onload = function () {
             validation() {
                 var errors = 0;
                 var rePhone = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+                var reDate = /(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d/;
+                var reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 if (this.personal.fullname == "") {
                     this.Errors.fullName = true;
                     errors++;
@@ -314,6 +320,34 @@ window.onload = function () {
                     errors++;
                 } else {
                     this.Errors.phone = false;
+
+                }
+                if (reDate.test(this.personal.Birthdate) == false) {
+                    this.Errors.Birthdate = true;
+                    errors++;
+                } else {
+                    this.Errors.Birthdate = false;
+
+                }
+                if (this.personal.address == "") {
+                    this.Errors.address = true;
+                    errors++;
+                } else {
+                    this.Errors.address = false;
+
+                }
+                if (this.personal.city_zip_state == "") {
+                    this.Errors.city_zip_state = true;
+                    errors++;
+                } else {
+                    this.Errors.city_zip_state = false;
+
+                }
+                if (reEmail.test(this.personal.email) == false) {
+                    this.Errors.email = true;
+                    errors++;
+                } else {
+                    this.Errors.email = false;
 
                 }
                 return errors;
