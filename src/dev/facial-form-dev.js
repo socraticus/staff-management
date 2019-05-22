@@ -18,7 +18,7 @@ window.onload = function () {
 
 
     Vue.component('vue-signature', {
-        template: '<canvas style="border:1px solid #000000;" :id="uid" class="canvas" :data-uid="uid"></canvas>',
+        template: '<canvas style="border:1px solid #000000;" :id="uid" class="signature canvas" :data-uid="uid"></canvas>',
         props: {
             sigOption: {
                 type: Object,
@@ -145,7 +145,7 @@ window.onload = function () {
         }
     })
     Vue.component('vue-parentsignature', {
-        template: '<canvas style="border:1px solid #000000;" :id="uid" class="canvas" :data-uid="uid"></canvas>',
+        template: '<canvas style="border:1px solid #000000;" :id="uid" class="parentSignature canvas" :data-uid="uid"></canvas>',
         props: {
             sigOption: {
                 type: Object,
@@ -396,7 +396,9 @@ window.onload = function () {
                 city_zip_state: false,
                 Birthdate: false,
                 parentName: false,
-                parentSignature: false
+                parentSignature: false,
+                pictures: false,
+                signature: false
             },
             pictures: false,
             signature: "",
@@ -417,7 +419,7 @@ window.onload = function () {
                 this.step--;
             },
             next() {
-                
+
                 if (this.validation() === 0) {
                     this.step++;
                 }
@@ -435,6 +437,11 @@ window.onload = function () {
             clear() {
                 var _this = this;
                 _this.$refs.signature.clear();
+            },
+            isEmpty() {
+                var _this = this;
+                var empty = _this.$refs.signature.isEmpty();
+                return empty;
             },
             saveparent() {
                 var _this = this;
@@ -486,166 +493,191 @@ window.onload = function () {
                 var rePhone = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
                 var reDate = /(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d/;
                 var reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                if (this.parentsForm == true) {
-                    isEmptyParent = this.isEmptyparent();
-                }
+                if (this.step == 1) {
 
-                if (this.personal.fullname == "") {
-                    this.Errors.fullName = true;
-                    errors++;
-                } else {
-                    this.Errors.fullName = false;
+                    if (this.parentsForm == true) {
+                        isEmptyParent = this.isEmptyparent();
+                    }
 
-                }
-                if (rePhone.test(this.personal.phone) == false) {
-                    this.Errors.phone = true;
-                    $('#inputphone').addClass('error-focus');
-                    errors++;
-                } else {
-                    this.Errors.phone = false;
-                    $('#inputphone').removeClass('error-focus');
-                }
-                if (reDate.test(this.personal.Birthdate) == false) {
-                    this.Errors.Birthdate = true;
-                    $('#inputdate').addClass('error-focus');
-                    errors++;
-                } else {
-                    this.Errors.Birthdate = false;
-                    $('#inputdate').removeClass('error-focus');
-                }
-                if (this.Minor.parentName == "" && this.parentsForm == true) {
-                    this.Errors.parentName = true;
-                    errors++;
-                } else {
-                    this.Errors.parentName = false;
+                    if (this.personal.fullname == "") {
+                        this.Errors.fullName = true;
+                        errors++;
+                    } else {
+                        this.Errors.fullName = false;
 
-                }
-                if (isEmptyParent == true && this.parentsForm == true) {
-                    this.Errors.parentSignature = true;
-                    console.log(isEmptyParent);
-                    errors++;
-                } else {
-                    this.Errors.parentSignature = false;
-                    console.log(isEmptyParent);
-                }
-                if (this.personal.address == "") {
-                    this.Errors.address = true;
-                    errors++;
-                } else {
-                    this.Errors.address = false;
+                    }
+                    if (rePhone.test(this.personal.phone) == false) {
+                        this.Errors.phone = true;
+                        $('#inputphone').addClass('error-focus');
+                        errors++;
+                    } else {
+                        this.Errors.phone = false;
+                        $('#inputphone').removeClass('error-focus');
+                    }
+                    if (reDate.test(this.personal.Birthdate) == false) {
+                        this.Errors.Birthdate = true;
+                        $('#inputdate').addClass('error-focus');
+                        errors++;
+                    } else {
+                        this.Errors.Birthdate = false;
+                        $('#inputdate').removeClass('error-focus');
+                    }
+                    if (this.Minor.parentName == "" && this.parentsForm == true) {
+                        this.Errors.parentName = true;
+                        errors++;
+                    } else {
+                        this.Errors.parentName = false;
 
-                }
-                if (this.personal.city_zip_state == "") {
-                    this.Errors.city_zip_state = true;
-                    errors++;
-                } else {
-                    this.Errors.city_zip_state = false;
+                    }
+                    if (isEmptyParent == true && this.parentsForm == true) {
+                        this.Errors.parentSignature = true;
+                        $(".parentSignature").attr("style", "border: 2px solid rgb(162, 60, 111);touch-action: none;");
+                        errors++;
+                    } else {
+                        this.Errors.parentSignature = false;
+                        $(".parentSignature").attr("style", "border: 1px solid rgb(0, 0, 0); touch-action: none;");
+                    }
+                    if (this.personal.address == "") {
+                        this.Errors.address = true;
+                        errors++;
+                    } else {
+                        this.Errors.address = false;
 
+                    }
+                    if (this.personal.city_zip_state == "") {
+                        this.Errors.city_zip_state = true;
+                        errors++;
+                    } else {
+                        this.Errors.city_zip_state = false;
+
+                    }
+                    if (reEmail.test(this.personal.email) == false) {
+                        this.Errors.email = true;
+                        errors++;
+                    } else {
+                        this.Errors.email = false;
+
+                    }
                 }
-                if (reEmail.test(this.personal.email) == false) {
-                    this.Errors.email = true;
-                    errors++;
-                } else {
-                    this.Errors.email = false;
+                if (this.step == 4) {
+
+                    if (this.pictures == false) {
+                        this.Errors.pictures = true;
+                        $('#chkPermission').addClass('error-div');
+                        errors++;
+                    } else {
+                        this.Errors.pictures = false;
+                        $('#chkPermission').removeClass('error-div');
+                    }
+                    if (this.isEmpty() == true) {
+                        this.Errors.signature = true;
+                        $(".signature").attr("style", "border: 2px solid rgb(162, 60, 111);touch-action: none;");
+                        errors++;
+                    } else {
+                        this.Errors.signature = false;
+                        $(".signature").attr("style", "border: 1px solid rgb(0, 0, 0); touch-action: none;");
+                    }
 
                 }
                 return errors;
             },
             submitform() {
                 var that = this;
-                this.submitbtn = "PROCESSING..."
-                this.createdate = new Date();
-                axios.post(serverURL + '/facial/insert', {
-                    body: {
-                        id: this.id,
-                        clientid: this.clientid,
-                        createdate: this.createdate,
-                        fullname: this.personal.fullname,
-                        phone: this.personal.phone,
-                        address: this.personal.address,
-                        citystate: this.personal.city_zip_state,
-                        email: this.personal.email,
-                        datebirth: this.personal.Birthdate,
-                        wearcontact: this.health.wearcontact,
-                        surgery: this.health.surgery,
-                        surgerydescribe: this.health.surgerydescribe,
-                        skincancer: this.health.skincancer,
-                        dermatitis: this.health.dermatitis,
-                        keloidscarring: this.health.keloidscarring,
-                        acne: this.health.acne,
-                        rosacea: this.health.rosacea,
-                        broken: this.health.broken,
-                        treatment: this.health.treatment,
-                        hypo: this.health.hypo,
-                        hyperpig: this.health.hyperpig,
-                        burns: this.health.burns,
-                        anycondition: this.health.anycondition,
-                        anyconditiondescription: this.health.anyconditiondescription,
-                        allergies: this.health.allergies,
-                        latexallergies: this.health.latexallergies,
-                        otherallergies: this.health.otherallergies,
-                        otherallergiesdescription: this.health.otherallergiesdescription,
-                        prescription: this.health.prescription,
-                        prescriptiondescription: this.health.prescriptiondescription,
-                        pregnant: this.health.pregnant,
-                        technician: this.health.technician,
-                        techniciandescription: this.health.techniciandescription,
-                        appointment: this.skincare.appointment,
-                        oftenfacials: this.skincare.oftenfacials,
-                        oftenbody: this.skincare.oftenbody,
-                        cosmetic: this.skincare.cosmetic,
-                        finelines: this.skincare.finelines,
-                        wrinkles: this.skincare.wrinkles,
-                        dull: this.skincare.dull,
-                        loss: this.skincare.loss,
-                        dry: this.skincare.dry,
-                        oily: this.skincare.oily,
-                        pores: this.skincare.pores,
-                        redness: this.skincare.redness,
-                        sensit: this.skincare.sensit,
-                        dark: this.skincare.dark,
-                        pimples: this.skincare.pimples,
-                        skin: this.skincare.skin,
-                        other: this.skincare.other,
-                        otherextradescription: this.skincare.otherextradescription,
-                        routine: this.homecare.routine,
-                        cleanser: this.homecare.cleanser,
-                        toner: this.homecare.toner,
-                        moisturizer: this.homecare.moisturizer,
-                        spf: this.homecare.spf,
-                        vitamin: this.homecare.vitamin,
-                        scrubs: this.homecare.scrubs,
-                        speciality: this.homecare.speciality,
-                        mask: this.homecare.mask,
-                        supplements: this.homecare.supplements,
-                        exercise: this.homecare.exercise,
-                        scar: this.homecare.scar,
-                        skinsensitive: this.homecare.skinsensitive,
-                        pictures: this.pictures,
-                        signature: this.save()
+                if (this.validation() === 0) {
+                    this.submitbtn = "PROCESSING..."
+                    this.createdate = new Date();
+                    axios.post(serverURL + '/facial/insert', {
+                        body: {
+                            id: this.id,
+                            clientid: this.clientid,
+                            createdate: this.createdate,
+                            fullname: this.personal.fullname,
+                            phone: this.personal.phone,
+                            address: this.personal.address,
+                            citystate: this.personal.city_zip_state,
+                            email: this.personal.email,
+                            datebirth: this.personal.Birthdate,
+                            wearcontact: this.health.wearcontact,
+                            surgery: this.health.surgery,
+                            surgerydescribe: this.health.surgerydescribe,
+                            skincancer: this.health.skincancer,
+                            dermatitis: this.health.dermatitis,
+                            keloidscarring: this.health.keloidscarring,
+                            acne: this.health.acne,
+                            rosacea: this.health.rosacea,
+                            broken: this.health.broken,
+                            treatment: this.health.treatment,
+                            hypo: this.health.hypo,
+                            hyperpig: this.health.hyperpig,
+                            burns: this.health.burns,
+                            anycondition: this.health.anycondition,
+                            anyconditiondescription: this.health.anyconditiondescription,
+                            allergies: this.health.allergies,
+                            latexallergies: this.health.latexallergies,
+                            otherallergies: this.health.otherallergies,
+                            otherallergiesdescription: this.health.otherallergiesdescription,
+                            prescription: this.health.prescription,
+                            prescriptiondescription: this.health.prescriptiondescription,
+                            pregnant: this.health.pregnant,
+                            technician: this.health.technician,
+                            techniciandescription: this.health.techniciandescription,
+                            appointment: this.skincare.appointment,
+                            oftenfacials: this.skincare.oftenfacials,
+                            oftenbody: this.skincare.oftenbody,
+                            cosmetic: this.skincare.cosmetic,
+                            finelines: this.skincare.finelines,
+                            wrinkles: this.skincare.wrinkles,
+                            dull: this.skincare.dull,
+                            loss: this.skincare.loss,
+                            dry: this.skincare.dry,
+                            oily: this.skincare.oily,
+                            pores: this.skincare.pores,
+                            redness: this.skincare.redness,
+                            sensit: this.skincare.sensit,
+                            dark: this.skincare.dark,
+                            pimples: this.skincare.pimples,
+                            skin: this.skincare.skin,
+                            other: this.skincare.other,
+                            otherextradescription: this.skincare.otherextradescription,
+                            routine: this.homecare.routine,
+                            cleanser: this.homecare.cleanser,
+                            toner: this.homecare.toner,
+                            moisturizer: this.homecare.moisturizer,
+                            spf: this.homecare.spf,
+                            vitamin: this.homecare.vitamin,
+                            scrubs: this.homecare.scrubs,
+                            speciality: this.homecare.speciality,
+                            mask: this.homecare.mask,
+                            supplements: this.homecare.supplements,
+                            exercise: this.homecare.exercise,
+                            scar: this.homecare.scar,
+                            skinsensitive: this.homecare.skinsensitive,
+                            pictures: this.pictures,
+                            signature: this.save()
 
-                    }
-                }).then(function (response) {
-                    console.log(response)
-                    console.log(JSON.stringify(response))
-
-                    if (response.status === 200 || response.status === 409) {
-                        console.log(response.result);
-                        if (response.status === 200) {
-                            var submitbt1 = "READY";
-                            that.updateSubmitbtn(submitbt1);
                         }
-                        if (response.status === 409) {
-                            var submitbt2 = "TRY AGAIN";
-                            that.updateSubmitbtn(submitbt2);
-                        }
+                    }).then(function (response) {
+                        console.log(response)
+                        console.log(JSON.stringify(response))
 
-                    } else {
-                        var text = JSON.stringify(response.err)
-                        console.log(text);
-                        console.log(typeof text);
-                    }
-                });
+                        if (response.status === 200 || response.status === 409) {
+                            console.log(response.result);
+                            if (response.status === 200) {
+                                var submitbt1 = "READY";
+                                that.updateSubmitbtn(submitbt1);
+                            }
+                            if (response.status === 409) {
+                                var submitbt2 = "TRY AGAIN";
+                                that.updateSubmitbtn(submitbt2);
+                            }
+
+                        } else {
+                            var text = JSON.stringify(response.err)
+                            console.log(text);
+                            console.log(typeof text);
+                        }
+                    });
+                }
             }
         },
         computed: {
