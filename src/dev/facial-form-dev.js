@@ -395,7 +395,8 @@ window.onload = function () {
                 address: false,
                 city_zip_state: false,
                 Birthdate: false,
-                parentName: false
+                parentName: false,
+                parentSignature: false
             },
             pictures: false,
             signature: "",
@@ -416,6 +417,7 @@ window.onload = function () {
                 this.step--;
             },
             next() {
+                
                 if (this.validation() === 0) {
                     this.step++;
                 }
@@ -447,6 +449,11 @@ window.onload = function () {
                 var _this = this;
                 _this.$refs.parentsignature.clear();
             },
+            isEmptyparent() {
+                var _this = this;
+                var empty = _this.$refs.parentsignature.isEmpty();
+                return empty;
+            },
             updateDate: function (date) {
                 this.personal.Birthdate = date;
                 var age = this.calculateAge(date);
@@ -475,9 +482,14 @@ window.onload = function () {
             },
             validation() {
                 var errors = 0;
+                var isEmptyParent = false;
                 var rePhone = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
                 var reDate = /(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](19|20)\d\d/;
                 var reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if (this.parentsForm == true) {
+                    isEmptyParent = this.isEmptyparent();
+                }
+
                 if (this.personal.fullname == "") {
                     this.Errors.fullName = true;
                     errors++;
@@ -487,17 +499,19 @@ window.onload = function () {
                 }
                 if (rePhone.test(this.personal.phone) == false) {
                     this.Errors.phone = true;
+                    $('#inputphone').addClass('error-focus');
                     errors++;
                 } else {
                     this.Errors.phone = false;
-
+                    $('#inputphone').removeClass('error-focus');
                 }
                 if (reDate.test(this.personal.Birthdate) == false) {
                     this.Errors.Birthdate = true;
+                    $('#inputdate').addClass('error-focus');
                     errors++;
                 } else {
                     this.Errors.Birthdate = false;
-
+                    $('#inputdate').removeClass('error-focus');
                 }
                 if (this.Minor.parentName == "" && this.parentsForm == true) {
                     this.Errors.parentName = true;
@@ -505,6 +519,14 @@ window.onload = function () {
                 } else {
                     this.Errors.parentName = false;
 
+                }
+                if (isEmptyParent == true && this.parentsForm == true) {
+                    this.Errors.parentSignature = true;
+                    console.log(isEmptyParent);
+                    errors++;
+                } else {
+                    this.Errors.parentSignature = false;
+                    console.log(isEmptyParent);
                 }
                 if (this.personal.address == "") {
                     this.Errors.address = true;
