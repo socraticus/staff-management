@@ -83,9 +83,8 @@ router.post('/insert', function (req, res, next) {
 
 router.get('/test', function (req, res, next) {
     var temp = intakeformMigration();
-    var result = JSON.parse(temp);
-    console.log(result);
-    res.send(result);
+    console.log(temp);
+    res.send(temp);
 
 })
 //Routes sections----------------------------------------------------------------------------
@@ -93,9 +92,9 @@ router.get('/test', function (req, res, next) {
 //Methods section----------------------------------------------------------------------------
 
 function intakeformMigration() {
-    Facialform.distinct("email").then(function (result) {
-        return result;
-    })
+    Facialform.find().distinct('email', function(error, result) {
+       return result;
+    });
 }
 
 
