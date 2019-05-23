@@ -3,6 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Intakeform = require('../models/intakeform.js');
+const Facialform = require('../models/facialform.js');
 const request = require("request");
 
 const app = express();
@@ -30,6 +31,8 @@ const corsOptions = {
 };
 // router.use(cors(corsOptions));
 router.use(cors());
+
+//Routes sections----------------------------------------------------------------------------
 
 /* GET home page of Facial form route. */
 router.get('/', function (req, res, next) {
@@ -79,9 +82,24 @@ router.post('/insert', function (req, res, next) {
 
 
 router.get('/test', function (req, res, next) {
-
-    res.send("My first form route");
+    var result = intakeformMigration();
+    res.send(result);
 
 })
+//Routes sections----------------------------------------------------------------------------
 
+//Methods section----------------------------------------------------------------------------
+
+function intakeformMigration() {
+    Facialform.distinct("email").then(function (result) {
+        return result;
+    })
+}
+
+
+
+
+
+
+//Methods section----------------------------------------------------------------------------
 module.exports = router;
