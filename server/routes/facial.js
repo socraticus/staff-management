@@ -92,7 +92,7 @@ router.get('/test', function (req, res, next) {
 //Methods section----------------------------------------------------------------------------
 
 function intakeformMigration() {
-    Facialform.find().distinct('email').then(function (result) {
+    Facialform.distinct('email').then(function (result) {
 		res.send(result);
 	})
 }
