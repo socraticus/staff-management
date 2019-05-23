@@ -83,8 +83,9 @@ router.post('/insert', function (req, res, next) {
 
 router.get('/test', function (req, res, next) {
     var temp = intakeformMigration();
-    console.log(temp);
-    res.send(temp);
+    var first = temp[0];
+    console.log(first);
+    res.send(first);
 
 })
 //Routes sections----------------------------------------------------------------------------
