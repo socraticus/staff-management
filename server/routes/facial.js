@@ -82,10 +82,7 @@ router.post('/insert', function (req, res, next) {
 
 
 router.get('/test', function (req, res, next) {
-    var temp = intakeformMigration();
-    var first = temp[0];
-    console.log(first);
-    res.send(first);
+   intakeformMigration();
 
 })
 //Routes sections----------------------------------------------------------------------------
@@ -94,7 +91,7 @@ router.get('/test', function (req, res, next) {
 
 function intakeformMigration() {
     Facialform.find().distinct('email', function(error, ids) {
-        return ids;
+       console.log(ids[0]);
     });
 }
 
