@@ -82,7 +82,7 @@ router.post('/insert', function (req, res, next) {
 
 
 router.get('/test', function (req, res, next) {
-   intakeformMigration();
+    intakeformMigration();
 
 })
 //Routes sections----------------------------------------------------------------------------
@@ -90,8 +90,16 @@ router.get('/test', function (req, res, next) {
 //Methods section----------------------------------------------------------------------------
 
 function intakeformMigration() {
-    Facialform.find().distinct('email', function(error, ids) {
-       console.log(ids[0]);
+    Facialform.find().distinct('email', function (error, emails) {
+        emails.forEach(item => {
+            var facialitem = Facialform.findOne({ email: item , fullname :{ $ne: [] }});
+            var intakeitem =new Intakeform(facialitem);
+
+            intakeitem.save(function (err, intakeform) {
+                if (err) return console.error(err);
+                console.log(" saved to intakeitem collection.");
+            });
+        });
     });
 }
 
