@@ -102,7 +102,7 @@ function intakeformMigration() {
                 console.log(" saved to intakeitem collection.");
             });
         }); */
-        Facialform.findOne({ email: emails[0], fullname: { $ne: [] } },'fullname', function (err, resad) {
+        Facialform.findOne({ email: emails[0], fullname: { $ne: [] } },{projection:{ _id: 0 }, function (err, resad) {
 
             console.log(resad);
             var intakeitem = new Intakeform(resad);
