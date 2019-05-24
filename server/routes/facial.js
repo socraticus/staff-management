@@ -103,8 +103,9 @@ function intakeformMigration() {
             });
         }); */
         Facialform.findOne({ email: emails[0], fullname: { $ne: [] } }, { '_id ': 0 }, function (err, resad) {
-
-            console.log(resad);
+            var obj = JSON.parse(resad)
+            delete obj._id;
+                console.log(obj);
             var intakeitem = new Intakeform(resad);
 
             intakeitem.save(function (err, intakeform) {
