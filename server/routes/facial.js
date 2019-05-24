@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Intakeform = require('../models/intakeform.js');
 const Facialform = require('../models/facialform.js');
+const Minorform = require('../models/minorform.js');
+const Massageform = require('../models/massageform.js');
 const request = require("request");
 
 const app = express();
@@ -113,7 +115,41 @@ function intakeformMigration() {
     });
 }
 
+function minorAndMassageMigration() {
+    request('https://ananda-spa-miami-dev.firebaseapp.com/dev/minor_list.json', (error, response, html) => {
+        if (!error && response.statusCode === 200) {
+            var x = JSON.parse(html);
 
+
+
+            for (i = 0; i < x.apps.length; i++) {
+                var options = {
+                    url: 'https://admin.okto.us/api/core/GetOneApplicationIntake?clientid=32d5c181-5835-41f0-bc4b-6d53cf07dfb0&id=' + x.apps[i].id,
+
+                }
+                if (x.apps[i].type == "Intake") {
+                    request(options, (error, response, body) => {
+                        if (!error && response.statusCode === 200) {
+                            var data = JSON.parse(body);
+                            var y = JSON.parse(data);
+                            var item = y.app[0];
+                            var Massageitem = new Massageform(item);
+
+                            Massageitem.save(function (err, massageform) {
+                                if (err) return console.error(err);
+                                console.log(" saved to Massageitem collection.");
+                            });
+                        }
+                    })
+
+                }
+            }
+
+
+        }
+    })
+
+}
 
 
 
