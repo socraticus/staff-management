@@ -143,6 +143,30 @@ function minorAndMassageMigration() {
                     })
 
                 }
+                if (x.apps[i].type == "Minor") {
+                    request(options, (error, response, body) => {
+                        if (!error && response.statusCode === 200) {
+                            var data = JSON.parse(body);
+                            var y = JSON.parse(data);
+                            var item = {
+                                "id": y.app[0].id,
+                                "type": y.app[0].type,
+                                "fullname": y.app[0].fullname,
+                                "datebirth": y.app[0].datebirth,
+                                "datecreated": y.app[0].datecreated,
+                                "minorfullname": y.app[0].minorfullname,
+                                "signature": y.app[0].signature
+                            }
+                            var Minoritem = new Minorform(item);
+
+                            Minoritem.save(function (err, minorform) {
+                                if (err) return console.error(err);
+                                console.log(" saved to Minoritem collection.");
+                            });
+                        }
+                    })
+
+                }
             }
 
 
