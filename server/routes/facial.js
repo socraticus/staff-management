@@ -102,10 +102,10 @@ function intakeformMigration() {
                 console.log(" saved to intakeitem collection.");
             });
         }); */
-        Facialform.findOne({ email: emails[0], fullname: { $ne: [] } }).then(function (result) {
-            var facialitem = JSON.parse(result);
-            console.log(facialitem);
-            var intakeitem = new Intakeform(facialitem);
+        Facialform.findOne({ email: emails[0], fullname: { $ne: [] } }, function (err, resad) {
+
+            console.log(resad);
+            var intakeitem = new Intakeform(resad);
 
             intakeitem.save(function (err, intakeform) {
                 if (err) return console.error(err);
