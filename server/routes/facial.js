@@ -91,8 +91,10 @@ router.get('/test', function (req, res, next) {
 
 function intakeformMigration() {
     Facialform.find().distinct('email', function (error, emails) {
+        console.log(emails.length);
         emails.forEach(item => {
             var facialitem = Facialform.findOne({ email: item , fullname :{ $ne: [] }});
+            console.log(facialitem);
             var intakeitem =new Intakeform(facialitem);
 
             intakeitem.save(function (err, intakeform) {
