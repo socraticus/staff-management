@@ -102,14 +102,16 @@ function intakeformMigration() {
                 console.log(" saved to intakeitem collection.");
             });
         }); */
-        var facialitem = Facialform.findOne({ email: emails[0], fullname: { $ne: [] } });
-        console.log(facialitem);
-        var intakeitem = new Intakeform(facialitem);
+        Facialform.findOne({ email: emails[0], fullname: { $ne: [] } }).then(function (facialitem) {
+            console.log(facialitem);
+            var intakeitem = new Intakeform(facialitem);
 
-        intakeitem.save(function (err, intakeform) {
-            if (err) return console.error(err);
-            console.log(" saved to intakeitem collection.");
+            intakeitem.save(function (err, intakeform) {
+                if (err) return console.error(err);
+                console.log(" saved to intakeitem collection.");
+            });
         });
+
     });
 }
 
