@@ -92,28 +92,23 @@ router.get('/test', function (req, res, next) {
 function intakeformMigration() {
     Facialform.find().distinct('email', function (error, emails) {
         console.log(emails.length);
-        /* emails.forEach(item => {
-            var facialitem = Facialform.findOne({ email: item , fullname :{ $ne: [] }});
-            console.log(facialitem);
-            var intakeitem =new Intakeform(facialitem);
+        emails.forEach(item => {
 
-            intakeitem.save(function (err, intakeform) {
-                if (err) return console.error(err);
-                console.log(" saved to intakeitem collection.");
-            });
-        }); */
-        Facialform.findOne({ email: emails[0], fullname: { $ne: [] } },  function (err, resad) {
-            var obj = JSON.stringify(resad);
-            var result = JSON.parse(obj);
-            delete result._id;
-            console.log(result);
-            var intakeitem = new Intakeform(result);
+            Facialform.findOne({ email: item, fullname: { $ne: [] } }, function (err, resad) {
+                var obj = JSON.stringify(resad);
+                var result = JSON.parse(obj);
+                delete result._id;
+                console.log(result);
+                var intakeitem = new Intakeform(result);
 
-            intakeitem.save(function (err, intakeform) {
-                if (err) return console.error(err);
-                console.log(" saved to intakeitem collection.");
+                intakeitem.save(function (err, intakeform) {
+                    if (err) return console.error(err);
+                    console.log(" saved to intakeitem collection.");
+                });
             });
+
         });
+
 
     });
 }
