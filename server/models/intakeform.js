@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 // Create Schema and Model
 
 const IntakeformSchema = new Schema({
-    _id: String,
     id: Number,
     clientid: Number,
     createdate: Date,
