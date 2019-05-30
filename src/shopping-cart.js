@@ -26,7 +26,13 @@ function testingVue() {
 
 window.onload = function () {
 
+    Sentry.init({ dsn: 'https://401cde2c88ed49238f5797f94c947d54@sentry.io/1469276' });
 
+    try {
+        aFunctionThatMightFail();
+    } catch (err) {
+        Sentry.captureException(err);
+    }
 
     // Proxying Vue instance
     var shoppingCartBtn = document.getElementById('shopping-cart-btn');
@@ -623,7 +629,7 @@ window.onload = function () {
                 this.paymentForm.requestCardNonce();
                 axios.post(serverURL + '/square/process-clicked', {
                     body: {
-                        error: 'some people is processing....',    
+                        error: 'some people is processing....',
                     }
                 });
             },
