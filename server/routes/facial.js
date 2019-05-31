@@ -45,7 +45,16 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/getAll', function (req, res, next) {
-    Intakeform.find({ }, 'createdate fullname email phone', function (err, result) { 
+    Intakeform.find({}, 'createdate fullname email phone', function (err, result) {
+        res.send(result);
+    })
+
+
+})
+
+router.post('/getItem', function (req, res, next) {
+    var request_params = req.body;
+    Intakeform.findOne({ _id: request_params.body.id }, function (err, result) {
         res.send(result);
     })
 
