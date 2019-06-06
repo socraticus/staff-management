@@ -101,7 +101,7 @@ router.post('/insert', function (req, res, next) {
 
 
 router.get('/test', function (req, res, next) {
-    minorAndMassageMigration();
+    intakeformMigration();
 
 })
 //Routes sections----------------------------------------------------------------------------
