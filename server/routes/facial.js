@@ -111,10 +111,10 @@ function intakeformMigration() {
         var obj = JSON.stringify(resad);
         var result = JSON.parse(obj);
         delete result._id;
-        result.push({ "recommendation" : "" });
-        result.push({ "groupon" : "" });
-        result.push({ "parentname" : "" });
-        result.push({ "parentsignature" : "" });
+        result.recommendation = "";
+        result.groupon = "";
+        result.parentname = "";
+        result.parentsignature = "";
         console.log(result);
         var intakeitem = new Intakeform(result);
 
