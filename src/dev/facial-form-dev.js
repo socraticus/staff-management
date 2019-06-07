@@ -304,14 +304,20 @@ window.onload = function() {
     $(".parentSignature").outerHeight(
       $(window).height() -
         $(".parentSignature").offset().top -
-        Math.abs($(".parentSignature").outerHeight(true) - $(".parentSignature").outerHeight())
+        Math.abs(
+          $(".parentSignature").outerHeight(true) -
+            $(".parentSignature").outerHeight()
+        )
     );
   }
   function resizesg() {
     $(".parentSignature").outerHeight(
       $(window).height() -
         $(".parentSignature").offset().top -
-        Math.abs($(".parentSignature").outerHeight(true) - $(".parentSignature").outerHeight())
+        Math.abs(
+          $(".parentSignature").outerHeight(true) -
+            $(".parentSignature").outerHeight()
+        )
     );
   }
   $(document).ready(function() {
@@ -333,13 +339,17 @@ window.onload = function() {
       id: 12000,
       clientid: 30425,
       createdate: Date,
+      begin: {
+        recommendation: "",
+        groupon: ""
+      },
       personal: {
         fullname: "",
         email: "",
         phone: "",
         address: "",
         city_zip_state: "",
-        Birthdate: Date
+        Birthdate: Date,
       },
       health: {
         wearcontact: false,
@@ -460,9 +470,9 @@ window.onload = function() {
         var png = _this.$refs.parentsignature.save();
         /* var jpeg = _this.$refs.signature.save('image/jpeg')
                 var svg = _this.$refs.signature.save('image/svg+xml'); */
-        signature = png.substring(22);
+        parentsignature = png.substring(22);
         console.log("this is valid signature var: " + signature);
-        return signature;
+        return parentsignature;
       },
       clearparent() {
         var _this = this;
@@ -670,7 +680,11 @@ window.onload = function() {
                 scar: this.homecare.scar,
                 skinsensitive: this.homecare.skinsensitive,
                 pictures: this.pictures,
-                signature: this.save()
+                signature: this.save(),
+                recommendation: this.begin.recommendation,
+                groupon: this.begin.groupon,
+                parentname: this.Minor.parentName,
+                parentsignature: this.saveparent()
               }
             })
             .then(function(response) {
