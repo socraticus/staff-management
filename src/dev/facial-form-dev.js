@@ -349,7 +349,7 @@ window.onload = function() {
         phone: "",
         address: "",
         city_zip_state: "",
-        Birthdate: Date,
+        Birthdate: Date
       },
       health: {
         wearcontact: false,
@@ -417,6 +417,8 @@ window.onload = function() {
         parentSignature: ""
       },
       Errors: {
+        recommendation: false,
+        groupon: false,
         fullName: false,
         phone: false,
         email: false,
@@ -433,6 +435,7 @@ window.onload = function() {
       option: {
         penColor: "rgb(0, 0, 0)"
       },
+      grouponForm: false,
       parentsForm: false,
       submitbtn: "SUBMIT"
     },
@@ -519,6 +522,24 @@ window.onload = function() {
             isEmptyParent = this.isEmptyparent();
           }
 
+          if (this.begin.recommendation == "") {
+            this.Errors.recommendation = true;
+            $("#Recommendation-2").attr("style", "border: 1px solid #e21010;");
+            errors++;
+          } else {
+            this.Errors.recommendation = false;
+            $("#Recommendation-2").attr("style", "border: 1px solid #cccccc;");
+          }
+          if (this.grouponForm == "true") {
+            if (this.begin.groupon == "") {
+              this.Errors.groupon = true;
+              $("#field-7").attr("style", "border: 1px solid #e21010;");
+              errors++;
+            } else {
+              this.Errors.groupon = false;
+              $("#field-7").attr("style", "border: 1px solid #cccccc;");
+            }
+          }
           if (this.personal.fullname == "") {
             this.Errors.fullName = true;
             errors++;
@@ -611,6 +632,9 @@ window.onload = function() {
         if (this.validation() === 0) {
           this.submitbtn = "PROCESSING...";
           this.createdate = new Date();
+          if (this.parentsForm == true) {
+            this.Minor.parentSignature = this.saveparent();
+          }
           axios
             .post(serverURL + "/facial/insert", {
               body: {
@@ -684,7 +708,7 @@ window.onload = function() {
                 recommendation: this.begin.recommendation,
                 groupon: this.begin.groupon,
                 parentname: this.Minor.parentName,
-                parentsignature: this.saveparent()
+                parentsignature: this.Minor.parentSignature
               }
             })
             .then(function(response) {
