@@ -48,7 +48,7 @@ router.get("/", function(req, res, next) {
 });
 
 router.get("/getAll", function(req, res, next) {
-  Intakeform.find({}, "createdate fullname email phone", function(err, result) {
+  Intakeform.find({skip: 100, limit: 50}, "createdate fullname email phone", function(err, result) {
     res.send(result);
   });
 });

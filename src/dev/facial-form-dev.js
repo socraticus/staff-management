@@ -501,6 +501,9 @@ window.onload = function() {
       updateSubmitbtn(submitbtn) {
         this.submitbtn = submitbtn;
       },
+      updateStep() {
+        this.step++;
+      },
       calculateAge(dateString) {
         var today = new Date();
         var birthDate = new Date(dateString);
@@ -720,6 +723,7 @@ window.onload = function() {
                 if (response.status === 200) {
                   var submitbt1 = "READY";
                   that.updateSubmitbtn(submitbt1);
+                  that.updateStep();
                 }
                 if (response.status === 409) {
                   var submitbt2 = "TRY AGAIN";
