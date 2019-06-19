@@ -51,6 +51,7 @@ router.get("/getAll", async (req, res, next) => {
   await Intakeform.find(
     {},
     "createdate fullname email phone",
+    { limit: 9 },
     function(err, result) {
       res.send(result);
     }
