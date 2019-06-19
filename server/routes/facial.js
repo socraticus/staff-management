@@ -47,10 +47,15 @@ router.get("/", function(req, res, next) {
   });
 });
 
-router.get("/getAll", function(req, res, next) {
-  Intakeform.find({}, "createdate fullname email phone",{limit: 9}, function(err, result) {
-    res.send(result);
-  });
+router.get("/getAll", async (req, res, next) => {
+  await Intakeform.find(
+    {},
+    "createdate fullname email phone",
+    { limit: 9 },
+    function(err, result) {
+      res.send(result);
+    }
+  );
 });
 
 router.post("/getItem", function(req, res, next) {
