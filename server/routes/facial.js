@@ -48,13 +48,12 @@ router.get("/", function(req, res, next) {
 });
 
 router.get("/getAll", async (req, res, next) => {
-  await Intakeform.find(
-    {},
-    "createdate fullname email phone",
-    function(err, result) {
-      res.send(result);
-    }
-  );
+  await Intakeform.find({}, "createdate fullname email phone", function(
+    err,
+    result
+  ) {
+    res.send(result);
+  });
 });
 
 router.get("/getPreview", async (req, res, next) => {
@@ -66,6 +65,14 @@ router.get("/getPreview", async (req, res, next) => {
       res.send(result);
     }
   );
+});
+
+router.get("/getAllsorted", async (req, res, next) => {
+  await Intakeform.find({}, "createdate fullname email phone")
+    .sort({ createdate: "desc" })
+    .exec(function(err, result) {
+      res.send(result);
+    });
 });
 
 router.post("/getItem", function(req, res, next) {
