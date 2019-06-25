@@ -57,6 +57,17 @@ router.get("/getAll", async (req, res, next) => {
   );
 });
 
+router.get("/getPreview", async (req, res, next) => {
+  await Intakeform.find(
+    {},
+    "createdate fullname email phone",
+    { limit: 36 },
+    function(err, result) {
+      res.send(result);
+    }
+  );
+});
+
 router.post("/getItem", function(req, res, next) {
   var request_params = req.body;
   Intakeform.findOne({ _id: request_params.body.id }, function(err, result) {
