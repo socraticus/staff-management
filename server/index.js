@@ -19,7 +19,7 @@ const app = express();
 
 // Keep Alive app in Heroku
 setInterval(function () {
-    https.get("https://ananda-spa-backend.herokuapp.com");
+    https.get("https://ananda-spa-apitest.herokuapp.com");
 }, 300000); // every 5 minutes (300000)
 
 
