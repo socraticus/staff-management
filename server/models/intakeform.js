@@ -9,6 +9,7 @@ const IntakeformSchema = new Schema({
     createdate: Date,
     recommendation:String,
     groupon:String,
+    business:String,
     fullname: String,
     phone: String,
     address: String,

@@ -135,6 +135,7 @@ function intakeformMigration() {
         delete result._id;
         result.recommendation = "";
         result.groupon = "";
+        result.business = "";
         result.parentname = "";
         result.parentsignature = "";
         console.log(result);

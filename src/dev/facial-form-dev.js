@@ -341,7 +341,8 @@ window.onload = function() {
       createdate: Date,
       begin: {
         recommendation: "",
-        groupon: ""
+        groupon: "",
+        business: ""
       },
       personal: {
         fullname: "",
@@ -710,6 +711,7 @@ window.onload = function() {
                 signature: this.save(),
                 recommendation: this.begin.recommendation,
                 groupon: this.begin.groupon,
+                business: this.begin.business,
                 parentname: this.Minor.parentName,
                 parentsignature: this.Minor.parentSignature
               }
