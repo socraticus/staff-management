@@ -420,6 +420,7 @@ window.onload = function() {
       Errors: {
         recommendation: false,
         groupon: false,
+        business: false,
         fullName: false,
         phone: false,
         email: false,
@@ -533,6 +534,14 @@ window.onload = function() {
           } else {
             this.Errors.recommendation = false;
             $("#Recommendation-2").attr("style", "border: 1px solid #cccccc;");
+          }
+          if (this.begin.business == "") {
+            this.Errors.business = true;
+            $("#businesses").attr("style", "border: 1px solid #e21010;");
+            errors++;
+          } else {
+            this.Errors.business = false;
+            $("#businesses").attr("style", "");
           }
           if (this.grouponForm == "true") {
             if (this.begin.groupon == "") {
