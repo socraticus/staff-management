@@ -424,6 +424,7 @@ window.onload = function() {
         fullName: false,
         phone: false,
         email: false,
+        email_duplicated: false,
         address: false,
         city_zip_state: false,
         Birthdate: false,
@@ -611,7 +612,30 @@ window.onload = function() {
             this.Errors.email = true;
             errors++;
           } else {
-            this.Errors.email = false;
+            if (this.parentsForm == false) {
+              axios
+                .post(serverURL + "/facial/checkemail", {
+                  body: {
+                    email: this.personal.email
+                  }
+                })
+                .then(function(response) {
+                  console.log(response);
+                  console.log(JSON.stringify(response));
+                  if (response.status === 200) {
+                    this.Errors.email = false;
+                    this.Errors.email_duplicated = false;
+                  }
+                  if (response.status === 409) {
+                    this.Errors.email = true;
+                    this.Errors.email_duplicated = true;
+                    errors++;
+                  }
+                });
+            } else {
+              this.Errors.email = false;
+              this.Errors.email_duplicated = false;
+            }
           }
         }
         if (this.step == 4) {

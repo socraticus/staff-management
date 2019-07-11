@@ -115,6 +115,27 @@ router.post("/insert", function(req, res, next) {
   });
 });
 
+router.post("/checkemail", function(req, res, next) {
+  var request_params = req.body;
+  Intakeform.find({ email: request_params.body.email }).then(function(result) {
+    if (result.length) {
+      console.log("this record alredy exist");
+      res.json({
+        status: 409,
+        title: "exist",
+        result: "this record alredy exist"
+      });
+    } else {
+      console.log("do not exist");
+      res.json({
+        status: 200,
+        title: "Successful",
+        result: "this record do not exist"
+      });
+    }
+  });
+});
+
 router.get("/test", function(req, res, next) {
   intakeformMigration();
 });
