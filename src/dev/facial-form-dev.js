@@ -440,9 +440,45 @@ window.onload = function() {
       },
       grouponForm: false,
       parentsForm: false,
+      submitbtnerror: false,
       submitbtn: "SUBMIT"
     },
-    watch: {},
+    watch: {
+      "personal.email": function() {
+        var that = this;
+        var reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (reEmail.test(this.personal.email) == false) {
+          this.Errors.email = true;
+        } else {
+          if (this.parentsForm == false) {
+            this.submitbtnerror = true;
+            axios
+              .post(serverURL + "/facial/checkemail", {
+                body: {
+                  email: this.personal.email
+                }
+              })
+              .then(function(response) {
+                console.log(response);
+                console.log(JSON.stringify(response));
+                if (response.status === 200) {
+                  that.Errors.email = false;
+                  that.Errors.email_duplicated = false;
+                  that.submitbtnerror = false;
+                }
+                if (response.status === 409) {
+                  that.Errors.email = true;
+                  that.Errors.email_duplicated = true;
+                  that.submitbtnerror = false;
+                }
+              });
+          } else {
+            this.Errors.email = false;
+            this.Errors.email_duplicated = false;
+          }
+        }
+      }
+    },
 
     methods: {
       prev() {
@@ -611,31 +647,12 @@ window.onload = function() {
           if (reEmail.test(this.personal.email) == false) {
             this.Errors.email = true;
             errors++;
-          } else {
-            if (this.parentsForm == false) {
-              axios
-                .post(serverURL + "/facial/checkemail", {
-                  body: {
-                    email: this.personal.email
-                  }
-                })
-                .then(function(response) {
-                  console.log(response);
-                  console.log(JSON.stringify(response));
-                  if (response.status === 200) {
-                    this.Errors.email = false;
-                    this.Errors.email_duplicated = false;
-                  }
-                  if (response.status === 409) {
-                    this.Errors.email = true;
-                    this.Errors.email_duplicated = true;
-                    errors++;
-                  }
-                });
-            } else {
-              this.Errors.email = false;
-              this.Errors.email_duplicated = false;
-            }
+          }
+          if (this.Errors.email == true) {
+            errors++;
+          }
+          if (this.submitbtnerror == true) {
+            errors++;
           }
         }
         if (this.step == 4) {
