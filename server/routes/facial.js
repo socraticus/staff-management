@@ -163,7 +163,7 @@ function intakeformMigration() {
 }
 
 function intakeformbackup() {
-  Intakeform.find({}, function(error, result) {
+  Intakeform.find().then(function(result) {
     result.forEach(item => {
       var intakeback = new IntakeformB(item);
       intakeback.save(function(err, intakeformB) {
