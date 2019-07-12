@@ -452,10 +452,11 @@ window.onload = function() {
         } else {
           if (this.parentsForm == false) {
             this.submitbtnerror = true;
+            var email_lowercase = this.personal.email.toLowerCase();
             axios
               .post(serverURL + "/facial/checkemail", {
                 body: {
-                  email: this.personal.email
+                  email: email_lowercase
                 }
               })
               .then(function(response) {
@@ -513,7 +514,7 @@ window.onload = function() {
         /* var jpeg = _this.$refs.signature.save('image/jpeg')
                 var svg = _this.$refs.signature.save('image/svg+xml'); */
         parentsignature = png.substring(22);
-        console.log("this is valid signature var: " + signature);
+        console.log("this is valid signature var: " + parentsignature);
         return parentsignature;
       },
       clearparent() {
