@@ -106,6 +106,9 @@ window.onload = function() {
       this.cart.items = JSON.parse(localStorage.getItem("cartItems") || "[]");
     },
     methods: {
+      applyDiscount: function() {
+        this.discountCode = "NEXT1254";
+      },
       addProductsToCart: function(product) {
         var cartItem = this.getCartItem(product);
 
@@ -224,6 +227,7 @@ window.onload = function() {
 
   // Add Listeners to addButtons
   addClickedProduct();
+  activeDiscount();
 
   function addClickedProduct() {
     // Verify if product data has been loaded, if not, load it
@@ -262,6 +266,12 @@ window.onload = function() {
     } else {
       console.log("already loaded");
     }
+  }
+
+  function activeDiscount() {
+    $("#drawer-website-discount-btn").click(function() {
+      mainVue.discountCode = "NEXT1254";
+    });
   }
 
   // Checkout Vue Instance
