@@ -3,6 +3,7 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const Intakeform = require("../models/intakeform.js");
+const IntakeformB = require("../models/intakeformB.js");
 const Facialform = require("../models/facialform.js");
 const Minorform = require("../models/minorform.js");
 const Massageform = require("../models/massageform.js");
@@ -127,7 +128,7 @@ router.post("/checkemail", function(req, res, next) {
 });
 
 router.get("/test", function(req, res, next) {
-  intakeformMigration();
+  intakeformbackup();
 });
 //Routes sections----------------------------------------------------------------------------
 
@@ -156,6 +157,18 @@ function intakeformMigration() {
           if (err) return console.error(err);
           console.log(" saved to intakeitem collection.");
         });
+      });
+    });
+  });
+}
+
+function intakeformbackup() {
+  intakeform.find(function(error, result) {
+    result.forEach(item => {
+      var intakeback = new IntakeformB(item);
+      intakeback.save(function(err, intakeformB) {
+        if (err) return console.error(err);
+        console.log(" saved to intakeitem collection.");
       });
     });
   });
