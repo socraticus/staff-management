@@ -165,7 +165,10 @@ function intakeformMigration() {
 function intakeformbackup() {
   Intakeform.find().then(function(result) {
     result.forEach(item => {
-      var intakeback = new IntakeformB(item);
+      var obj = JSON.stringify(item);
+      var result = JSON.parse(obj);
+      delete result._id;
+      var intakeback = new IntakeformB(result);
       intakeback.save(function(err, intakeformB) {
         if (err) return console.error(err);
         console.log(" saved to intakeitem collection.");
