@@ -177,6 +177,25 @@ function intakeformbackup() {
   });
 }
 
+function intakeformrestore() {
+  IntakeformB.find().then(function(result) {
+    result.forEach(item => {
+      var obj = JSON.stringify(item);
+      var result = JSON.parse(obj);
+      delete result._id;
+      result.business_yelp = false;
+      result.business_google = false;
+      result.business_groupon = false;
+      result.business_recommendation = false;
+      var intake = new Intakeform(result);
+      intake.save(function(err, intakeform) {
+        if (err) return console.error(err);
+        console.log(" saved to intakeitem collection.");
+      });
+    });
+  });
+}
+
 function minorAndMassageMigration() {
   request(
     "https://ananda-spa-miami-dev.firebaseapp.com/dev/minor_list.json",
