@@ -342,7 +342,11 @@ window.onload = function() {
       begin: {
         recommendation: "",
         groupon: "",
-        business: ""
+        business: "",
+        business_yelp: false,
+        business_google: false,
+        business_groupon: false,
+        business_recommendation: false
       },
       personal: {
         fullname: "",
@@ -573,13 +577,18 @@ window.onload = function() {
             this.Errors.recommendation = false;
             $("#Recommendation-2").attr("style", "border: 1px solid #cccccc;");
           }
-          if (this.begin.business == "") {
+          if (
+            this.begin.business_yelp == "true" ||
+            this.begin.business_google == "true" ||
+            this.begin.business_groupon == "true" ||
+            this.begin.business_recommendation == "true"
+          ) {
+            this.Errors.business = false;
+            $("#businesses").attr("style", "");
+          } else {
             this.Errors.business = true;
             $("#businesses").attr("style", "border: 1px solid #e21010;");
             errors++;
-          } else {
-            this.Errors.business = false;
-            $("#businesses").attr("style", "");
           }
           if (this.grouponForm == "true") {
             if (this.begin.groupon == "") {
@@ -763,6 +772,10 @@ window.onload = function() {
                 recommendation: this.begin.recommendation,
                 groupon: this.begin.groupon,
                 business: this.begin.business,
+                business_yelp: this.begin.business_yelp,
+                business_google: this.begin.business_google,
+                business_groupon: this.begin.business_groupon,
+                business_recommendation: this.begin.business_recommendation,
                 parentname: this.Minor.parentName,
                 parentsignature: this.Minor.parentSignature
               }
