@@ -400,7 +400,7 @@ app.use("/facial", routeFacial);
 
 //Plivo General Routes
 const routePlivo = require("./routes/plivo");
-app.use("/facial", routePlivo);
+app.use("/plivo", routePlivo);
 
 // // Square POST charge route
 // app.post('/square/process-payment', (req, res) => {
