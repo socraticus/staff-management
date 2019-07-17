@@ -27,6 +27,7 @@
     "mongoose": "^5.3.6",
     "morgan": "^1.9.1",
     "nodemailer": "^5.1.1",
+    "plivo": "^4.1.2",
     "puppeteer": "^1.13.0",
     "request": "^2.88.0",
     "square-connect": "^2.20181212.0",
