@@ -46,6 +46,7 @@ router.get("/", function(req, res, next) {
 //Methods----------------------------------------------------------------------------------------/
 router.post("/sms", function(req, res, next) {
   var request_params = req.body;
+  console.log(request_params);
   res.send({
     request_params
   });
