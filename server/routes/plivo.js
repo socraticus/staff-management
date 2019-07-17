@@ -3,6 +3,7 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const request = require("request");
+let plivo = require("plivo");
 
 const app = express();
 
@@ -47,9 +48,22 @@ router.get("/", function(req, res, next) {
 router.post("/sms", function(req, res, next) {
   var request_params = req.body;
   console.log(request_params);
-  res.send({
+  /*  res.send({
     request_params
-  });
+  }); */
+  let client = new plivo.Client(
+    "MAYWUYZJUZMJIXYJJJMD",
+    "MTNiZTNmYmZhZjJmMDc4ZWU3MjNjYTU2MTAwMWQ1"
+  );
+  client.messages
+    .create(
+      "+1 786-232-0269",
+      request_params.number,
+      "This is a promotional message sent from anandaSPA, thank you for choosing us"
+    )
+    .then(function(message_created) {
+      console.log(message_created);
+    });
 });
 //Methods----------------------------------------------------------------------------------------/
 module.exports = router;
