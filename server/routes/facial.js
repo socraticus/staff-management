@@ -127,9 +127,9 @@ router.post("/checkemail", function(req, res, next) {
   });
 });
 
-router.get("/test", function(req, res, next) {
+/* router.get("/test", function(req, res, next) {
   intakeformrestore();
-});
+}); */
 //Routes sections----------------------------------------------------------------------------
 
 //Methods section----------------------------------------------------------------------------
